@@ -50,44 +50,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <!-- Full screen light black background -->
   <style>
-  body {
-  background: url('image/log.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: white;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
-
-/* Glass Login Box */
-.form-box {
-  background: rgba(49, 48, 48, 0.45);   /* transparent dark */
-  backdrop-filter: blur(5px);      /* blur effect */
-  -webkit-backdrop-filter: blur(10px);
-  padding: 40px;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 420px;                 /* normal login size */
-  box-shadow: 0 0 30px rgba(115, 109, 109, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-
-  /* 👇 ADD GLOW HERE */
-  box-shadow:
-    -10px 0 20px rgba(255, 0, 150, 0.6),
-     10px 0 20px rgba(0, 255, 255, 0.6);
-}
-
-/* Active tab */
-.nav-pills .nav-link.active {
-  background-color: #0d6efd !important;
-}
-
-/* Alert box */
-.alert-box {
-  background-color: rgba(247, 246, 246, 0.15);
+    body {
+      background-color: #2c2c2c; /* light black */
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+    .form-box {
+      background-color: #1e1e1e; /* darker container */
+      padding: 30px;
+      border-radius: 12px;
+      width: 900%;
+      max-width: 900px;
+    }
+    .nav-pills .nav-link.active {
+      background-color: #0d6efd !important; /* keep active tab blue */
+    }
+    .alert-box {
+  background-color: #3a1a1a;
   border: 1px solid #ff4d4d;
   color: #ff4d4d;
   padding: 10px;
@@ -96,8 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   text-align: center;
 }
 
-
-
   </style>
 </head>
 <body>
@@ -105,8 +86,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="form-box">
   <!-- Pills navs -->
   <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
-
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="tab-login" data-mdb-toggle="pill" href="login.php" role="tab"
+        aria-controls="pills-login" aria-selected="true">Login</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="tab-register" data-mdb-toggle="pill" href="ragister.php" role="tab"
+        aria-controls="pills-register" aria-selected="false">Register</a>
+    </li>
   </ul>
+  <!-- Pills navs -->
 
   <!-- Pills content -->
   <div class="tab-content">
@@ -116,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <?php endif; ?>
       <form action="login.php" method="POST">
         <div class="text-center mb-3">
-          <p style="font-size: 28px;">Login </p>
+          <p>Login :</p>
           <!-- <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-facebook-f"></i></button>
           <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-google"></i></button>
           <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-twitter"></i></button>
@@ -141,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <div class="col-md-6 d-flex justify-content-center">
             <div class="form-check mb-3 mb-md-0">
               <input class="form-check-input" type="checkbox" id="loginCheck" checked />
-              <label class="form-check-label" for="loginCheck">Remember me </label>
+              <label class="form-check-label" for="loginCheck">Remember me</label>
             </div>
           </div>
           <div class="col-md-6 d-flex justify-content-center">
@@ -210,7 +199,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!-- FISH START -->
 <div id="fish" style="
-width:660px;
+width:580px;
 position:fixed;
 top:0;
 left:0;
