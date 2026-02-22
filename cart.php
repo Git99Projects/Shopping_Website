@@ -1,5 +1,10 @@
 <?php
 session_start();
+if(!isset($_SESSION['user_email'])){
+    header("Location: login.php");
+    exit();
+}
+
 
 // Ensure 'cart' session is initialized
 if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {

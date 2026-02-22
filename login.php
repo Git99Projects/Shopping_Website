@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'db.php';
 
 $alert = ""; // For displaying error message above form
@@ -17,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->fetch();
 
     if (password_verify($password, $hashed_password)) {
+      $_SESSION['user_email'] = $email;
       header("Location: home.php");
       exit();
     } else {
