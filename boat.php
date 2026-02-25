@@ -42,6 +42,7 @@ if (isset($_GET['add_to_cart'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Online Super Market - boAt</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -56,13 +57,27 @@ if (isset($_GET['add_to_cart'])) {
   .product-card {
   background-color:rgb(207, 235, 243); /* Change this to your desired color */
 }
-    .product-img {
-  width: 180px;
-  height: 275px;
+      .product-img {
+  width: 100%;
+  max-width: 180px;
+  height: auto;
   object-fit: contain;
   display: block;
-  margin: 0 auto; /* centers image horizontally */
-     }
+  margin: 0 auto;
+}
+/* Tablet */
+@media (max-width: 992px) {
+  .product-img {
+    max-width: 170px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .product-img {
+    max-width: 140px;
+  }
+}
     </style>
 </head>
 <body>
