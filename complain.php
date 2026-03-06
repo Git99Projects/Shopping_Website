@@ -1,5 +1,13 @@
 <?php
-include 'db.php'; // make sure $conn is defined in this file
+session_start();
+include 'db.php';
+
+if (!isset($_SESSION['user_id'])) {
+  header("Location: login.php");
+  exit();
+}
+
+$user_id = $_SESSION['user_id'];
 ?>
 
 <!DOCTYPE html>
@@ -68,6 +76,11 @@ include 'db.php'; // make sure $conn is defined in this file
   margin-right: 10px;
 }
 
+.btn-danger {
+  white-space: nowrap;
+  min-width: 90px;
+}
+
   </style>
 </head>
 <body>
@@ -99,8 +112,12 @@ include 'db.php'; // make sure $conn is defined in this file
   <h2 class="mb-4" align="center">
     <i class="fa-solid fa-comments text-warning me-2"></i>Customer Complaints
     <?php
-    $count = $conn->query("SELECT COUNT(*) as total FROM complaints")->fetch_assoc();
-    echo "<span class='badge-count'>Total: {$count['total']}</span>";
+   $stmtCount = $conn->prepare("SELECT COUNT(*) as total FROM complaints WHERE user_id = ?");
+   $stmtCount->bind_param("i", $user_id);
+   $stmtCount->execute();
+   $countResult = $stmtCount->get_result()->fetch_assoc();
+   echo "<span class='badge-count'>Total: {$countResult['total']}</span>";
+   $stmtCount->close();
     ?>
   </h2>
 
@@ -114,23 +131,38 @@ include 'db.php'; // make sure $conn is defined in this file
           <th><i class="fa-solid fa-heading"></i> Subject</th>
           <th><i class="fa-solid fa-message"></i> Message</th>
           <th><i class="fa-solid fa-clock"></i> Date</th>
+          <th><i class="fa-solid fa-gear"></i> Action</th>
         </tr>
       </thead>
       <tbody>
-        <?php
-        $result = $conn->query("SELECT * FROM complaints ORDER BY created_at ASC");
+     <?php
+       $stmt = $conn->prepare("SELECT * FROM complaints WHERE user_id = ? ORDER BY created_at DESC");
+       $stmt->bind_param("i", $user_id);
+       $stmt->execute();
+       $result = $stmt->get_result();
         if ($result && $result->num_rows > 0):
           while ($row = $result->fetch_assoc()):
-        ?>
+      ?>
         <tr>
-          <td><?php echo $row['id']; ?></td>
-          <td><?php echo htmlspecialchars($row['name']); ?></td>
-          <td><?php echo htmlspecialchars($row['email']); ?></td>
-          <td><?php echo htmlspecialchars($row['subject']); ?></td>
-          <td><?php echo nl2br(htmlspecialchars($row['message'])); ?></td>
-          <td><?php echo $row['created_at']; ?></td>
-        </tr>
-        <?php endwhile; else: ?>
+           <td><?php echo $row['id']; ?></td>
+           <td><?php echo htmlspecialchars($row['name']); ?></td>
+           <td><?php echo htmlspecialchars($row['email']); ?></td>
+           <td><?php echo htmlspecialchars($row['subject']); ?></td>
+           <td><?php echo nl2br(htmlspecialchars($row['message'])); ?></td>
+           <td><?php echo $row['created_at']; ?></td>
+        <td>
+        <a href="delete_complaint.php?id=<?php echo $row['id']; ?>" 
+        class="btn btn-danger btn-sm text-nowrap"
+        onclick="return confirm('Are you sure you want to delete this complaint?');">
+      <i class="fa-solid fa-trash"></i> Delete
+    </a>
+  </td>
+</tr>
+        <?php 
+        endwhile;
+          $stmt->close();
+        else:
+         ?>
         <tr>
           <td colspan="6" class="text-center text-muted">No complaints found.</td>
         </tr>

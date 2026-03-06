@@ -1,20 +1,35 @@
 <?php
 session_start();
-if(!isset($_SESSION['user_email'])){
+include 'db.php';
+if(!isset($_SESSION['user_id'])){
     header("Location: login.php");
     exit();
+}
+$user_id = (int)$_SESSION['user_id'];
+
+$cart = $_SESSION['cart'][$user_id] ?? [];
+$delivery_fees = $_SESSION['delivery_fees'][$user_id] ?? [];
+
+if (empty($cart)) {
+  header("Location: home.php");
+  exit();
 }
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $name = $_POST['name'];
-  $email = $_POST['email'];
-  $phone = $_POST['phone'];
-  $address = $_POST['address'];
-  $payment = $_POST['payment'];
+ $name    = trim($_POST['name'] ?? '');
+ $email   = trim($_POST['email'] ?? '');
+ $phone   = trim($_POST['phone'] ?? '');
+ $address = trim($_POST['address'] ?? '');
+ $payment = trim($_POST['payment'] ?? '');
+
+if ($name === '' || $email === '' || $phone === '' || $address === '' || $payment === '') {
+  header("Location: checkout.php?error=1");
+  exit();
+}
 
   // Save user info
-  $_SESSION['user_info'] = [
+  $_SESSION['user_info'][$user_id]  = [
     'name' => $name,
     'email' => $email,
     'phone' => $phone,
@@ -24,15 +39,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // Prepare order
   $order = [
-    'user' => $_SESSION['user_info'],
+    'user' => $_SESSION['user_info'][$user_id],
     'items' => [],
     'total' => 0,
     'timestamp' => date("Y-m-d H:i:s")
   ];
 
-  foreach ($_SESSION['cart'] as $id => $item) {
-    $delivery = $_SESSION['delivery_fees'][$id] ?? rand(10, 100);
-    $total = ($item['price'] * $item['quantity']) + $delivery;
+ foreach ($cart as $id => $item) {
+    $delivery = $delivery_fees[$id] ?? rand(10, 100);
+
+    $price = (float)($item['price'] ?? 0);
+    $qty   = (int)($item['quantity'] ?? 1);
+    $total = ($price * $qty) + (float)$delivery;
 
     $order['items'][] = [
       'id' => $id,
@@ -47,15 +65,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $order['total'] += $total;
   }
 
-  // Save to order history
-  if (!isset($_SESSION['order_history'])) {
-    $_SESSION['order_history'] = [];
-  }
-  $_SESSION['order_history'][] = $order;
+
+// Insert into orders table
+$stmt = $conn->prepare("INSERT INTO orders (user_id, name, email, phone, address, payment, total) VALUES (?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("isssssd", $user_id, $name, $email, $phone, $address, $payment, $order['total']);
+$stmt->execute();
+$order_id = $stmt->insert_id;
+$stmt->close();
+
+// Insert each item into order_items table
+$itemStmt = $conn->prepare("INSERT INTO order_items (order_id, product_key, product_name, price, quantity, image, delivery, line_total)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+
+foreach ($order['items'] as $it) {
+  $itemStmt->bind_param(
+    "issdissd",
+    $order_id,
+    $it['id'],       // product_key like apple_1, samsung_2, etc.
+    $it['name'],
+    $it['price'],
+    $it['quantity'],
+    $it['image'],
+    $it['delivery'],
+    $it['total']
+  );
+  $itemStmt->execute();
+}
+$itemStmt->close();
+
 
   // Clear cart & delivery fees
-  unset($_SESSION['cart']);
-  unset($_SESSION['delivery_fees']);
+unset($_SESSION['cart'][$user_id]);
+unset($_SESSION['delivery_fees'][$user_id]);
 
   // Redirect to confirmation
   header("Location: order_confirm.php");

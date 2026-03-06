@@ -3,39 +3,71 @@ session_start();
 include 'db.php';
 $highlight_id = isset($_GET['highlight_id']) ? $_GET['highlight_id'] : null;
 
-
-// Handle Add to Cart
+// Handle Add to Cart (✅ USER-WISE)
 if (isset($_GET['add_to_cart'])) {
-    $product_id = 'boult_' . $_GET['add_to_cart'];
-  
-    if (isset($_SESSION['cart'][$product_id])) {
-        $_SESSION['cart'][$product_id]['quantity'] += 1;
+
+    // ✅ Require login before add to cart
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: login.php");
+        exit();
+    }
+
+    $user_id = (int)$_SESSION['user_id'];
+
+    // ✅ Ensure user cart exists
+    if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
+    }
+    if (!isset($_SESSION['cart'][$user_id]) || !is_array($_SESSION['cart'][$user_id])) {
+        $_SESSION['cart'][$user_id] = [];
+    }
+
+    // ✅ Ensure delivery fees user-wise
+    if (!isset($_SESSION['delivery_fees']) || !is_array($_SESSION['delivery_fees'])) {
+        $_SESSION['delivery_fees'] = [];
+    }
+    if (!isset($_SESSION['delivery_fees'][$user_id]) || !is_array($_SESSION['delivery_fees'][$user_id])) {
+        $_SESSION['delivery_fees'][$user_id] = [];
+    }
+
+    $product_key = 'boult_' . (int)$_GET['add_to_cart'];
+
+    // ✅ If already in cart, increase qty
+    if (isset($_SESSION['cart'][$user_id][$product_key])) {
+        $_SESSION['cart'][$user_id][$product_key]['quantity'] += 1;
     } else {
-        $raw_id = str_replace('boult_', '', $product_id);
+        $raw_id = (int)str_replace('boult_', '', $product_key);
+
         $stmt = $conn->prepare("SELECT * FROM boult_products WHERE id = ?");
         $stmt->bind_param("i", $raw_id);
         $stmt->execute();
         $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
+
+        if ($result && $result->num_rows > 0) {
             $product = $result->fetch_assoc();
-            $_SESSION['cart'][$product_id] = [
+
+            $_SESSION['cart'][$user_id][$product_key] = [
                 "name" => $product['name'],
-                "price" => $product['price'],
+                "price" => (float)$product['price'],
                 "image" => $product['image'],
-                "quantity" => 1,
-                "delivery" => rand(10, 100)
+                "quantity" => 1
             ];
+
+            // ✅ set delivery fee for this product (user-wise)
+            $_SESSION['delivery_fees'][$user_id][$product_key] = rand(10, 100);
         }
+        $stmt->close();
     }
-  
+
     // 👇 Redirect condition based on whether it's "Buy Now"
     if (isset($_GET['buy_now']) && $_GET['buy_now'] == 1) {
-        header("Location: cart.php"); // Buy Now → go to cart
+        header("Location: cart.php");
     } else {
-        header("Location: boult.php"); // Add to cart → stay on home
+        header("Location: boult.php");
     }
     exit();
-  }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -146,7 +178,14 @@ if (isset($_GET['add_to_cart'])) {
         <a class="nav-link  me-3" href="cart.php">
           <i class="fa-solid fa-cart-shopping fa-2x" style="color:rgb(53, 30, 200);"></i>
           <sup>
-            <?php echo isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'], 'quantity')) : 0; ?>
+           <?php
+            $user_id = $_SESSION['user_id'] ?? null;
+            if ($user_id && isset($_SESSION['cart'][$user_id])) {
+              echo array_sum(array_column($_SESSION['cart'][$user_id], 'quantity'));
+            } else {
+              echo 0;
+            }
+          ?>
           </sup>
         </a>
       </div>

@@ -1,25 +1,37 @@
 <?php
 session_start();
-if(!isset($_SESSION['user_email'])){
-    header("Location: login.php");
-    exit();
+include 'db.php';
+
+if (!isset($_SESSION['user_id'])) {
+  header("Location: login.php");
+  exit();
 }
 
+$user_id = (int)$_SESSION['user_id'];
 
-// Ensure 'cart' session is initialized
+/* ✅ Make cart USER-WISE */
 if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
+  $_SESSION['cart'] = [];
 }
-
-// Make sure delivery fees exist for every item in cart
-if (!isset($_SESSION['delivery_fees'])) {
-    $_SESSION['delivery_fees'] = [];
+if (!isset($_SESSION['cart'][$user_id]) || !is_array($_SESSION['cart'][$user_id])) {
+  $_SESSION['cart'][$user_id] = [];
 }
+$cart = &$_SESSION['cart'][$user_id];
 
-foreach ($_SESSION['cart'] as $id => $item) {
-    if (!isset($_SESSION['delivery_fees'][$id]) || $_SESSION['delivery_fees'][$id] <= 0) {
-        $_SESSION['delivery_fees'][$id] = rand(10, 100); // delivery fee > 0
-    }
+/* ✅ Delivery fees USER-WISE */
+if (!isset($_SESSION['delivery_fees']) || !is_array($_SESSION['delivery_fees'])) {
+  $_SESSION['delivery_fees'] = [];
+}
+if (!isset($_SESSION['delivery_fees'][$user_id]) || !is_array($_SESSION['delivery_fees'][$user_id])) {
+  $_SESSION['delivery_fees'][$user_id] = [];
+}
+$delivery_fees = &$_SESSION['delivery_fees'][$user_id];
+
+/* Ensure delivery fee for every cart item */
+foreach ($cart as $id => $item) {
+  if (!isset($delivery_fees[$id]) || $delivery_fees[$id] <= 0) {
+    $delivery_fees[$id] = rand(10, 100);
+  }
 }
 ?>
 
@@ -121,15 +133,23 @@ body::before {
     text-decoration: none;
   }
 
+  .cart-title {
+  text-align: center;
+}
+ .table-responsive{ 
+  overflow-x:auto; 
+}
+
 </style>
 
 </head>
 <body>
 <div class="container mt-5 ">
 <a href="home.php" class="btn btn-secondary">⬅️ Back</a>
-  <h2 class="mb-4" align="center">🛒 Your Shopping Cart</h2>
+<h2 class="mb-4 cart-title">🛒 Your Shopping Cart</h2>
 
-  <?php if (!empty($_SESSION['cart'])): ?>
+  <?php if (!empty($cart)): ?>
+    <div class="table-responsive">
     <table class="table table-bordered">
       <thead class="table-info">
         <tr>
@@ -145,10 +165,10 @@ body::before {
       <tbody>
         <?php
           $grand_total = 0;
-          foreach ($_SESSION['cart'] as $id => $item):
-            $qty = $item['quantity'];
-            $price = $item['price'];
-            $delivery = $_SESSION['delivery_fees'][$id];
+         foreach ($cart as $id => $item):
+           $qty = isset($item['quantity']) ? (int)$item['quantity'] : 1;
+           $price = isset($item['price']) ? (float)$item['price'] : 0;
+           $delivery = $delivery_fees[$id] ?? 0;
             $total = ($price * $qty) + $delivery;
             $grand_total += $total;
         ?>
@@ -168,6 +188,7 @@ body::before {
         </tr>
       </tbody>
     </table>
+  </div> 
 
     <div class="d-flex justify-content-between">
       <a href="home.php" class="btn btn-secondary">⬅️ Continue Shopping</a>

@@ -1,26 +1,39 @@
 <?php
 session_start();
-if(!isset($_SESSION['user_email'])){
+include 'db.php'; 
+if(!isset($_SESSION['user_id'])){
     header("Location: login.php");
     exit();
 }
 
 
-// Redirect if cart is empty
-if (empty($_SESSION['cart'])) {
+$user_id = (int)$_SESSION['user_id'];
+
+/* ✅ USER-WISE cart */
+$cart = $_SESSION['cart'][$user_id] ?? [];
+
+/* ✅ USER-WISE delivery fees */
+if (!isset($_SESSION['delivery_fees']) || !is_array($_SESSION['delivery_fees'])) {
+  $_SESSION['delivery_fees'] = [];
+}
+if (!isset($_SESSION['delivery_fees'][$user_id]) || !is_array($_SESSION['delivery_fees'][$user_id])) {
+  $_SESSION['delivery_fees'][$user_id] = [];
+}
+$delivery_fees = &$_SESSION['delivery_fees'][$user_id];
+
+/* Redirect if cart is empty */
+if (empty($cart)) {
   header("Location: cart.php");
   exit();
 }
 
-// Ensure delivery fees are set
-if (!isset($_SESSION['delivery_fees'])) {
-  $_SESSION['delivery_fees'] = [];
-}
-foreach ($_SESSION['cart'] as $id => $item) {
-  if (!isset($_SESSION['delivery_fees'][$id]) || $_SESSION['delivery_fees'][$id] <= 0) {
-    $_SESSION['delivery_fees'][$id] = rand(10, 100);
+/* Ensure delivery fee for every cart item */
+foreach ($cart as $id => $item) {
+  if (!isset($delivery_fees[$id]) || $delivery_fees[$id] <= 0) {
+    $delivery_fees[$id] = rand(10, 100);
   }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -108,10 +121,10 @@ foreach ($_SESSION['cart'] as $id => $item) {
   <?php
     $grand_total = 0;
     echo '<ul class="list-group mb-3">';
-    foreach ($_SESSION['cart'] as $id => $item) {
-      $price = $item['price'];
-      $qty = $item['quantity'];
-      $delivery = $_SESSION['delivery_fees'][$id];
+     foreach ($cart as $id => $item) {
+      $price = (float)($item['price'] ?? 0);
+      $qty = (int)($item['quantity'] ?? 1);
+      $delivery = (float)($delivery_fees[$id] ?? 0);
       $subtotal = ($price * $qty) + $delivery;
       $grand_total += $subtotal;
 
@@ -128,8 +141,8 @@ foreach ($_SESSION['cart'] as $id => $item) {
   <h3 class="mt-4">🧾 Customer Information</h3>
   <form action="place_order.php" method="POST">
 
-    <?php if (!empty($_SESSION['user_info'])): ?>
-      <?php $u = $_SESSION['user_info']; ?>
+    <?php if (!empty($_SESSION['user_info'][$user_id])): ?>
+    <?php $u = $_SESSION['user_info'][$user_id]; ?>
       <div class="alert alert-success">
         <strong>Welcome back <?php echo htmlspecialchars($u['name']); ?>!</strong><br>
         Address already saved:

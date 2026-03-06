@@ -5,35 +5,64 @@ $highlight_id = isset($_GET['highlight_id']) ? $_GET['highlight_id'] : null;
 
 // Handle Add to Cart
 if (isset($_GET['add_to_cart'])) {
-  $product_id = 'home_' . $_GET['add_to_cart'];
 
-  if (isset($_SESSION['cart'][$product_id])) {
-      $_SESSION['cart'][$product_id]['quantity'] += 1;
-  } else {
-      $raw_id = str_replace('home_', '', $product_id);
-      $stmt = $conn->prepare("SELECT * FROM home_products WHERE id = ?");
-      $stmt->bind_param("i", $raw_id);
-      $stmt->execute();
-      $result = $stmt->get_result();
-      if ($result->num_rows > 0) {
-          $product = $result->fetch_assoc();
-          $_SESSION['cart'][$product_id] = [
-              "name" => $product['name'],
-              "price" => $product['price'],
-              "image" => $product['image'],
-              "quantity" => 1,
-              "delivery" => rand(10, 100)
-          ];
-      }
+  if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
   }
 
-  // 👇 Redirect condition based on whether it's "Buy Now"
-  if (isset($_GET['buy_now']) && $_GET['buy_now'] == 1) {
-      header("Location: cart.php"); // Buy Now → go to cart
+  $user_id = (int)$_SESSION['user_id'];
+
+  // Make sure user cart exists
+  if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+  }
+  if (!isset($_SESSION['cart'][$user_id]) || !is_array($_SESSION['cart'][$user_id])) {
+    $_SESSION['cart'][$user_id] = [];
+  }
+
+  $product_id = 'home_' . (int)$_GET['add_to_cart'];
+
+  if (isset($_SESSION['cart'][$user_id][$product_id])) {
+    $_SESSION['cart'][$user_id][$product_id]['quantity'] += 1;
   } else {
-      header("Location: home.php"); // Add to cart → stay on home
+    $raw_id = (int) str_replace('home_', '', $product_id);
+
+    $stmt = $conn->prepare("SELECT * FROM home_products WHERE id = ?");
+    $stmt->bind_param("i", $raw_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result && $result->num_rows > 0) {
+      $product = $result->fetch_assoc();
+
+      $_SESSION['cart'][$user_id][$product_id] = [
+        "name" => $product['name'],
+        "price" => (float)$product['price'],
+        "image" => $product['image'],
+        "quantity" => 1
+      ];
+    }
+    $stmt->close();
+  }
+
+  // Redirect condition based on whether it's "Buy Now"
+  if (isset($_GET['buy_now']) && $_GET['buy_now'] == 1) {
+    header("Location: cart.php");
+  } else {
+    header("Location: home.php");
   }
   exit();
+}
+
+// cart quantity badge
+$user_id_for_cart = (int)($_SESSION['user_id'] ?? 0);
+$cart_qty = 0;
+
+if ($user_id_for_cart > 0 && isset($_SESSION['cart'][$user_id_for_cart]) && is_array($_SESSION['cart'][$user_id_for_cart])) {
+  foreach ($_SESSION['cart'][$user_id_for_cart] as $it) {
+    $cart_qty += (int)($it['quantity'] ?? 0);
+  }
 }
 
 ?>
@@ -80,6 +109,14 @@ if (isset($_GET['add_to_cart'])) {
     max-width: 140px;
   }
 }
+.profile-link i{
+  font-size: 28px;
+  color: rgb(53, 30, 200);
+  line-height: 1;
+}
+.profile-link{
+  padding: 6px 8px;
+}
     </style>
 </head>
 <body>
@@ -87,7 +124,7 @@ if (isset($_GET['add_to_cart'])) {
 <?php if (isset($_GET['notfound']) && $_GET['notfound'] == 1): ?>
   <!-- Modal -->
   <div class="modal fade" id="notFoundModal" tabindex="-1" aria-labelledby="notFoundModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="position: absolute; top: 50px; left: 50%; transform: translateX(-50%);">
+    <div class="modal-dialog" style="position:absolute; top: 50px; left: 50%; transform: translateX(-50%);">
       <div class="modal-content" style="background-color:rgb(243, 231, 231); color:rgb(47, 8, 8); border: 2px solidrgb(251, 249, 249);">
         <div class="modal-header">
           <h5 class="modal-title fw-bold" id="notFoundModalLabel">❌ Product Not Found</h5>
@@ -102,13 +139,15 @@ if (isset($_GET['add_to_cart'])) {
 
   <!-- Auto-show the modal -->
   <script>
-    window.onload = function () {
-      var notFoundModal = new bootstrap.Modal(document.getElementById('notFoundModal'));
-      notFoundModal.show();
-    };
-  </script>
+document.addEventListener("DOMContentLoaded", function () {
+  var el = document.getElementById("notFoundModal");
+  if (el) {
+    var m = new bootstrap.Modal(el);
+    m.show();
+  }
+});
+</script>
 <?php endif; ?>
-
 
 <div class="container-fluid p-0">
 
@@ -118,19 +157,54 @@ if (isset($_GET['add_to_cart'])) {
     <a href="home.php">
       <img src="image/logo.png" alt="logo" class="logo" width="45">
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<div class="d-flex align-items-center ms-auto gap-2">
+ 
+ <!-- Profile (ONLY ONE ICON) -->
+      <div class="dropdown">
+        <a class="nav-link dropdown-toggle profile-link" href="#"
+           role="button" data-bs-toggle="dropdown">
+          <i class="fa-solid fa-circle-user fs-4"></i>
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-end">
+          <?php if (isset($_SESSION['user_id'])): ?>
+            <li><a class="dropdown-item" href="profile.php">My Profile</a></li>
+            <li><a class="dropdown-item" href="order_history.php">My Orders</a></li>
+            <li><a class="dropdown-item" href="complain.php">My Complaints</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
+          <?php else: ?>
+            <li><a class="dropdown-item" href="login.php">Login</a></li>
+            <li><a class="dropdown-item" href="ragister.php">Register</a></li>
+          <?php endif; ?>
+        </ul>
+      </div>
+
+  <!-- Hamburger -->
+ <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+  <span class="navbar-toggler-icon"></span>
+</button>
+
+</div>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- Left nav links -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link active" href="home.php"><b>Home</b></a></li>
-        <li class="nav-item"><a class="nav-link" href="insert_products.php">Admin</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="login.php">Logout</a></li>
-        <li class="nav-item"><a class="nav-link" href="ragister.php">Register</a></li>
-      </ul>
+       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="home.php"><b>Home</b></a></li>
+
+          <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
+            <li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Admin</a></li>
+          <?php endif; ?>
+
+          <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
+
+          <?php if (isset($_SESSION['user_id'])): ?>
+            <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+          <?php else: ?>
+            <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="ragister.php">Register</a></li>
+          <?php endif; ?>
+        </ul>
       
       <div class="mx-auto d-flex">
   <form class="d-flex me-3" method="GET" action="search_products.php">
@@ -150,43 +224,44 @@ if (isset($_GET['add_to_cart'])) {
         </a>
         <a class="nav-link  me-3" href="cart.php">
           <i class="fa-solid fa-cart-shopping fa-2x" style="color:rgb(53, 30, 200);"></i>
-          <sup>
-            <?php echo isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'], 'quantity')) : 0; ?>
-          </sup>
+         <sup><?php echo (int)$cart_qty; ?></sup>
         </a>
+
+      
       </div>
     </div>
   </div>
 </nav>
 <br>
 
-<!-- Products Section -->
-<div class="row px-1">
+  <!-- Products Section -->
+  <div class="row px-1">
     <div class="col-md-10 px-3">
-        <div class="row px-4 py-4">
-            <?php
-            $query = "SELECT * FROM home_products WHERE brand = 'Home'";
-            $result = $conn->query($query);
-            while ($row = $result->fetch_assoc()):
-            ?>
-            <div class="col-md-3 mb-4">
+      <div class="row px-4 py-4">
+        <?php
+        $query = "SELECT * FROM home_products WHERE brand = 'Home'";
+        $result = $conn->query($query);
+        while ($row = $result->fetch_assoc()):
+        ?>
+          <div class="col-md-3 mb-4">
             <div class="card h-100 product-card <?php if ($highlight_id == $row['id']) echo 'border border-warning border-3'; ?>">
-                    <img src="image/<?php echo $row['image']; ?>" class="product-img mx-auto d-block" alt="<?php echo $row['name']; ?>">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $row['name']; ?></h5>
-                        <p class="card-text"><?php echo $row['description']; ?></p>
-                        <h4>₹<?php echo number_format($row['price']); ?></h4>
-                        <h6>
-                            M.R.P: ₹<s><?php echo number_format($row['mrp']); ?></s>
-                            (<?php echo round(100 - ($row['price'] / $row['mrp']) * 100); ?>% off)
-                        </h6>
-                        <a href="home.php?add_to_cart=<?php echo $row['id']; ?>" class="btn btn-info">Add to Cart</a>
-                        <a href="home.php?add_to_cart=<?php echo $row['id']; ?>&buy_now=1" class="btn btn-success">Buy Now</a>
-                    </div>
-                </div>
+              <img src="image/<?php echo htmlspecialchars($row['image']); ?>" class="product-img mx-auto d-block" alt="<?php echo htmlspecialchars($row['name']); ?>">
+              <div class="card-body">
+                <h5 class="card-title"><?php echo htmlspecialchars($row['name']); ?></h5>
+                <p class="card-text"><?php echo htmlspecialchars($row['description']); ?></p>
+                <h4>₹<?php echo number_format((float)$row['price']); ?></h4>
+                <h6>
+                  M.R.P: ₹<s><?php echo number_format((float)$row['mrp']); ?></s>
+                  (<?php echo (int)round(100 - ($row['price'] / ($row['mrp'] ?: 1)) * 100); ?>% off)
+                </h6>
+
+                <a href="home.php?add_to_cart=<?php echo (int)$row['id']; ?>" class="btn btn-info">Add to Cart</a>
+                <a href="home.php?add_to_cart=<?php echo (int)$row['id']; ?>&buy_now=1" class="btn btn-success">Buy Now</a>
+              </div>
             </div>
-            <?php endwhile; ?>
-        </div>
+          </div>
+        <?php endwhile; ?>
+      </div>
     </div>
 
     <!-- Sidebar -->

@@ -1,31 +1,35 @@
 <?php
-include 'db.php';  // database connection
+session_start();
+include 'db.php';
+
 $success = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name    = htmlspecialchars(trim($_POST["name"]));
-    $email   = htmlspecialchars(trim($_POST["email"]));
-    $subject = htmlspecialchars(trim($_POST["subject"]));
-    $message = htmlspecialchars(trim($_POST["message"]));
+    $name    = trim($_POST["name"] ?? "");
+    $email   = trim($_POST["email"] ?? "");
+    $subject = trim($_POST["subject"] ?? "");
+    $message = trim($_POST["message"] ?? "");
 
-    // Insert into complaints table
-    $stmt = $conn->prepare("INSERT INTO complaints (name, email, subject, message) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $name, $email, $subject, $message);
+    // Link complaint to logged-in user (if logged in)
+    $user_id = $_SESSION['user_id'] ?? null;
+
+    // If logged in, force correct email
+    if (isset($_SESSION['user_email']) && $_SESSION['user_email'] !== "") {
+        $email = $_SESSION['user_email'];
+    }
+
+    $stmt = $conn->prepare("INSERT INTO complaints (user_id, name, email, subject, message) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("issss", $user_id, $name, $email, $subject, $message);
+
     if ($stmt->execute()) {
-        $success = "<div class='alert alert-success mt-3'>✅ Hi <strong>$name</strong>, your message has been sent successfully.</div>";
+        $safeName = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+        $success = "<div class='alert alert-success mt-3'>✅ Hi <strong>$safeName</strong>, your message has been sent successfully.</div>";
+        $_POST = []; // optional reset
     } else {
         $success = "<div class='alert alert-danger mt-3'>❌ Failed to send message. Please try again.</div>";
     }
-}
 
-$success = "";
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name    = htmlspecialchars(trim($_POST["name"]));
-    $email   = htmlspecialchars(trim($_POST["email"]));
-    $subject = htmlspecialchars(trim($_POST["subject"]));
-    $message = htmlspecialchars(trim($_POST["message"]));
-
-    $success = "<div class='alert alert-success mt-3'>✅ Hi <strong>$name</strong>, your message has been sent successfully. We’ll get back to you shortly!</div>";
+    $stmt->close();
 }
 ?>
 
@@ -159,6 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <p><i class="fa-solid fa-location-dot"></i> <b>Address:</b> SuperMarket Lane, Kosi kalan (Mathura), India</p>
     <p><i class="fa-solid fa-clock"></i> <b>Support:</b> Mon–Sat | 9 AM – 6 PM</p>
     <p><i class="fa-solid fa-clock"></i> <b>Mail:</b> kumardeepak884488@gmail.com </p>
+    <p><i class="fa-solid fa-clock"></i> <b>Mail:</b> manojgola184@gmail.com </p>
   </div>
 </div>
 
