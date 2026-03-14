@@ -1,6 +1,12 @@
 <?php
 session_start();
 include 'db.php';
+$delete_mode = (
+    isset($_GET['delete_mode']) &&
+    $_GET['delete_mode'] == '1' &&
+    isset($_SESSION['role']) &&
+    $_SESSION['role'] === 'admin'
+);
 $highlight_id = isset($_GET['highlight_id']) ? $_GET['highlight_id'] : null;
 
 // Handle Add to Cart
@@ -28,7 +34,7 @@ if (isset($_GET['add_to_cart'])) {
   } else {
     $raw_id = (int) str_replace('home_', '', $product_id);
 
-    $stmt = $conn->prepare("SELECT * FROM home_products WHERE id = ?");
+    $stmt = $conn->prepare("SELECT * FROM home_products WHERE id = ? AND deleted_by_admin = 0");
     $stmt->bind_param("i", $raw_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -232,6 +238,33 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
   </div>
 </nav>
+<?php if ($delete_mode): ?>
+  <div class="container my-3">
+  <form id="bulkDeleteForm" method="POST" action="delete_selected_products.php">
+  <input type="hidden" name="selected_ids" id="selected_ids">
+  <input type="hidden" name="table" value="home_products">
+  <input type="hidden" name="redirect_page" value="home.php">
+
+
+      <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded shadow-sm">
+        <div>
+          <strong>Admin Delete Mode</strong> |
+          Selected: <span id="selectedCount">0</span>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="button" class="btn btn-outline-primary btn-sm" onclick="toggleAllProducts(true)">Select All</button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleAllProducts(false)">Unselect All</button>
+
+          <button type="submit" id="deleteSelectedBtn" class="btn btn-danger btn-sm" style="display:none;"
+            onclick="return confirm('Are you sure you want to delete selected products?');">
+            Delete Selected
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+<?php endif; ?>
 <br>
 
   <!-- Products Section -->
@@ -239,14 +272,24 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="col-md-10 px-3">
       <div class="row px-4 py-4">
         <?php
-        $query = "SELECT * FROM home_products WHERE brand = 'Home'";
-        $result = $conn->query($query);
+      $query = "SELECT * FROM home_products WHERE brand = 'Home' AND deleted_by_admin = 0";
+       $result = $conn->query($query);
         while ($row = $result->fetch_assoc()):
         ?>
           <div class="col-md-3 mb-4">
             <div class="card h-100 product-card <?php if ($highlight_id == $row['id']) echo 'border border-warning border-3'; ?>">
-              <img src="image/<?php echo htmlspecialchars($row['image']); ?>" class="product-img mx-auto d-block" alt="<?php echo htmlspecialchars($row['name']); ?>">
-              <div class="card-body">
+
+     <?php if ($delete_mode): ?>
+          <div class="text-end p-2">
+             <input type="checkbox"
+                class="product-checkbox"
+                  value="<?php echo (int)$row['id']; ?>"
+                   onchange="updateSelectedProducts()">
+       </div>
+     <?php endif; ?>
+
+                <img src="image/<?php echo htmlspecialchars($row['image']); ?>" class="product-img mx-auto d-block" alt="<?php echo htmlspecialchars($row['name']); ?>">
+                <div class="card-body">
                 <h5 class="card-title"><?php echo htmlspecialchars($row['name']); ?></h5>
                 <p class="card-text"><?php echo htmlspecialchars($row['description']); ?></p>
                 <h4>₹<?php echo number_format((float)$row['price']); ?></h4>
@@ -254,9 +297,11 @@ document.addEventListener("DOMContentLoaded", function () {
                   M.R.P: ₹<s><?php echo number_format((float)$row['mrp']); ?></s>
                   (<?php echo (int)round(100 - ($row['price'] / ($row['mrp'] ?: 1)) * 100); ?>% off)
                 </h6>
-
+             <?php if (!$delete_mode): ?>
                 <a href="home.php?add_to_cart=<?php echo (int)$row['id']; ?>" class="btn btn-info">Add to Cart</a>
-                <a href="home.php?add_to_cart=<?php echo (int)$row['id']; ?>&buy_now=1" class="btn btn-success">Buy Now</a>
+                 <a href="home.php?add_to_cart=<?php echo (int)$row['id']; ?>&buy_now=1" class="btn btn-success">Buy Now</a>
+              <?php endif; ?>
+               
               </div>
             </div>
           </div>
@@ -266,26 +311,85 @@ document.addEventListener("DOMContentLoaded", function () {
 
     <!-- Sidebar -->
     <div class="col-md-2 bg-secondary p-0">
-        <ul class="navbar-nav text-center">
-            <li class="nav-item bg-info"><a href="#" class="nav-link text-light"><h2>Mobiles</h2></a></li>
-            <li class="nav-item"><a href="apple.php" class="nav-link text-light"><h5>Apple</h5></a></li>
-            <li class="nav-item"><a href="samsung.php" class="nav-link text-light"><h5>Samsung</h5></a></li>
-            <li class="nav-item"><a href="xiaomi.php" class="nav-link text-light"><h5>Xiaomi</h5></a></li>
-            <li class="nav-item"><a href="oneplus.php" class="nav-link text-light"><h5>OnePlus</h5></a></li>
-            <!-- <li class="nav-item"><a href="index1.php" class="nav-link text-light"><h5>Others</h5></a></li> -->
-        </ul>
-        <ul class="navbar-nav text-center">
-            <li class="nav-item bg-info"><a href="#" class="nav-link text-light"><h2>Laptops</h2></a></li>
-            <li class="nav-item"><a href="hp.php" class="nav-link text-light"><h5>HP</h5></a></li>
-            <li class="nav-item"><a href="dell.php" class="nav-link text-light"><h5>DELL</h5></a></li>
-            <li class="nav-item"><a href="macbook.php" class="nav-link text-light"><h5>MacBook</h5></a></li>
-        </ul>
-        <ul class="navbar-nav text-center">
-            <li class="nav-item bg-info"><a href="#" class="nav-link text-light"><h3>Headphones</h3></a></li>
-            <li class="nav-item"><a href="boat.php" class="nav-link text-light"><h5>boAT</h5></a></li>
-            <li class="nav-item"><a href="oneplusbud.php" class="nav-link text-light"><h5>OnePlus</h5></a></li>
-            <li class="nav-item"><a href="boult.php" class="nav-link text-light"><h5>Boult</h5></a></li>
-        </ul>
+      <ul class="navbar-nav text-center">
+    <li class="nav-item bg-info">
+        <a href="#" class="nav-link text-light"><h2>Mobiles</h2></a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $delete_mode ? 'apple.php?delete_mode=1' : 'apple.php'; ?>" class="nav-link text-light">
+            <h5>Apple</h5>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $delete_mode ? 'samsung.php?delete_mode=1' : 'samsung.php'; ?>" class="nav-link text-light">
+            <h5>Samsung</h5>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $delete_mode ? 'xiaomi.php?delete_mode=1' : 'xiaomi.php'; ?>" class="nav-link text-light">
+            <h5>Xiaomi</h5>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $delete_mode ? 'oneplus.php?delete_mode=1' : 'oneplus.php'; ?>" class="nav-link text-light">
+            <h5>OnePlus</h5>
+        </a>
+    </li>
+</ul>
+
+
+<ul class="navbar-nav text-center">
+    <li class="nav-item bg-info">
+        <a href="#" class="nav-link text-light"><h2>Laptops</h2></a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $delete_mode ? 'hp.php?delete_mode=1' : 'hp.php'; ?>" class="nav-link text-light">
+            <h5>HP</h5>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $delete_mode ? 'dell.php?delete_mode=1' : 'dell.php'; ?>" class="nav-link text-light">
+            <h5>DELL</h5>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $delete_mode ? 'macbook.php?delete_mode=1' : 'macbook.php'; ?>" class="nav-link text-light">
+            <h5>MacBook</h5>
+        </a>
+    </li>
+</ul>
+
+
+<ul class="navbar-nav text-center">
+    <li class="nav-item bg-info">
+        <a href="#" class="nav-link text-light"><h3>Headphones</h3></a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $delete_mode ? 'boat.php?delete_mode=1' : 'boat.php'; ?>" class="nav-link text-light">
+            <h5>boAT</h5>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $delete_mode ? 'oneplusbud.php?delete_mode=1' : 'oneplusbud.php'; ?>" class="nav-link text-light">
+            <h5>OnePlus</h5>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $delete_mode ? 'boult.php?delete_mode=1' : 'boult.php'; ?>" class="nav-link text-light">
+            <h5>Boult</h5>
+        </a>
+    </li>
+</ul>
     </div>
 </div>
 
@@ -296,5 +400,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<?php if ($delete_mode): ?>
+<script>
+function getProductCheckboxes() {
+  return document.querySelectorAll('.product-checkbox');
+}
+
+function updateSelectedProducts() {
+  const checkboxes = getProductCheckboxes();
+  const selected = [];
+
+  checkboxes.forEach(cb => {
+    if (cb.checked) {
+      selected.push(cb.value);
+    }
+  });
+
+  document.getElementById('selectedCount').textContent = selected.length;
+  document.getElementById('selected_ids').value = selected.join(',');
+  document.getElementById('deleteSelectedBtn').style.display = selected.length > 0 ? 'inline-block' : 'none';
+}
+
+function toggleAllProducts(state) {
+  const checkboxes = getProductCheckboxes();
+  checkboxes.forEach(cb => cb.checked = state);
+  updateSelectedProducts();
+}
+</script>
+<?php endif; ?>
+
 </body>
 </html>

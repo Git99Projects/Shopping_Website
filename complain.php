@@ -80,6 +80,9 @@ $user_id = $_SESSION['user_id'];
   white-space: nowrap;
   min-width: 90px;
 }
+.hide-id{
+  display: none;
+}
 
   </style>
 </head>
@@ -125,7 +128,7 @@ $user_id = $_SESSION['user_id'];
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <th><i class="fa-solid fa-hashtag"></i> ID</th>
+          <th class="hide-id"><i class="fa-solid fa-hashtag"></i> ID</th>
           <th><i class="fa-solid fa-user"></i> Name</th>
           <th><i class="fa-solid fa-envelope"></i> Email</th>
           <th><i class="fa-solid fa-heading"></i> Subject</th>
@@ -136,7 +139,7 @@ $user_id = $_SESSION['user_id'];
       </thead>
       <tbody>
      <?php
-       $stmt = $conn->prepare("SELECT * FROM complaints WHERE user_id = ? ORDER BY created_at DESC");
+       $stmt = $conn->prepare("SELECT * FROM complaints WHERE user_id = ? AND deleted_by_user = 0 ORDER BY created_at DESC");
        $stmt->bind_param("i", $user_id);
        $stmt->execute();
        $result = $stmt->get_result();
@@ -144,7 +147,7 @@ $user_id = $_SESSION['user_id'];
           while ($row = $result->fetch_assoc()):
       ?>
         <tr>
-           <td><?php echo $row['id']; ?></td>
+           <td class="hide-id"><?php echo $row['id']; ?></td>
            <td><?php echo htmlspecialchars($row['name']); ?></td>
            <td><?php echo htmlspecialchars($row['email']); ?></td>
            <td><?php echo htmlspecialchars($row['subject']); ?></td>

@@ -89,17 +89,41 @@ $itemStmt = $conn->prepare("SELECT * FROM order_items WHERE order_id = ? ORDER B
 <?php if ($orders->num_rows > 0): ?>
   <?php while ($order = $orders->fetch_assoc()): ?>
     <div class="card my-4">
-      <div class="card-header bg-info text-white">
-        <strong>Order ID:</strong> <?php echo (int)$order['id']; ?> |
-        <strong>Order Date:</strong> <?php echo htmlspecialchars($order['created_at']); ?> |
-        <a href="delete_order.php?id=<?php echo (int)$order['id']; ?>" 
-          class="btn btn-danger btn-sm float-end"
-          onclick="return confirm('Are you sure you want to remove this order from your history?');">
-          Delete
-       </a>
-        <strong>Payment:</strong> <?php echo htmlspecialchars($order['payment']); ?>
+    <div class="card-header bg-info text-white">
 
-      </div>
+  <strong>Order ID:</strong> <?php echo (int)$order['id']; ?> |
+
+  <strong>Order Date:</strong> <?php echo htmlspecialchars($order['created_at']); ?> |
+
+  <?php $status = $order['status'] ?? 'Pending'; ?>
+
+  <strong>Status:</strong>
+  <span class="badge bg-<?php
+    echo $status === 'Pending' ? 'warning' :
+         ($status === 'Shipped' ? 'info' :
+         ($status === 'Delivered' ? 'success' : 'danger'));
+  ?>">
+    <?php echo htmlspecialchars($status); ?>
+  </span> |
+
+  <?php if ($status === 'Pending'): ?>
+    <a href="cancel_order.php?id=<?php echo (int)$order['id']; ?>"
+       class="btn btn-warning btn-sm float-end ms-2"
+       onclick="return confirm('Are you sure you want to cancel this order?');">
+       Cancel Order
+    </a>
+
+  <?php elseif ($status === 'Delivered' || $status === 'Cancelled'): ?>
+    <a href="delete_order.php?id=<?php echo (int)$order['id']; ?>"
+       class="btn btn-danger btn-sm float-end ms-2"
+       onclick="return confirm('Are you sure you want to remove this order from your history?');">
+       Delete
+    </a>
+  <?php endif; ?>
+
+  <strong>Payment:</strong> <?php echo htmlspecialchars($order['payment']); ?>
+
+</div>
 
       <div class="card-body">
         <p><strong>Name:</strong> <?php echo htmlspecialchars($order['name']); ?></p>

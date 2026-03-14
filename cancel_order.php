@@ -11,12 +11,11 @@ $user_id = (int)$_SESSION['user_id'];
 $order_id = (int)($_GET['id'] ?? 0);
 
 if ($order_id > 0) {
-    $stmt = $conn->prepare("
-        UPDATE orders
-        SET deleted_by_user = 1,
-            deleted_at = NOW()
-        WHERE id = ? AND user_id = ?
-    ");
+
+    $stmt = $conn->prepare("UPDATE orders 
+                            SET status = 'Cancelled' 
+                            WHERE id = ? AND user_id = ? AND status = 'Pending'");
+
     $stmt->bind_param("ii", $order_id, $user_id);
     $stmt->execute();
     $stmt->close();

@@ -1,6 +1,6 @@
 <?php
+include 'auth_admin.php';
 include 'db.php';
-
 $message = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

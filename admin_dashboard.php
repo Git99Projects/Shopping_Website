@@ -19,16 +19,29 @@ if ($res) $totalComplaints = (int)$res->fetch_assoc()['total'];
 /* ---------- RECENT ORDERS ---------- */
 $recentOrders = [];
 $sqlOrders = "
-  SELECT o.id, o.user_id, o.total, o.payment, o.created_at,o.status,
-         u.first_name, u.last_name, u.email
+  SELECT 
+    o.id,
+    o.user_id,
+    o.total,
+    o.payment,
+    o.created_at,
+    o.status,
+    u.first_name,
+    u.last_name,
+    u.email,
+    COUNT(oi.id) AS product_count
   FROM orders o
   JOIN users u ON u.id = o.user_id
+  LEFT JOIN order_items oi ON oi.order_id = o.id
+  GROUP BY o.id, o.user_id, o.total, o.payment, o.created_at, o.status, u.first_name, u.last_name, u.email
   ORDER BY o.id DESC
   LIMIT 10
 ";
 $res = $conn->query($sqlOrders);
 if ($res) {
-  while ($row = $res->fetch_assoc()) $recentOrders[] = $row;
+  while ($row = $res->fetch_assoc()) {
+    $recentOrders[] = $row;
+  }
 }
 
 /* ---------- RECENT COMPLAINTS ---------- */
@@ -43,10 +56,15 @@ $sqlComplaints = "
 ";
 $res = $conn->query($sqlComplaints);
 if ($res) {
-  while ($row = $res->fetch_assoc()) $recentComplaints[] = $row;
+  while ($row = $res->fetch_assoc()) {
+    $recentComplaints[] = $row;
+  }
 }
 
-function e($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
+function e($s) {
+  return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
+}
+
 function statusBadge($status) {
   $s = strtolower(trim((string)$status));
   return match ($s) {
@@ -71,17 +89,29 @@ function statusBadge($status) {
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
 
   <style>
-    body { background:#f8f9fa; color:#000; }
-
-    .card-custom { 
-      background:#ffffff; 
-      border:1px solid #dee2e6; 
-      border-radius:12px;
+    body {
+      background: #f8f9fa;
+      color: #000;
     }
 
-    .muted { color:#6c757d; }
+    .card-custom {
+      background: #ffffff;
+      border: 1px solid #dee2e6;
+      border-radius: 12px;
+    }
 
-    a { text-decoration:none; }
+    .muted {
+      color: #6c757d;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .modal-body img {
+      border-radius: 8px;
+      object-fit: cover;
+    }
   </style>
 </head>
 <body>
@@ -105,6 +135,14 @@ function statusBadge($status) {
 </nav>
 
 <div class="container py-4">
+
+<?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+  <div class="mb-4 d-flex gap-2 flex-wrap">
+    <a href="insert_products.php" class="btn btn-success">➕ Add Product</a>
+    <a href="home.php?delete_mode=1" class="btn btn-danger">🗑️ Delete Product</a>
+    <a href="restore_products.php" class="btn btn-warning">♻️ Restore Product</a>
+  </div>
+<?php endif; ?>
 
   <!-- Top Stats -->
   <div class="row g-3 mb-4">
@@ -155,7 +193,7 @@ function statusBadge($status) {
       <table class="table table-bordered table-hover align-middle mb-0">
         <thead class="table-light">
           <tr>
-            <th>#Order</th>
+            <th>Products</th>
             <th>User</th>
             <th>Email</th>
             <th>Total</th>
@@ -163,47 +201,67 @@ function statusBadge($status) {
             <th>Status</th>
             <th>Change Status</th>
             <th>Date</th>
+            <th>View Products</th>
           </tr>
         </thead>
         <tbody>
         <?php if (count($recentOrders) === 0): ?>
-         <tr><td colspan="8" class="text-center text-muted">No orders found.</td></tr>
+          <tr>
+            <td colspan="9" class="text-center text-muted">No orders found.</td>
+          </tr>
         <?php else: ?>
           <?php foreach ($recentOrders as $o): ?>
             <tr>
-             <td><?= e($o['id']); ?></td>
-                 <td><?= e(trim(($o['first_name'] ?? '').' '.($o['last_name'] ?? ''))); ?></td>
-                <td><?= e($o['email']); ?></td>
-                 <td>₹<?= e(number_format((float)$o['total'], 2)); ?></td>
-                 <td><?= e($o['payment']); ?></td>
+              <td>
+                <span class="badge bg-dark">
+                  <?= (int)$o['product_count']; ?> item<?= ((int)$o['product_count'] !== 1 ? 's' : ''); ?>
+                </span>
+              </td>
+
+              <td><?= e(trim(($o['first_name'] ?? '') . ' ' . ($o['last_name'] ?? ''))); ?></td>
+              <td><?= e($o['email']); ?></td>
+              <td>₹<?= e(number_format((float)$o['total'], 2)); ?></td>
+              <td><?= e($o['payment']); ?></td>
 
               <td>
-                  <span class="badge bg-<?= e(statusBadge($o['status'] ?? '')); ?>">
+                <span class="badge bg-<?= e(statusBadge($o['status'] ?? '')); ?>">
                   <?= e($o['status'] ?? 'Pending'); ?>
-                     </span>
-                </td>
+                </span>
+              </td>
 
-                  <td style="min-width:180px;">
-                      <form method="POST" action="update_order_status.php" class="d-flex gap-2">
-                     <input type="hidden" name="order_id" value="<?= (int)$o['id']; ?>">
+              <td style="min-width:180px;">
+                <form method="POST" action="update_order_status.php" class="d-flex gap-2">
+                  <input type="hidden" name="order_id" value="<?= (int)$o['id']; ?>">
 
-                     <select name="status" class="form-select form-select-sm">
-                 <?php
-                      $current = (string)($o['status'] ?? 'Pending');
-                      $opts = ['Pending','Shipped','Delivered','Cancelled'];
-                       foreach ($opts as $st):
+                  <select name="status" class="form-select form-select-sm">
+                    <?php
+                    $current = (string)($o['status'] ?? 'Pending');
+                    $opts = ['Pending', 'Shipped', 'Delivered', 'Cancelled'];
+                    foreach ($opts as $st):
                     ?>
                       <option value="<?= e($st); ?>" <?= ($current === $st ? 'selected' : ''); ?>>
-                      <?= e($st); ?>
-                   </option>
-                 <?php endforeach; ?>
-                   </select>
+                        <?= e($st); ?>
+                      </option>
+                    <?php endforeach; ?>
+                  </select>
 
                   <button type="submit" class="btn btn-sm btn-primary">Update</button>
-                    </form>
-                    </td>
+                </form>
+              </td>
 
-                    <td><?= e($o['created_at']); ?></td>
+              <td><?= e($o['created_at']); ?></td>
+
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-info text-white view-products-btn"
+                  data-order-id="<?= (int)$o['id']; ?>"
+                  data-bs-toggle="modal"
+                  data-bs-target="#orderProductsModal"
+                >
+                  View
+                </button>
+              </td>
             </tr>
           <?php endforeach; ?>
         <?php endif; ?>
@@ -232,12 +290,14 @@ function statusBadge($status) {
         </thead>
         <tbody>
         <?php if (count($recentComplaints) === 0): ?>
-          <tr><td colspan="6" class="text-center text-muted">No complaints found.</td></tr>
+          <tr>
+            <td colspan="6" class="text-center text-muted">No complaints found.</td>
+          </tr>
         <?php else: ?>
           <?php foreach ($recentComplaints as $c): ?>
             <tr>
               <td><?= e($c['id']); ?></td>
-              <td><?= e(trim(($c['first_name'] ?? 'Guest').' '.($c['last_name'] ?? ''))); ?></td>
+              <td><?= e(trim(($c['first_name'] ?? 'Guest') . ' ' . ($c['last_name'] ?? ''))); ?></td>
               <td><?= e($c['email'] ?? ''); ?></td>
               <td><?= e($c['subject']); ?></td>
               <td><?= e(mb_strimwidth($c['message'], 0, 80, '...')); ?></td>
@@ -252,6 +312,57 @@ function statusBadge($status) {
 
 </div>
 
+<!-- Order Products Modal -->
+<div class="modal fade" id="orderProductsModal" tabindex="-1" aria-labelledby="orderProductsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ordered Products</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="orderProductsModalBody">
+        <div class="text-center py-4">
+          <div class="spinner-border text-primary" role="status"></div>
+          <div class="mt-2">Loading products...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const modalBody = document.getElementById("orderProductsModalBody");
+  const buttons = document.querySelectorAll(".view-products-btn");
+
+  buttons.forEach(button => {
+    button.addEventListener("click", function () {
+      const orderId = this.getAttribute("data-order-id");
+
+      modalBody.innerHTML = `
+        <div class="text-center py-4">
+          <div class="spinner-border text-primary" role="status"></div>
+          <div class="mt-2">Loading products...</div>
+        </div>
+      `;
+
+      fetch("get_order_products.php?order_id=" + encodeURIComponent(orderId))
+        .then(response => response.text())
+        .then(html => {
+          modalBody.innerHTML = html;
+        })
+        .catch(error => {
+          modalBody.innerHTML = `
+            <div class="alert alert-danger">Failed to load ordered products.</div>
+          `;
+          console.error(error);
+        });
+    });
+  });
+});
+</script>
+
 </body>
 </html>
