@@ -1,4 +1,5 @@
 <?php
+include 'auth_admin.php';
 include 'db.php';
 
 $message = '';

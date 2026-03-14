@@ -1,26 +1,63 @@
 <?php
 session_start();
-if(!isset($_SESSION['user_email'])){
+include 'db.php';
+
+if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
+$user_id = (int)$_SESSION['user_id'];
 
-// Redirect if cart is empty
-if (empty($_SESSION['cart'])) {
-  header("Location: cart.php");
-  exit();
+/* USER-WISE cart */
+$cart = $_SESSION['cart'][$user_id] ?? [];
+
+/* USER-WISE delivery fees */
+if (!isset($_SESSION['delivery_fees']) || !is_array($_SESSION['delivery_fees'])) {
+    $_SESSION['delivery_fees'] = [];
+}
+if (!isset($_SESSION['delivery_fees'][$user_id]) || !is_array($_SESSION['delivery_fees'][$user_id])) {
+    $_SESSION['delivery_fees'][$user_id] = [];
+}
+$delivery_fees = &$_SESSION['delivery_fees'][$user_id];
+
+/* Get selected cart items from cart.php */
+$selected_items = $_POST['selected_items'] ?? [];
+
+/* Redirect if cart empty */
+if (empty($cart)) {
+    header("Location: cart.php");
+    exit();
 }
 
-// Ensure delivery fees are set
-if (!isset($_SESSION['delivery_fees'])) {
-  $_SESSION['delivery_fees'] = [];
+/* Redirect if nothing selected */
+if (empty($selected_items) || !is_array($selected_items)) {
+    header("Location: cart.php");
+    exit();
 }
-foreach ($_SESSION['cart'] as $id => $item) {
-  if (!isset($_SESSION['delivery_fees'][$id]) || $_SESSION['delivery_fees'][$id] <= 0) {
-    $_SESSION['delivery_fees'][$id] = rand(10, 100);
-  }
+
+/* Build selected checkout items only */
+$checkout_items = [];
+
+foreach ($selected_items as $id) {
+    if (isset($cart[$id])) {
+        $checkout_items[$id] = $cart[$id];
+
+        if (!isset($delivery_fees[$id]) || $delivery_fees[$id] <= 0) {
+            $delivery_fees[$id] = rand(10, 100);
+        }
+    }
 }
+
+/* Redirect if invalid selection */
+if (empty($checkout_items)) {
+    header("Location: cart.php");
+    exit();
+}
+
+/* Save selected checkout items temporarily for place_order.php */
+$_SESSION['checkout_items'][$user_id] = $checkout_items;
+$_SESSION['checkout_type'][$user_id] = 'cart';
 ?>
 
 <!DOCTYPE html>
@@ -31,105 +68,106 @@ foreach ($_SESSION['cart'] as $id => $item) {
   <title>Checkout</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-  body {
-    background:rgb(60, 205, 47);
-    font-family: 'Segoe UI', sans-serif;
-  }
+    body {
+      background: rgb(60, 205, 47);
+      font-family: 'Segoe UI', sans-serif;
+    }
 
-  .container {
-    background: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  }
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
 
-  h2, h3, h4 {
-    font-weight: bold;
-    color: #343a40;
-  }
+    h2, h3, h4 {
+      font-weight: bold;
+      color: #343a40;
+    }
 
-  .list-group-item {
-    background-color: #fff;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-  }
+    .list-group-item {
+      background-color: #fff;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    }
 
-  .form-control {
-    border-radius: 8px;
-    border: 1px solidrgb(233, 242, 250);
-    box-shadow: none;
-  }
+    .form-control {
+      border-radius: 8px;
+      border: 1px solid rgb(233, 242, 250);
+      box-shadow: none;
+    }
 
-  .form-control:focus {
-    border-color: #80bdff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
-  }
+    .form-control:focus {
+      border-color: #80bdff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+    }
 
-  label {
-    font-weight: 500;
-    margin-bottom: 5px;
-  }
+    label {
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
 
-  textarea.form-control {
-    resize: none;
-  }
+    textarea.form-control {
+      resize: none;
+    }
 
-  .btn-success {
-    background-color: #198754;
-    border: none;
-    font-weight: bold;
-  }
+    .btn-success {
+      background-color: #198754;
+      border: none;
+      font-weight: bold;
+    }
 
-  .btn-success:hover {
-    background-color: #157347;
-  }
+    .btn-success:hover {
+      background-color: #157347;
+    }
 
-  .btn-warning {
-    border: none;
-  }
+    .btn-warning {
+      border: none;
+    }
 
-  .alert-success {
-    border-radius: 10px;
-    background-color: #d4edda;
-    border: 1px solid #c3e6cb;
-    color: #155724;
-  }
-</style>
-
+    .alert-success {
+      border-radius: 10px;
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+    }
+  </style>
 </head>
 <body>
-  
+
 <div class="container mt-4">
-<a href="cart.php" class="btn btn-secondary">⬅️ Back</a>
+  <a href="cart.php" class="btn btn-secondary">⬅️ Back</a>
   <h2 align="center">🛍 Proceed to Buy</h2>
 
   <?php
     $grand_total = 0;
     echo '<ul class="list-group mb-3">';
-    foreach ($_SESSION['cart'] as $id => $item) {
-      $price = $item['price'];
-      $qty = $item['quantity'];
-      $delivery = $_SESSION['delivery_fees'][$id];
-      $subtotal = ($price * $qty) + $delivery;
-      $grand_total += $subtotal;
 
-      echo '<li class="list-group-item d-flex justify-content-between align-items-center">';
-      echo htmlspecialchars($item['name']) . " (Qty: $qty)";
-      echo "<span>₹" . number_format($price * $qty) . " + ₹" . number_format($delivery) . " delivery</span>";
-      echo '</li>';
+    foreach ($checkout_items as $id => $item) {
+        $price = (float)($item['price'] ?? 0);
+        $qty = (int)($item['quantity'] ?? 1);
+        $delivery = (float)($delivery_fees[$id] ?? 0);
+        $subtotal = ($price * $qty) + $delivery;
+        $grand_total += $subtotal;
+
+        echo '<li class="list-group-item d-flex justify-content-between align-items-center">';
+        echo htmlspecialchars($item['name']) . " (Qty: $qty)";
+        echo "<span>₹" . number_format($price * $qty, 2) . " + ₹" . number_format($delivery, 2) . " delivery</span>";
+        echo '</li>';
     }
+
     echo '</ul>';
   ?>
 
-  <h4 class="text-success">Total Payable: ₹<?php echo number_format($grand_total); ?></h4>
+  <h4 class="text-success">Total Payable: ₹<?php echo number_format($grand_total, 2); ?></h4>
 
   <h3 class="mt-4">🧾 Customer Information</h3>
   <form action="place_order.php" method="POST">
 
-    <?php if (!empty($_SESSION['user_info'])): ?>
-      <?php $u = $_SESSION['user_info']; ?>
+    <?php if (!empty($_SESSION['user_info'][$user_id])): ?>
+      <?php $u = $_SESSION['user_info'][$user_id]; ?>
       <div class="alert alert-success">
         <strong>Welcome back <?php echo htmlspecialchars($u['name']); ?>!</strong><br>
         Address already saved:
