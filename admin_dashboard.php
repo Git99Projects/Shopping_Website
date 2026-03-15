@@ -89,19 +89,114 @@ function statusBadge($status) {
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
 
   <style>
-    body {
-      background: #f8f9fa;
-      color: #000;
-    }
+    body{
+background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+min-height:100vh;
+color:white;
+}
+.navbar{
+background:linear-gradient(45deg,#141e30,#243b55);
+border-bottom:1px solid rgba(255,255,255,0.1);
+}
 
-    .card-custom {
-      background: #ffffff;
-      border: 1px solid #dee2e6;
-      border-radius: 12px;
-    }
+.navbar-brand{
+color:#00d4ff !important;
+font-size:20px;
+letter-spacing:1px;
+}
 
+    .card-custom{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.2);
+border-radius:16px;
+box-shadow:
+0 10px 30px rgba(0,0,0,0.4);
+
+transition:0.3s;
+}
+
+.card-custom:hover{
+transform:translateY(-6px);
+box-shadow:
+0 15px 40px rgba(0,0,0,0.6),
+0 0 15px rgba(0,212,255,0.5);
+}
+.fa-users{
+color:#00d4ff;
+}
+
+.fa-bag-shopping{
+color:#00ff9c;
+}
+
+.fa-triangle-exclamation{
+color:#ff4d6d;
+}
+.table{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+color:white;
+border-radius:12px;
+overflow:hidden;
+}
+
+.table td,
+.table th{
+border-color:rgba(255,255,255,0.1);
+border:none !important;
+}
+.table thead{
+background:rgba(255,255,255,0.1);
+color:white;
+font-weight:600;
+
+}
+.table-hover tbody tr{
+transition:0.2s;
+border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.table-hover tbody tr:hover{
+background:rgba(0,212,255,0.15);
+transition:0.2s;
+transform:none;
+box-shadow:none;
+}
+.table-bordered{
+border:none;
+}
+
+/* table cells dark background */
+.table tbody td{
+background:rgba(186, 179, 179, 0.35);
+color:white;
+}
+
+/* hover par thoda glow */
+.table tbody tr:hover td{
+background:rgba(97, 82, 82, 0.55);
+}
+.btn{
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.05);
+box-shadow:0 0 12px rgba(0,212,255,0.6);
+}
+.card-custom h5{
+color:white;
+}
+.card-custom .fs-2{
+color:#ffffff;
+font-weight:700;
+
+text-shadow:
+0 0 5px rgba(0,212,255,0.7),
+0 0 10px rgba(0,212,255,0.5);
+}
     .muted {
-      color: #6c757d;
+      color:white;;
     }
 
     a {
@@ -112,6 +207,63 @@ function statusBadge($status) {
       border-radius: 8px;
       object-fit: cover;
     }
+
+.modal-content{
+background:#1e2a38;
+color:white;
+border-radius:12px;
+}
+
+.modal-body{
+background:#1e2a38;
+color:white;
+font-weight:500;
+}
+.modal-body table{
+color:white;
+background:rgba(255,255,255,0.05);
+}
+
+.modal-body table th{
+background:rgba(0,212,255,0.15);
+color:white;
+}
+
+.modal-body table td{
+color:white !important;
+}
+/* Product name / price text */
+.modal-body p,
+.modal-body span{
+color:white;
+}
+
+#orderProductsModalBody *{
+color:white !important;
+background-color:transparent !important;
+}
+
+.hide-id{
+display:none;
+}
+/* Premium index badge */
+.index-box{
+display:inline-block;
+min-width:32px;
+padding:4px 8px;
+border-radius:8px;
+
+background:rgba(89, 93, 95, 0.43);
+color:white;
+font-weight:800;
+text-align:center;
+
+box-shadow:
+0 0 8px rgba(0,212,255,0.6),
+0 0 15px rgba(0,114,255,0.4);
+
+font-size:13px;
+}
   </style>
 </head>
 <body>
@@ -190,9 +342,10 @@ function statusBadge($status) {
     </div>
 
     <div class="table-responsive">
-      <table class="table table-bordered table-hover align-middle mb-0">
+      <table class="table table-bordered table-hover align-middle mb-0 ">
         <thead class="table-light">
           <tr>
+            <th>No.</th>
             <th>Products</th>
             <th>User</th>
             <th>Email</th>
@@ -210,8 +363,9 @@ function statusBadge($status) {
             <td colspan="9" class="text-center text-muted">No orders found.</td>
           </tr>
         <?php else: ?>
-          <?php foreach ($recentOrders as $o): ?>
+          <?php $i = 1; foreach ($recentOrders as $o): ?>
             <tr>
+              <td><span class="index-box"><?= $i++; ?></span></td>
               <td>
                 <span class="badge bg-dark">
                   <?= (int)$o['product_count']; ?> item<?= ((int)$o['product_count'] !== 1 ? 's' : ''); ?>
@@ -277,10 +431,11 @@ function statusBadge($status) {
     </div>
 
     <div class="table-responsive">
-      <table class="table table-bordered table-hover align-middle mb-0">
+      <table class="table table-bordered table-hover align-middle mb-0 complaints-table">
         <thead class="table-light">
           <tr>
-            <th>#</th>
+            <th>No.</th>
+            <th class="hide-id">#</th>
             <th>User</th>
             <th>Email</th>
             <th>Subject</th>
@@ -294,9 +449,10 @@ function statusBadge($status) {
             <td colspan="6" class="text-center text-muted">No complaints found.</td>
           </tr>
         <?php else: ?>
-          <?php foreach ($recentComplaints as $c): ?>
+          <?php $j = 1; foreach ($recentComplaints as $c): ?>
             <tr>
-              <td><?= e($c['id']); ?></td>
+              <td><span class="index-box"><?= $j++; ?></span></td>
+              <td class="hide-id"><?= e($c['id']); ?></td>
               <td><?= e(trim(($c['first_name'] ?? 'Guest') . ' ' . ($c['last_name'] ?? ''))); ?></td>
               <td><?= e($c['email'] ?? ''); ?></td>
               <td><?= e($c['subject']); ?></td>
