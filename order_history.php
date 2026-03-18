@@ -84,6 +84,8 @@ $itemStmt = $conn->prepare("SELECT * FROM order_items WHERE order_id = ? ORDER B
 </head>
 <body>
 <div class="container mt-5">
+    <a href="home.php" class="btn btn-primary">⬅️ Back</a>
+
   <h2>📦 Your Order History</h2>
 
 <?php if ($orders->num_rows > 0): ?>
@@ -192,7 +194,6 @@ $itemStmt = $conn->prepare("SELECT * FROM order_items WHERE order_id = ? ORDER B
 <?php $itemStmt->close(); ?>
 
 
-  <a href="home.php" class="btn btn-primary">⬅️ Back to Shop</a>
 </div>
 </body>
 </html>
