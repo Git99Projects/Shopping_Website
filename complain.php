@@ -99,9 +99,9 @@ $user_id = $_SESSION['user_id'];
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active" href="home.php">🏠 Home</a>
-        <a class="nav-link active" href="cart.php">🛒 Cart</a>
-        <a class="nav-link active" href="contact.php">📞 Contact</a>
+        <a class="nav-link btn btn-warning text-white px-3 ms-2" href="home.php">🏠 Home</a>
+        <a class="nav-link btn btn-warning text-white px-3 ms-2" href="cart.php">🛒 Cart</a>
+        <a class="nav-link btn btn-warning text-white px-3 ms-2" href="contact.php">📞 Contact</a>
         <a class="nav-link btn btn-warning text-white px-3 ms-2" href="complain.php">📮 Complain List</a>
       </div>
     </div>
