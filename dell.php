@@ -416,7 +416,34 @@ background: rgba(255,255,255,0.15);
     }
 
 }
+/* 🔥 Big Premium Checkbox */
+.product-checkbox{
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  accent-color: #00c6ff;
+  transform: scale(1.3);
+}
 
+/* Checkbox container */
+.checkbox-box{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+/* Card clickable effect */
+.product-card{
+  position: relative;
+  cursor: pointer;
+}
+
+/* Selected effect */
+.product-card.selected{
+  border: 2px solid #00c6ff !important;
+  box-shadow: 0 0 20px rgba(0,198,255,0.7);
+}
     </style>
 </head>
 <body>
@@ -461,7 +488,7 @@ background: rgba(255,255,255,0.15);
       <!-- Left Links -->
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link nav-glow" href="home.php">Home</a>
+          <a class="nav-link nav-glow" href="<?php echo $delete_mode ? 'dell.php?delete_mode=1' : 'dell.php'; ?>">Home</a>
         </li>
         <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
           <li class="nav-item"><a class="nav-link nav-glow" href="admin_dashboard.php">Admin</a></li>
@@ -539,7 +566,7 @@ background: rgba(255,255,255,0.15);
   </button>
 
   <ul class="dropdown-menu dropdown-glass">
-    <li><a class="dropdown-item nav-glow" href="home.php">Home</a></li>
+    <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'dell.php?delete_mode=1' : 'dell.php'; ?>">Home</a></li>
     <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
          <li><a class="dropdown-item nav-glow" href="admin_dashboard.php">Admin</a></li>
          <?php endif; ?>
@@ -615,10 +642,10 @@ if ($user_id && isset($_SESSION['cart'][$user_id])) {
           Mobiles
         </a>
         <ul class="dropdown-menu dropdown-glass">
-          <li><a class="dropdown-item nav-glow" href="apple.php">Apple</a></li>
-          <li><a class="dropdown-item nav-glow" href="samsung.php">Samsung</a></li>
-          <li><a class="dropdown-item nav-glow" href="xiaomi.php">Xiaomi</a></li>
-          <li><a class="dropdown-item nav-glow" href="oneplus.php">OnePlus</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'apple.php?delete_mode=1' : 'apple.php'; ?>">Apple</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'samsung.php?delete_mode=1' : 'samsung.php'; ?>">Samsung</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'xiaomi.php?delete_mode=1' : 'xiaomi.php'; ?>">Xiaomi</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'oneplus.php?delete_mode=1' : 'oneplus.php'; ?>">OnePlus</a></li>
           
         </ul>
       </li>
@@ -632,9 +659,9 @@ if ($user_id && isset($_SESSION['cart'][$user_id])) {
           Laptops
         </a>
         <ul class="dropdown-menu dropdown-glass">
-          <li><a class="dropdown-item nav-glow" href="hp.php">HP</a></li>
-          <li><a class="dropdown-item nav-glow" href="dell.php">Dell</a></li>
-          <li><a class="dropdown-item nav-glow" href="macbook.php">MacBook</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'hp.php?delete_mode=1' : 'hp.php'; ?>">HP</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'dell.php?delete_mode=1' : 'dell.php'; ?>">Dell</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'macbook.php?delete_mode=1' : 'macbook.php'; ?>">MacBook</a></li>
       
         </ul>
       </li>
@@ -648,9 +675,9 @@ if ($user_id && isset($_SESSION['cart'][$user_id])) {
           Headphones
         </a>
         <ul class="dropdown-menu dropdown-glass">
-          <li><a class="dropdown-item nav-glow" href="boat.php">boAT</a></li>
-          <li><a class="dropdown-item nav-glow" href="oneplus.php">OnePlus</a></li>
-          <li><a class="dropdown-item nav-glow" href="boult.php">Boult</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'boat.php?delete_mode=1' : 'boat.php'; ?>">boAT</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'oneplus.php?delete_mode=1' : 'oneplus.php'; ?>">OnePlus</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'boult.php?delete_mode=1' : 'boult.php'; ?>">Boult</a></li>
       
         </ul>
       </li>
@@ -709,7 +736,7 @@ if ($user_id && isset($_SESSION['cart'][$user_id])) {
             <div class="card h-100 product-card <?php if ($highlight_id == $row['id']) echo 'border border-warning border-3'; ?>">
 
                     <?php if ($delete_mode): ?>
-                      <div class="text-end p-2">
+                      <div class="checkbox-box">
                         <input type="checkbox"
                                class="product-checkbox"
                                value="<?php echo (int)$row['id']; ?>"

@@ -66,7 +66,7 @@ exit();
   justify-content:center;
   align-items:center;
   color:white;
-  overflow:hidden;
+  overflow-x:hidden;
 }
 /* Background video */
 .video-bg{
@@ -289,6 +289,87 @@ width:38px;
 height:38px;
 object-fit:contain;
 }
+/* ========================= */
+/* GLOBAL FIX */
+/* ========================= */
+body {
+  overflow-x: hidden; /* horizontal scroll band */
+}
+
+/* ========================= */
+/* 📱 MOBILE VIEW (0–576px) */
+/* ========================= */
+@media (max-width: 576px) {
+
+  body {
+    align-items: flex-start;   /* center ki jagah top se start */
+    padding-top: 40px;
+    overflow-y: auto;          /* scroll allow */
+  }
+
+  .form-box {
+    width: 90%;
+    padding: 20px;
+    border-radius: 15px;
+  }
+
+  .login-title {
+    font-size: 22px;
+  }
+
+  .form-control {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .btn-light {
+    width: 100%;
+  }
+
+  /* social icons small */
+  .social-icons {
+    gap: 15px;
+  }
+
+  .social-icons a {
+    width: 40px;
+    height: 40px;
+  }
+
+  .social-img {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+/* ========================= */
+/* 📱 TABLET VIEW (577–991px) */
+/* ========================= */
+@media (min-width: 577px) and (max-width: 991px) {
+
+  .form-box {
+    max-width: 500px;
+    padding: 30px;
+  }
+
+  .login-title {
+    font-size: 24px;
+  }
+}
+
+/* ========================= */
+/* 💻 LAPTOP VIEW (992px+) */
+/* ========================= */
+@media (min-width: 992px) {
+
+  .form-box {
+    max-width: 420px; /* perfect login size */
+  }
+
+  .login-title {
+    font-size: 28px;
+  }
+}
   </style>
 </head>
 <body>
@@ -311,10 +392,6 @@ object-fit:contain;
       <form action="login.php" method="POST">
         <div class="text-center mb-3">
           <p  class="login-title">Login </p>
-          <!-- <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-facebook-f"></i></button>
-          <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-google"></i></button>
-          <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-twitter"></i></button>
-          <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-github"></i></button> -->
         </div>
 
         <!-- <p class="text-center">or:</p> -->
@@ -369,52 +446,7 @@ Remember me
         </div>
       </form>
     </div>
-
-    <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-      <form>
-        <div class="text-center mb-3">
-          <p>Sign up with:</p>
-          <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-facebook-f"></i></button>
-          <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-google"></i></button>
-          <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-twitter"></i></button>
-          <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-github"></i></button>
-        </div>
-
-        <p class="text-center">or:</p>
-
-        <div class="form-outline mb-4">
-          <input type="text" id="registerName" class="form-control" required />
-          <label class="form-label" for="registerName">Name</label>
-        </div>
-
-        <div class="form-outline mb-4">
-          <input type="text" id="registerUsername" class="form-control" required />
-          <label class="form-label" for="registerUsername">Username</label>
-        </div>
-
-        <div class="form-outline mb-4">
-          <input type="email" id="registerEmail" class="form-control" required />
-          <label class="form-label" for="registerEmail">Email</label>
-        </div>
-
-        <div class="form-outline mb-4">
-          <input type="password" id="registerPassword" class="form-control" required />
-          <label class="form-label" for="registerPassword">Password</label>
-        </div>
-
-        <div class="form-outline mb-4">
-          <input type="password" id="registerRepeatPassword" class="form-control" required />
-          <label class="form-label" for="registerRepeatPassword">Repeat password</label>
-        </div>
-
-        <div class="form-check d-flex justify-content-center mb-4">
-          <input class="form-check-input me-2" type="checkbox" id="registerCheck" required />
-          <label class="form-check-label" for="registerCheck">
-            I have read and agree to the terms
-          </label>
-        </div>
-
-        <button type="submit" class="btn btn-light btn-block mb-3">Sign up</button>
+        
       </form>
     </div>
   </div>

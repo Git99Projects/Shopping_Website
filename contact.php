@@ -191,66 +191,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       width: 40px;
       margin-right: 10px;
     }
+/* All main buttons smooth effect */
+.btn {
+  transition: all 0.3s ease;
+}
 
+/* Continue Shopping (secondary) */
+.btn-secondary:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(0,198,255,0.7);
+}
+
+/* Proceed to Buy (success) */
+.btn-success:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(0,255,100,0.7);
+}
     
-    /* body {
-      background: linear-gradient(135deg, rgb(17, 45, 201), rgb(37, 180, 32));
-      font-family: 'Segoe UI', sans-serif;
-    }
-
-    
-
-    .contact-wrapper {
-      max-width: 800px;
-      margin: 20px auto;
-      background: white;
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    }
-
-    .contact-wrapper h2 {
-      color: #232f3e;
-      font-weight: bold;
-    }
-
-    .form-label i {
-      color: #007185;
-      margin-right: 8px;
-    }
-
-    .btn-submit {
-      background-color: #ff9900;
-      color: white;
-      font-weight: bold;
-      border: none;
-    }
-
-    .btn-submit:hover {
-      background-color: #e68a00;
-    }
-
-    .form-control:focus {
-      border-color: #007185;
-      box-shadow: 0 0 0 0.2rem rgba(0, 113, 133, 0.25);
-    }
-
-    .contact-info {
-      font-size: 14px;
-      margin-top: 20px;
-      color: #444;
-    }
-
-    .alert {
-      font-size: 16px;
-    }
-
-    @media (max-width: 768px) {
-      .contact-wrapper {
-        margin: 20px;
-        padding: 25px;
-      }
-    } */
   </style>
 </head>
 <body>
@@ -266,9 +223,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
       <div class="navbar-nav ">
-        <a class="nav-link active" href="home.php">🏠 Home</a>
-        <a class="nav-link active" href="cart.php">🛒 Cart</a>
-        <a class="nav-link active" href="contact.php">📞 Contact</a>
+        <a class="nav-link btn btn-warning text-white px-3 ms-2" href="home.php">🏠 Home</a>
+        <a class="nav-link btn btn-warning text-white px-3 ms-2" href="cart.php">🛒 Cart</a>
+        <a class="nav-link btn btn-warning text-white px-3 ms-2" href="contact.php">📞 Contact</a>
         <a class="nav-link btn btn-warning text-white px-3 ms-2" href="complain.php">📮 Complain List</a>
       </div>
     </div>
