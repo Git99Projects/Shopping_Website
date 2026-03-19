@@ -44,108 +44,196 @@ foreach ($cart as $id => $item) {
 
   <style>
     body {
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-position: center center;
-      background-color: rgb(208, 216, 211);
-      background: linear-gradient(135deg, rgb(17, 45, 201), rgb(37, 180, 32));
-      font-family: 'Segoe UI', sans-serif;
-      image-rendering: auto;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: 'Segoe UI', sans-serif;
+}
 
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.3);
-      z-index: -1;
-    }
+/* Glass Container */
+.container-box {
+  max-width: 1100px;
+  margin: auto;
+  padding: 30px;
+  border-radius: 20px;
 
-    h2 {
-      font-weight: bold;
-      color: #343a40;
-    }
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(15px);
 
-    table {
-      background: rgb(249, 242, 189);
-      box-shadow: 0 0 10px rgba(78, 78, 78, 0.05);
-      border-radius: 10px;
-      overflow: hidden;
-    }
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
 
-    th, td {
-      vertical-align: middle !important;
-      text-align: center;
-    }
+  color: white;
+}
 
-    img {
-      border-radius: 8px;
-      object-fit: cover;
-    }
+/* Heading */
+.cart-title {
+  color: white;
+  font-weight: 700;
+}
 
-    .btn-danger {
-      background-color: rgb(234, 21, 42);
-      border: none;
-    }
+/* Table */
+.table {
+  color: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
 
-    .btn-danger:hover {
-      background-color: #c82333;
-    }
+.table thead {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+}
 
-    .btn-success {
-      background-color: rgb(24, 138, 85);
-      border: none;
-    }
+.table tbody tr {
+  background: rgba(255,255,255,0.05);
+  transition: 0.3s;
+}
 
-    .btn-success:hover {
-      background-color: rgb(18, 100, 62);
-    }
+.table tbody tr:hover {
+  background: rgba(0,198,255,0.15);
+  
+}
 
-    .btn-secondary {
-      background-color: rgb(9, 134, 243);
-      border: none;
-    }
+/* Table cells */
+.table td, .table th {
+  border-color: rgba(255,255,255,0.1);
+}
 
-    .btn-secondary:hover {
-      background-color: rgb(48, 84, 110);
-    }
+/* Image */
+img {
+  border-radius: 8px;
+  transition: 0.3s;
+}
 
-    .alert {
-      font-size: 18px;
-      background-color: #fff3cd;
-      color: #856404;
-      border: 1px solid #ffeeba;
-      border-radius: 8px;
-    }
+img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(0,198,255,0.6);
+}
 
-    .container-box {
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(13, 13, 13, 0.1);
-    }
+/* Buttons */
+.btn-danger {
+  background: linear-gradient(135deg, #ff4d4d, #cc0000);
+  border: none;
+  border-radius: 20px;
+  transition: 0.3s;
+}
 
-    a {
-      text-decoration: none;
-    }
+.btn-danger:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255,0,0,0.7);
+}
 
-    .cart-title {
-      text-align: center;
-    }
+.btn-success {
+  background: linear-gradient(135deg, #00c851, #007e33);
+  border: none;
+  border-radius: 20px;
+}
 
-    .table-responsive {
-      overflow-x: auto;
-    }
+.btn-secondary {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  border: none;
+  border-radius: 20px;
+}
 
-    .select-col {
-      width: 60px;
-    }
+/* Alert */
+.alert {
+  background: rgba(255,255,0,0.1);
+  border-left: 4px solid yellow;
+  color: #fff;
+}
+
+/* ========================= */
+/* 📱 MOBILE VIEW */
+/* ========================= */
+@media (max-width: 576px) {
+
+  .container-box {
+    padding: 15px;
+  }
+
+  .cart-title {
+    font-size: 20px;
+  }
+
+  /* Table → Card style */
+  .table thead {
+    display: none;
+  }
+
+  .table, .table tbody, .table tr, .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .table td {
+    padding-left: 50%;
+    position: relative;
+    font-size: 13px;
+  }
+
+  .table td::before {
+    position: absolute;
+    left: 10px;
+    width: 45%;
+    font-weight: bold;
+    color: #00e5ff;
+  }
+
+  .table td:nth-child(2)::before { content: "Image"; }
+  .table td:nth-child(3)::before { content: "Product"; }
+  .table td:nth-child(4)::before { content: "Price"; }
+  .table td:nth-child(5)::before { content: "Qty"; }
+  .table td:nth-child(6)::before { content: "Delivery"; }
+  .table td:nth-child(7)::before { content: "Total"; }
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .btn {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .d-flex {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* ========================= */
+/* 💻 LAPTOP VIEW */
+/* ========================= */
+@media (min-width: 992px) {
+  .container-box {
+    max-width: 1200px;
+  }
+}
+input[type="checkbox"] {
+  transform: scale(1.2);
+  accent-color: #00c6ff;
+}
+/* All main buttons smooth effect */
+.btn {
+  transition: all 0.3s ease;
+}
+
+/* Continue Shopping (secondary) */
+.btn-secondary:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(0,198,255,0.7);
+}
+
+/* Proceed to Buy (success) */
+.btn-success:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(0,255,100,0.7);
+}
   </style>
 </head>
 <body>
@@ -223,7 +311,7 @@ foreach ($cart as $id => $item) {
 
         <div class="d-flex justify-content-between mt-3">
           <a href="home.php" class="btn btn-secondary">⬅️ Continue Shopping</a>
-          <button type="submit" class="btn btn-success">✅ Proceed to Buy Selected</button>
+          <button type="submit" class="btn btn-success">✅ Proceed to Buy </button>
         </div>
       </form>
     <?php else: ?>

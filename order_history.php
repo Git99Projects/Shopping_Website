@@ -26,75 +26,220 @@ $itemStmt = $conn->prepare("SELECT * FROM order_items WHERE order_id = ? ORDER B
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      background-color:rgb(24, 73, 148);
-      font-family: 'Segoe UI', sans-serif;
-    }
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: 'Segoe UI', sans-serif;
+}
 
-    .container {
-      background: #fff;
-      padding: 30px;
-      margin-top: 40px;
-      margin-bottom: 40px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
+/* 🔥 Glass Container */
+.container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 20px;
 
-    h2 {
-      font-weight: bold;
-      color: #343a40;
-      margin-bottom: 30px;
-    }
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
 
-    .card {
-      border-radius: 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-    }
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
 
-    .card-header {
-      font-size: 16px;
-    }
+  color: white;
+}
 
-    .table th, .table td {
-      vertical-align: middle;
-      text-align: center;
-    }
+/* Heading */
+h2 {
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+}
 
-    .btn-primary {
-      background-color: #007bff;
-      border: none;
-      font-weight: 500;
-    }
+/* 🔥 Order Card */
+.card {
+  border-radius: 15px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  transition: 0.3s;
+}
 
-    .btn-primary:hover {
-      background-color: #0069d9;
-    }
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+}
 
-    .alert {
-      font-size: 18px;
-      background-color: #fff3cd;
-      color: #856404;
-      border: 1px solid #ffeeba;
-      border-radius: 8px;
-    }
+/* Header */
+.card-header {
+  background: linear-gradient(135deg, #00c6ff, #0072ff) !important;
+  color: white;
+  font-weight: 500;
+  border-radius: 15px 15px 0 0;
+}
 
-    img {
-      border-radius: 8px;
-    }
+/* Table */
+.table {
+  color: white;
+}
+
+.table thead {
+  background: rgba(255,255,255,0.1);
+}
+
+.table td, .table th {
+  border-color: rgba(255,255,255,0.1);
+}
+
+/* Table hover */
+.table tbody tr:hover {
+  background: rgba(0,198,255,0.15);
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  border: none;
+  border-radius: 20px;
+}
+
+.btn-warning {
+  border-radius: 20px;
+}
+
+.btn-danger {
+  border-radius: 20px;
+}
+
+/* Image */
+img {
+  border-radius: 8px;
+}
+
+/* Alert */
+.alert {
+  background: rgba(255,255,0,0.1);
+  border-left: 4px solid yellow;
+  color: #ffd;
+}
+
+/* ========================= */
+/* 📱 MOBILE VIEW */
+/* ========================= */
+@media (max-width: 576px) {
+
+  .container {
+    margin: 15px;
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  /* Table → Card style */
+  .table thead {
+    display: none;
+  }
+
+  .table, .table tbody, .table tr, .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 15px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .table td {
+    padding-left: 50%;
+    position: relative;
+    font-size: 13px;
+  }
+
+  .table td::before {
+    position: absolute;
+    left: 10px;
+    width: 45%;
+    font-weight: bold;
+    color: #00e5ff;
+  }
+
+  .table td:nth-child(2)::before { content: "Product"; }
+  .table td:nth-child(3)::before { content: "Qty"; }
+  .table td:nth-child(4)::before { content: "Price"; }
+  .table td:nth-child(5)::before { content: "Delivery"; }
+  .table td:nth-child(6)::before { content: "Total"; }
+
+  img {
+    width: 50px;
+  }
+
+  .btn {
+    width: 100%;
+    margin-top: 8px;
+  }
+}
+
+/* ========================= */
+/* 💻 LAPTOP VIEW */
+/* ========================= */
+@media (min-width: 992px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+/* All main buttons smooth effect */
+.btn {
+  transition: all 0.3s ease;
+}
+
+/* Continue Shopping (secondary) */
+.btn-primary:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(0,198,255,0.7);
+}
+
+/* Proceed to Buy (success) */
+.btn-success:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(0,255,100,0.7);
+}
+/* 🔥 Premium index badge */
+.index-box{
+  display:inline-block;
+  min-width:32px;
+  padding:4px 8px;
+  border-radius:8px;
+
+  background:rgba(89, 93, 95, 0.43);
+  color:white;
+  font-weight:800;
+  text-align:center;
+
+  box-shadow:
+    0 0 8px rgba(0,212,255,0.6),
+    0 0 15px rgba(0,114,255,0.4);
+
+  font-size:13px;
+}
   </style>
 </head>
 <body>
 <div class="container mt-5">
     <a href="home.php" class="btn btn-primary">⬅️ Back</a>
 
-  <h2>📦 Your Order History</h2>
-
+  <h2 class="mb-4">📦 Your Order History</h2>
+<?php $i = 1; ?>
 <?php if ($orders->num_rows > 0): ?>
   <?php while ($order = $orders->fetch_assoc()): ?>
     <div class="card my-4">
     <div class="card-header bg-info text-white">
 
-  <strong>Order ID:</strong> <?php echo (int)$order['id']; ?> |
+<strong>No:</strong> 
+<span class="index-box"><?php echo $i++; ?></span> |
 
+<strong>Order ID:</strong> <?php echo (int)$order['id']; ?> |
   <strong>Order Date:</strong> <?php echo htmlspecialchars($order['created_at']); ?> |
 
   <?php $status = $order['status'] ?? 'Pending'; ?>
@@ -110,7 +255,7 @@ $itemStmt = $conn->prepare("SELECT * FROM order_items WHERE order_id = ? ORDER B
 
   <?php if ($status === 'Pending'): ?>
     <a href="cancel_order.php?id=<?php echo (int)$order['id']; ?>"
-       class="btn btn-warning btn-sm float-end ms-2"
+       class="btn btn-warning btn-sm float-end ms-2 btn-success"
        onclick="return confirm('Are you sure you want to cancel this order?');">
        Cancel Order
     </a>
@@ -134,6 +279,7 @@ $itemStmt = $conn->prepare("SELECT * FROM order_items WHERE order_id = ? ORDER B
         <table class="table table-bordered">
           <thead class="table-light">
             <tr>
+              <th>No.</th>
               <th>Image</th>
               <th>Product</th>
               <th>Qty</th>
@@ -150,9 +296,10 @@ $itemStmt = $conn->prepare("SELECT * FROM order_items WHERE order_id = ? ORDER B
             $itemStmt->execute();
             $items = $itemStmt->get_result();
           ?>
-
+<?php $j = 1; ?>
           <?php while ($item = $items->fetch_assoc()): ?>
             <tr>
+              <td><span class="index-box"><?php echo $j++; ?></span></td>
               <td>
                 <?php
                   // In DB we store image like: image/abc.png OR abc.png.
