@@ -442,6 +442,83 @@ background: rgba(255,255,255,0.15);
   border: 2px solid #00c6ff !important;
   box-shadow: 0 0 20px rgba(0,198,255,0.7);
 }
+/* Modal Background */
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 999999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    backdrop-filter: blur(8px);
+    text-align: center;
+}
+
+/* Image (60% screen) */
+/* Desktop */
+.image-modal img {
+    display: block;
+    margin: 80px auto;   /* center */
+    width: 30%;
+    max-width: 500px;
+    max-height: 80%;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    animation: zoomIn 0.3s ease;
+}
+
+/* 📱 Mobile FIX */
+@media (max-width: 768px) {
+
+    .image-modal img {
+        width: 70%;
+        margin: 100px auto;   /* thoda niche adjust */
+        max-height: 70%;
+    }
+
+    .close-btn {
+        font-size: 26px;
+        top: 15px;
+        right: 20px;
+    }
+}
+
+/* Close button */
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    font-size: 35px;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    color: #ff1493;
+    transform: scale(1.2);
+}
+
+/* Animation */
+@keyframes zoomIn {
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .image-modal img {
+        width: 90%;
+    }
+}
     </style>
 </head>
 <body>
@@ -742,7 +819,11 @@ if ($user_id && isset($_SESSION['cart'][$user_id])) {
                       </div>
                     <?php endif; ?>
 
-                    <img src="image/<?php echo htmlspecialchars($row['image']); ?>" class="product-img mx-auto d-block" alt="<?php echo htmlspecialchars($row['name']); ?>">
+                    <img src="image/<?php echo htmlspecialchars($row['image']); ?>" 
+     class="product-img mx-auto d-block"
+     style="cursor:pointer;"
+     onclick="openImageModal(this.src)"
+     alt="<?php echo htmlspecialchars($row['name']); ?>">
                      <div class="card-body products-section">
                         <h5 class="card-title product-name">
     <?php echo htmlspecialchars($row['name']); ?>
@@ -792,7 +873,10 @@ $shortDesc = substr($fullDesc, 0, 30);
         </div>
     </div>
 </div>
-
+<div id="imageModal" class="image-modal">
+    <span class="close-btn" onclick="closeImageModal()">&times;</span>
+    <img id="modalImg">
+</div>
 <!-- Footer -->
 <div class="custom-footer p-3 text-center">
     <p>All rights reserved. Designed by <span style="color:blue;">Deepak Kumar Singh and Manoj</span></p>
@@ -843,5 +927,23 @@ function toggleAllProducts(state) {
 }
 </script>
 <?php endif; ?>
+<script>
+function openImageModal(src) {
+    document.getElementById("imageModal").style.display = "block";
+    document.getElementById("modalImg").src = src;
+}
+
+function closeImageModal() {
+    document.getElementById("imageModal").style.display = "none";
+}
+
+// Click outside to close
+window.onclick = function(event) {
+    let modal = document.getElementById("imageModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
 </body>
 </html>
