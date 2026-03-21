@@ -23,7 +23,91 @@ button a.nav-link {
   border-radius: 5px;
   font-weight: bold;
 }
+body{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+min-height:100vh;
+color:white;
+}
+.navbar{
+background:linear-gradient(45deg,#141e30,#243b55) !important;
+border-bottom:1px solid rgba(255,255,255,0.1);
+}
 
+.navbar .nav-link{
+color:#00d4ff !important;
+font-weight:600;
+}
+.bg-secondary{
+background:rgba(255,255,255,0.08) !important;
+backdrop-filter:blur(12px);
+border-radius:12px;
+border:1px solid rgba(255,255,255,0.2);
+margin-bottom:15px;
+}
+.bg-secondary p{
+font-size:18px;
+font-weight:600;
+color:#00d4ff;
+
+text-shadow:
+0 0 5px #00d4ff,
+0 0 10px rgba(0,212,255,0.5);
+}
+button{
+border:none;
+background:none;
+margin:5px;
+}
+
+button a.nav-link{
+padding:10px 30px;
+border-radius:8px;
+font-weight:600;
+background:linear-gradient(45deg,#00d4ff,#0072ff);
+color:white !important;
+
+transition:0.3s;
+}
+
+button a.nav-link:hover{
+transform:scale(1.05);
+
+box-shadow:
+0 0 10px rgba(0,212,255,0.7),
+0 0 20px rgba(0,212,255,0.5);
+}
+.btn-secondary{
+background:linear-gradient(45deg,#ff4b2b,#ff416c);
+border:none;
+}
+
+.btn-secondary:hover{
+transform:scale(1.05);
+box-shadow:0 0 10px rgba(255,65,108,0.6);
+}
+.bg-info{
+background:linear-gradient(45deg,#141e30,#243b55) !important;
+color:white;
+}
+h3{
+color:#00d4ff;
+font-weight:600;
+
+}
+.bg-light{
+background:rgba(255,255,255,0.08) !important;
+backdrop-filter:blur(10px);
+border-radius:10px;
+}
+.nav-linkwelcome{
+font-size:18px;
+font-weight:600;
+color:#00d4ff !important;
+
+text-shadow:
+0 0 5px #00d4ff,
+0 0 10px rgba(0,212,255,0.5);
+}
     </style>
 
 </head>
@@ -32,12 +116,12 @@ button a.nav-link {
      <div class="container-fluid p-0">
         <!-- first child -->
         <nav class="navbar navbar-expand-lg navbar-light bg-info">
-            <div class="container-fluid">
+            <div class="container-fluid justify-content-left">
                 <!-- <img src="../image/logo.png" alt="" class="logo"> -->
                 <nav class="navbar navbar-expand-lg">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="" class="nav-link">Welcome Deepak</a>
+                    <a href="#" class="nav-link nav-linkwelcome">Welcome Deepak Sir</a>
                 </li>
             </ul>
             </nav>
@@ -46,7 +130,7 @@ button a.nav-link {
         <!-- second child -->
          <div class="bg-light">
          <a href="home.php" class="btn btn-secondary">⬅️ Back</a>
-            <h3 class="text-center p-2">Manage / Insert Products</h3>
+            <h3 class="text-center p-2 text-white">Manage / Insert Products</h3>
          </div>
          <!-- third child -->
           <div class="row">

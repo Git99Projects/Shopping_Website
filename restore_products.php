@@ -48,34 +48,114 @@ if (!empty($queries)) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
-    body {
-      background: #f8f9fa;
-    }
-    .page-box {
-      background: #fff;
-      border-radius: 12px;
-      padding: 25px;
-      margin-top: 30px;
-      margin-bottom: 30px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    }
-    .product-img {
-      width: 70px;
-      height: 70px;
-      object-fit: contain;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      background: #fff;
-    }
-    .table th, .table td {
-      text-align: center;
-      vertical-align: middle;
-    }
+   body{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+min-height:100vh;
+color:white;
+}
+    .page-box{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.2);
+border-radius:16px;
+padding:25px;
+margin-top:30px;
+margin-bottom:30px;
+
+box-shadow:
+0 10px 30px rgba(0,0,0,0.5);
+
+transition:0.3s;
+}
+
+.page-box:hover{
+transform:translateY(-5px);
+box-shadow:
+0 15px 40px rgba(0,0,0,0.7),
+0 0 15px rgba(0,212,255,0.4);
+}
+
+h2{
+color:#00d4ff;
+font-weight:600;
+
+text-shadow:
+0 0 6px #00d4ff,
+0 0 12px rgba(0,212,255,0.5);
+}
+
+    .product-img{
+width:70px;
+height:70px;
+object-fit:contain;
+border-radius:10px;
+
+background:rgba(255,255,255,0.1);
+border:1px solid rgba(255,255,255,0.2);
+
+padding:5px;
+}
+.product-img:hover{
+transform:scale(1.3);
+transition:0.3s;
+}
+.product-checkbox{
+width:25px;
+height:25px;
+cursor:pointer;
+}
+#mainCheckbox{
+width:22px;
+height:22px;
+cursor:pointer;
+}
+.product-checkbox:checked,
+#mainCheckbox:checked{
+accent-color:#00d4ff;
+box-shadow:0 0 6px #00d4ff;
+}
+   .table{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+color:white;
+border-radius:10px;
+overflow:hidden;
+}
+
+.table thead{
+background:rgba(0,212,255,0.15);
+color:white;
+}
+
+.table td,
+.table th{
+border-color:rgba(255,255,255,0.1);
+}
+
+.table-hover tbody tr:hover{
+background:rgba(0,212,255,0.15);
+transition:0.2s;
+}
+.btn{
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.05);
+box-shadow:
+0 0 10px rgba(0,212,255,0.6);
+}
+input[type="checkbox"]{
+accent-color:#00d4ff;
+}
     #restoreBtn {
       display: none;
     }
     .hide-id{
     display:none;
+}
+.hide-id{
+display:none;
 }
   </style>
 </head>
@@ -131,7 +211,7 @@ if (!empty($queries)) {
                            value="<?php echo $row['table_name'] . ':' . (int)$row['id']; ?>"
                            onchange="updateSelected()">
                   </td>
-                  <td><?php echo (int)$row['id']; ?></td>
+                  <td class="hide-id"><?php echo (int)$row['id']; ?></td>
                   <td>
                     <?php if (!empty($row['image'])): ?>
                       <img src="image/<?php echo htmlspecialchars($row['image']); ?>" class="product-img" alt="">

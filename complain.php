@@ -19,71 +19,276 @@ $user_id = $_SESSION['user_id'];
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
-    body {
-      background: linear-gradient(to right,rgb(57, 107, 184),rgb(4, 53, 10));
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .navbar {
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .container {
-      margin-top: 40px;
-      background:rgb(69, 106, 207);
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    }
-    h2 {
-      color: #004085;
-      font-weight: 700;
-    }
-    .badge-count {
-      font-size: 14px;
-      background-color: #ffc107;
-      color: #000;
-      padding: 5px 10px;
-      border-radius: 20px;
-    }
-    .table thead {
-      background-color: #007bff;
-      color: white;
-    }
-    .table td, .table th {
-      vertical-align: middle;
-      word-break: break-word;
-    }
-    .table-responsive {
-      max-height: 500px;
-      overflow-y: auto;
-    }
-    .footer {
-      margin-top: 60px;
-      padding: 20px;
-      background:rgb(16, 112, 35);
-      color: white;
-      text-align: center;
-      font-size: 14px;
-      border-radius: 0 0 12px 12px;
-    }
-    @media (max-width: 768px) {
-      .container {
-        margin-top: 10px;
-        padding: 20px;
-      }
-    }
+   body {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Navbar glass effect */
+.navbar {
+  backdrop-filter: blur(10px);
+  background: rgba(0,0,0,0.6) !important;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+}
+
+/* 🔥 Glass Container */
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+
+  color: white;
+  transition: 0.3s;
+}
+
+.container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+
+/* Heading */
+h2 {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Badge */
+.badge-count {
+  background: linear-gradient(135deg, #ffc107, #ff9800);
+  color: #000;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+/* 🔥 Table */
+.table {
+  color: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table thead {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: white;
+}
+
+.table tbody tr {
+  background: rgba(255,255,255,0.05);
+  transition: 0.3s;
+}
+
+
+
+/* Table cells */
+.table td, .table th {
+  vertical-align: middle;
+  border-color: rgba(255,255,255,0.1);
+}
+
+/* Scroll table */
+.table-responsive {
+  max-height: 450px;
+  overflow-y: auto;
+  border-radius: 10px;
+}
+
+/* 🔥 Buttons */
+.btn-danger {
+  background: linear-gradient(135deg, #ff4d4d, #cc0000);
+  border: none;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+.btn-danger:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255,0,0,0.7);
+}
+
+.btn-secondary {
+  border-radius: 20px;
+}
+
+/* Footer */
+.footer {
+  margin-top: 50px;
+  padding: 20px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  color: white;
+  text-align: center;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .container {
+    margin: 20px;
+    padding: 20px;
+  }
+}
     .navbar-brand img {
   width: 40px;
   margin-right: 10px;
 }
 
-.btn-danger {
-  white-space: nowrap;
-  min-width: 90px;
-}
 .hide-id{
   display: none;
 }
 
+
+/* ========================= */
+/* 📱 MOBILE VIEW (0–576px) */
+/* ========================= */
+@media (max-width: 576px) {
+
+  .container {
+    margin: 15px;
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .badge-count {
+    display: block;
+    margin-top: 8px;
+  }
+
+  /* 🔥 Table → Card Style */
+  .table thead {
+    display: none;
+  }
+
+  .table, 
+  .table tbody, 
+  .table tr, 
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .table td {
+    padding: 8px;
+    padding-left: 50%;
+    position: relative;
+    font-size: 13px;
+  }
+
+  /* Labels for mobile */
+  .table td::before {
+    position: absolute;
+    left: 10px;
+    width: 45%;
+    font-weight: bold;
+    color: #00e5ff;
+  }
+
+  .table td:nth-child(2)::before { content: "Name"; }
+  .table td:nth-child(3)::before { content: "Email"; }
+  .table td:nth-child(4)::before { content: "Subject"; }
+  .table td:nth-child(5)::before { content: "Message"; }
+  .table td:nth-child(6)::before { content: "Date"; }
+  .table td:nth-child(7)::before { content: "Action"; }
+
+  /* Button full width */
+  .btn-danger {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  /* Navbar fix */
+  .navbar-nav .nav-link {
+    margin: 5px 0;
+  }
+}
+
+/* ========================= */
+/* 📱 TABLET VIEW (577–991px) */
+/* ========================= */
+@media (min-width: 577px) and (max-width: 991px) {
+
+  .container {
+    max-width: 90%;
+    padding: 25px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  .table-responsive {
+    max-height: 400px;
+  }
+}
+
+/* ========================= */
+/* 💻 LAPTOP VIEW (992px+) */
+/* ========================= */
+@media (min-width: 992px) {
+
+  .container {
+    max-width: 1100px; /* 👈 wide premium */
+  }
+
+  h2 {
+    font-size: 26px;
+  }
+
+  .table td {
+    font-size: 14px;
+  }
+}
+/* All main buttons smooth effect */
+.btn {
+  transition: all 0.3s ease;
+}
+
+/* Continue Shopping (secondary) */
+.btn-secondary:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(0,198,255,0.7);
+}
+
+/* Proceed to Buy (success) */
+.btn-success:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(0,255,100,0.7);
+}
+/* 🔥 Premium index badge */
+.index-box{
+  display:inline-block;
+  min-width:32px;
+  padding:4px 8px;
+  border-radius:8px;
+
+  background:rgba(89, 93, 95, 0.43);
+  color:white;
+  font-weight:800;
+  text-align:center;
+
+  box-shadow:
+    0 0 8px rgba(0,212,255,0.6),
+    0 0 15px rgba(0,114,255,0.4);
+
+  font-size:13px;
+}
   </style>
 </head>
 <body>
@@ -99,9 +304,9 @@ $user_id = $_SESSION['user_id'];
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active" href="home.php">🏠 Home</a>
-        <a class="nav-link active" href="cart.php">🛒 Cart</a>
-        <a class="nav-link active" href="contact.php">📞 Contact</a>
+        <a class="nav-link btn btn-warning text-white px-3 ms-2" href="home.php">🏠 Home</a>
+        <a class="nav-link btn btn-warning text-white px-3 ms-2" href="cart.php">🛒 Cart</a>
+        <a class="nav-link btn btn-warning text-white px-3 ms-2" href="contact.php">📞 Contact</a>
         <a class="nav-link btn btn-warning text-white px-3 ms-2" href="complain.php">📮 Complain List</a>
       </div>
     </div>
@@ -128,6 +333,7 @@ $user_id = $_SESSION['user_id'];
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
+          <th>No.</th>
           <th class="hide-id"><i class="fa-solid fa-hashtag"></i> ID</th>
           <th><i class="fa-solid fa-user"></i> Name</th>
           <th><i class="fa-solid fa-envelope"></i> Email</th>
@@ -138,6 +344,7 @@ $user_id = $_SESSION['user_id'];
         </tr>
       </thead>
       <tbody>
+        <?php $i = 1; ?>
      <?php
        $stmt = $conn->prepare("SELECT * FROM complaints WHERE user_id = ? AND deleted_by_user = 0 ORDER BY created_at DESC");
        $stmt->bind_param("i", $user_id);
@@ -147,6 +354,7 @@ $user_id = $_SESSION['user_id'];
           while ($row = $result->fetch_assoc()):
       ?>
         <tr>
+          <td><span class="index-box"><?php echo $i++; ?></span></td>
            <td class="hide-id"><?php echo $row['id']; ?></td>
            <td><?php echo htmlspecialchars($row['name']); ?></td>
            <td><?php echo htmlspecialchars($row['email']); ?></td>

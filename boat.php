@@ -88,35 +88,439 @@ if (isset($_GET['add_to_cart'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-           body {
-      background-color:rgb(255, 255, 255); /* Light blue */
-    }
+  @media (max-width: 991px){
+
+.products-section_2nav{
+overflow: visible !important;
+}
+
+.dropdown-menu{
+position: absolute !important;
+z-index: 99999 !important;
+}
+
+}
+@font-face {
+    font-family: 'JellyJam';
+    src: url('JellyjampersonaluseBold-Rpjey.otf') format('opentype');
+}
+
+.apple-title {
+    font-family: 'JellyJam';
+    font-size: 25px;
+    background: radial-gradient(circle at 30% 30%, #ff8080, #cc0000 60%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow:
+        0 3px 0 #990000,
+        0 6px 8px rgba(0,0,0,0.4);
+}
+
+.custom-footer {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    color: white;
+}
+</style>
+
+<style>
+body {
+    margin: auto;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow-x: hidden;
+
+    background-image: url("https://4kwallpapers.com/images/wallpapers/thick-forest-3840x2160-14776.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.dropdown-menu-custom .dropdown-item,
+.dropdown-glass .dropdown-item{
+color: white;
+}
+
+.dropdown-menu-custom .dropdown-item:hover,
+.dropdown-glass .dropdown-item:hover{
+background: rgba(255,255,255,0.2);
+color: #ff1493;
+}
+
+
+.navbar.bg-info{
+position: relative;
+z-index: 10000000;
+
+}
+@media (max-width: 768px){
+.card-body{
+min-height:220px;   /* height kam ya jyada kar sakte ho */
+width:70%;     /* card ke andar full width */
+padding:10px;
+overflow:hidden;
+margin: 0 auto;
+text-align: center;
+transition: all 0.3s ease;
+}
+}
+.products-section{
+    background: rgba(234, 212, 212, 0.46);
+    backdrop-filter: blur(10px);
+    padding: 15px;
+    border-radius: 20px;
+}
+.products-section_2nav{
+    background: rgba(233, 218, 218, 0.38);
+    backdrop-filter: blur(10px);
+    padding: 5px;
+    border-radius: 20px;
+}
+
+</style>
+
+<style>
+  .second-nav{
+position: relative;
+z-index: 9999;
+}
+        
     .navbar {
-    background-color:rgb(51, 217, 235); /* Indigo */
+   background: rgba(100, 184, 209, 0.53) !important;
+    backdrop-filter: blur(1px);
   }
   .product-card {
-  background-color:rgb(207, 235, 243); /* Change this to your desired color */
+    background: transparent;
+    backdrop-filter: blur(0px);
+      transition: 0.3s ease;
+    overflow: hidden;
 }
-      .product-img {
-  width: 100%;
-  max-width: 180px;
-  height: auto;
+
+
+    .product-img {
+  width: 180px;
+  height: 275px;
   object-fit: contain;
   display: block;
-  margin: 0 auto;
+  margin: 0 auto; /* centers image horizontally */
+  border-radius: 0px; 
+  transition: transform 0.4s ease;
+     }
+.product-img:hover {
+    transform: scale(1.1);
 }
-/* Tablet */
-@media (max-width: 992px) {
-  .product-img {
-    max-width: 170px;
-  }
+.product-card {
+     overflow: hidden;
+}
+
+.product-name {
+    font-weight: bold;
+    font-size: 18px;
+    color: #4346f9ff;
+    text-shadow: 0 0 8px #00ffff, 0 0 15px #0077ff;
+    transition: 0.3s;
+}
+
+.product-name:hover {
+    color: #f21ca0ff;
+    transform: scale(1.05);
+}
+
+.nav-glow {
+    font-weight: bold;
+    font-size: 16px;
+    color: #2020e7ff;   /* 🔵 Default Color */
+    text-shadow: 0 0 6px #e6dfdfff, 0 0 12px #314180ff;
+    transition: 0.3s ease;
+}
+
+.nav-glow:hover {
+    color: #ff1493;   /* 🩷 Hover Color */
+    transform: scale(1.08);
+}
+
+
+.brand-glow {
+    font-weight: bold;
+    color: #dfc6baff;   /* normal color */
+    text-shadow: 0 0 6px #66ccff, 0 0 12px;
+    transition: 0.3s ease;
+}
+
+.brand-glow:hover {
+    color: #0c0c9cff;   /* hover color */
+    transform: scale(1.08);
+}
+
+
+/* PRICE EFFECT */
+.price-glow {
+    font-weight: bold;
+    color: #2d2dff;
+    transition: 0.3s ease;
+}
+
+.price-glow:hover {
+    color: #ff1493;
+    transform: scale(1.1);
+}
+
+/* BUTTON EFFECT */
+.btn-hover {
+    transition: 0.3s ease;
+}
+
+.btn-hover:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* Dropdown transparent */
+/* Glass Effect Dropdown */
+.dropdown-menu-custom {
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    padding: 8px;
+}
+
+/* Keep nav-glow look */
+.dropdown-custom {
+    background: transparent !important;
+    color: #2020e7ff !important;
+    font-weight: bold;
+    text-shadow: 0 0 6px #e6dfdfff, 0 0 12px #314180ff;
+    transition: 0.3s ease;
+    border-radius: 8px;
+}
+
+/* Hover effect */
+.dropdown-custom:hover {
+    color: #ff1493 !important;
+    background: rgba(255,255,255,0.2) !important;
+    transform: scale(1.05);
+}
+
+/* Premium Mobile Search */
+.premium-search {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 30px;
+    padding: 6px 12px;
+    border: 2px solid rgba(255,255,255,0.6);
+    box-shadow: 0 0 15px rgba(255,255,255,0.6);
+    transition: 0.4s ease;
 }
 
 /* Mobile */
-@media (max-width: 576px) {
-  .product-img {
-    max-width: 140px;
-  }
+@media (max-width: 991px) {
+    .premium-search {
+        width: 150px;
+    }
+}
+
+/* Laptop */
+@media (min-width: 992px) {
+    .premium-search {
+        width: 380px;
+    }
+}
+
+.premium-search input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    font-size: 15px;
+    color: white;
+    font-weight: 500;
+}
+
+.premium-search input::placeholder {
+    color: rgba(255,255,255,0.8);
+}
+
+.premium-search button {
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+/* Strong Hover Glow */
+.premium-search:hover {
+    box-shadow: 0 0 25px #00ffff, 0 0 40px #00aaff;
+    border-color: #00ffff;
+}
+
+/* Focus Glow */
+.premium-search:focus-within {
+    box-shadow: 0 0 30px #ff1493, 0 0 50px #ff69b4;
+    border-color: #ff1493;
+}
+
+/* Icon hover */
+.premium-search button:hover {
+    color: #ff1493;
+    transform: scale(1.2);
+}
+
+/* Second Navbar Glass */
+.second-nav {
+      background: transparent !important;
+    color: #2020e7ff !important;
+    font-weight: bold;
+    text-shadow: 0 0 6px #e6dfdfff, 0 0 12px #314180ff;
+    transition: 0.3s ease;
+    border-radius: 8px;
+}
+
+/* Glass Dropdown */
+.dropdown-glass {
+    background: rgba(152, 137, 137, 0.81) !important;
+    backdrop-filter: blur(12px);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    z-index: 999999;
+    position: absolute;
+}
+
+
+.dropdown-glass .dropdown-item {
+    background: transparent !important;
+    transition: 0.3s ease;
+    color: white;
+transition: 0.3s;
+}
+
+.dropdown-glass .dropdown-item:hover {
+    background: rgba(255,255,255,0.2) !important;
+    transform: scale(1.05);
+    z-index: 99999 !important;
+    color: red;
+background: rgba(255,255,255,0.15);
+}
+
+@media (max-width: 991px) {
+
+    .second-nav .navbar-nav {
+        flex-direction: row !important;
+        justify-content: center;
+        gap: 20px;
+    }
+
+}
+
+/* 🔥 Big Premium Checkbox */
+.product-checkbox{
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  accent-color: #00c6ff;
+  transform: scale(1.3);
+}
+
+/* Checkbox container */
+.checkbox-box{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+/* Card clickable effect */
+.product-card{
+  position: relative;
+  cursor: pointer;
+}
+
+/* Selected effect */
+.product-card.selected{
+  border: 2px solid #00c6ff !important;
+  box-shadow: 0 0 20px rgba(0,198,255,0.7);
+}
+/* Modal Background */
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 999999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    backdrop-filter: blur(8px);
+    text-align: center;
+}
+
+/* Image (60% screen) */
+/* Desktop */
+.image-modal img {
+    display: block;
+    margin: 80px auto;   /* center */
+    width: 30%;
+    max-width: 500px;
+    max-height: 80%;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    animation: zoomIn 0.3s ease;
+}
+
+/* 📱 Mobile FIX */
+@media (max-width: 768px) {
+
+    .image-modal img {
+        width: 70%;
+        margin: 100px auto;   /* thoda niche adjust */
+        max-height: 70%;
+    }
+
+    .close-btn {
+        font-size: 26px;
+        top: 15px;
+        right: 20px;
+    }
+}
+
+/* Close button */
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    font-size: 35px;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    color: #ff1493;
+    transform: scale(1.2);
+}
+
+/* Animation */
+@keyframes zoomIn {
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .image-modal img {
+        width: 90%;
+    }
 }
     </style>
 </head>
@@ -148,65 +552,216 @@ if (isset($_GET['add_to_cart'])) {
 <div class="container-fluid p-0">
 
 <!-- Header Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-info">
+<!-- DESKTOP NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light d-none d-lg-flex">
   <div class="container-fluid">
-    <a href="home.php">
-      <img src="image/logo.png" alt="logo" class="logo" width="45">
+
+    <!-- Logo -->
+    <a href="home.php" class="nav-glow">
+      <img src="image/logo.png" width="45">
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-      <span class="navbar-toggler-icon"></span>
+
+    <div class="collapse navbar-collapse show">
+
+      <!-- Left Links -->
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a href="<?php echo $delete_mode ? 'boat.php?delete_mode=1' : 'boat.php'; ?>"class="nav-link nav-glow" >Home</a>
+        </li>
+        <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
+          <li class="nav-item"><a class="nav-link nav-glow" href="admin_dashboard.php">Admin</a></li>
+         <?php endif; ?>
+        <li class="nav-item">
+          <a class="nav-link nav-glow" href="contact.php">Contact</a>
+        </li>
+        <?php if (isset($_SESSION['user_id'])): ?>
+        <li class="nav-item">
+          <a class="nav-link nav-glow" href="login.php">Logout</a>
+        </li>
+         <?php else: ?>
+        <li class="nav-item">
+          <a class="nav-link nav-glow" href="ragister.php">Register</a>
+        </li>
+        <?php endif; ?>
+      </ul>
+
+      <!-- Search -->
+      <form class="premium-search ms-2" method="GET" action="search_products.php">
+    <input type="search" name="search" placeholder="Search..." required>
+    <button type="submit">
+        <i class="fa fa-search"></i>
     </button>
+</form>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <!-- Left nav links -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-    <li class="nav-item"><a class="nav-link active" href="home.php"><b>Home</b></a></li>
-
-    <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
-        <li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Admin</a></li>
-    <?php endif; ?>
-
-    <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
-
-    <?php if (isset($_SESSION['user_id'])): ?>
-        <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
-    <?php else: ?>
-        <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
-        <li class="nav-item"><a class="nav-link" href="ragister.php">Register</a></li>
-    <?php endif; ?>
-</ul>
-      
-      <div class="mx-auto d-flex">
-  <form class="d-flex me-3" method="GET" action="search_products.php">
-    <input class="form-control me-1" type="search" name="search" placeholder="Search products" style="width: 400px;">
-    <button class="btn btn-outline-light" type="submit" style="width: 80px;">
-      <i class="fa fa-search fa-2x"></i>
-    </button>
-  </form>
-</div>
-
-      <!-- Search form + right items -->
+      <!-- Right Side -->
       <div class="d-flex align-items-center">
-       
-      <a class="nav-link btn  text-blue px-3 ms-2" href="complain.php" style="color:rgb(46, 22, 202);"><b>📮</b> Complain List</a>
-        <a class="nav-link " href="order_history.php">
-          <i class="fa-solid fa-bag-shopping fa-2x me-1" style="color:rgb(50, 30, 181);"></i> Orders
+
+        <!-- Complain -->
+        <a class="nav-link nav-glow me-2" href="complain.php">
+          📮 Complain List
         </a>
-        <a class="nav-link  me-3" href="cart.php">
-          <i class="fa-solid fa-cart-shopping fa-2x" style="color:rgb(53, 30, 200);"></i>
+
+        <!-- Orders -->
+        <a class="nav-link nav-glow me-2" href="order_history.php">
+          <i class="fa-solid fa-bag-shopping"></i> Orders
+        </a>
+
+        <!-- Cart -->
+        <a class="nav-link nav-glow" href="cart.php">
+          <i class="fa-solid fa-cart-shopping fa-2x" ></i>
           <sup>
-           <?php
-                $user_id = $_SESSION['user_id'] ?? null;
-                if ($user_id && isset($_SESSION['cart'][$user_id])) {
-                  echo array_sum(array_column($_SESSION['cart'][$user_id], 'quantity'));
-               } else {
-                  echo 0;
-               }
-             ?>          
+            <?php
+              $user_id = $_SESSION['user_id'] ?? null;
+              if ($user_id && isset($_SESSION['cart'][$user_id])) {
+                echo array_sum(array_column($_SESSION['cart'][$user_id], 'quantity'));
+             } else {
+               echo 0;
+             }
+          ?>
           </sup>
         </a>
+
       </div>
+
     </div>
+  </div>
+</nav>
+
+
+
+<!-- MOBILE NAVBAR -->
+<nav class="navbar bg-info d-flex d-lg-none px-3">
+
+  <!-- Logo -->
+  <a href="home.php">
+    <img src="image/logo.png" width="40">
+  </a>
+
+  <!-- Home Dropdown -->
+  <div class="dropdown">
+  <button class="btn btn-info dropdown-toggle text-dark fw-bold nav-glow dropdown-custom" data-bs-toggle="dropdown">
+    Home
+  </button>
+
+  <ul class="dropdown-menu dropdown-glass">
+    <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'boat.php?delete_mode=1' : 'boat.php'; ?>">Home</a></li>
+    <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
+         <li><a class="dropdown-item nav-glow" href="admin_dashboard.php">Admin</a></li>
+         <?php endif; ?>
+    <li><a class="dropdown-item nav-glow" href="contact.php">Contact</a></li>
+    <?php if (isset($_SESSION['user_id'])): ?>
+    <li><a class="dropdown-item nav-glow" href="login.php">Logout</a></li>
+     <?php else: ?>
+    <li><a class="dropdown-item nav-glow" href="ragister.php">Register</a></li>
+     <?php endif; ?>
+    <li><a class="dropdown-item nav-glow" href="complain.php">Complain List</a></li>
+    <li><a class="dropdown-item nav-glow" href="order_history.php">Orders</a></li>
+  
+  </ul>
+</div>
+
+  <!-- Small Search -->
+  <form class="premium-search ms-2" method="GET" action="search_products.php">
+    <input type="search" name="search" placeholder="Search..." required>
+    <button type="submit">
+        <i class="fa fa-search"></i>
+    </button>
+</form>
+
+  <!-- Cart Icon -->
+  <a class="nav-link nav-glow" href="cart.php">
+          <i class="fa-solid fa-cart-shopping fa-2x"></i>
+          <sup>
+            <?php
+$user_id = $_SESSION['user_id'] ?? null;
+if ($user_id && isset($_SESSION['cart'][$user_id])) {
+    echo array_sum(array_column($_SESSION['cart'][$user_id], 'quantity'));
+} else {
+    echo 0;
+}
+?>
+          </sup>
+        </a>
+
+</nav>
+
+<!-- SECOND NAVBAR -->
+<nav class="navbar navbar-expand-lg second-nav py-2">
+  <div class="container-fluid justify-content-center">
+
+    <ul class="navbar-nav products-section_2nav">
+
+    <!-- Profile (ONLY ONE ICON) -->
+      <div class="dropdown">
+        <a class="btn btn-info dropdown-toggle text-dark fw-bold nav-glow dropdown-custom" href="#"
+           role="button" data-bs-toggle="dropdown">
+          <i class="fa-solid fa-circle-user fs-4"></i>
+        </a>
+
+        <ul class="dropdown-menu dropdown-glass">
+          <?php if (isset($_SESSION['user_id'])): ?>
+            <li><a class="dropdown-item nav-glow" href="profile.php">My Profile</a></li>
+            <li><a class="dropdown-item nav-glow" href="order_history.php">My Orders</a></li>
+            <li><a class="dropdown-item nav-glow" href="complain.php">My Complaints</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
+          <?php else: ?>
+            <li><a class="dropdown-item nav-glow" href="login.php">Login</a></li>
+            <li><a class="dropdown-item nav-glow" href="register.php">Register</a></li>
+          <?php endif; ?>
+        </ul>
+      </div>
+      <!-- Mobiles Dropdown -->
+      <li class="nav-item dropdown mx-3">
+        <a class="nav-link dropdown-toggle nav-glow fw-bold"
+           href="#"
+           role="button"
+           data-bs-toggle="dropdown">
+          Mobiles
+        </a>
+        <ul class="dropdown-menu dropdown-glass">
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'apple.php?delete_mode=1' : 'apple.php'; ?>">Apple</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'samsung.php?delete_mode=1' : 'samsung.php'; ?>">Samsung</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'xiaomi.php?delete_mode=1' : 'xiaomi.php'; ?>">Xiaomi</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'oneplus.php?delete_mode=1' : 'oneplus.php'; ?>">OnePlus</a></li>
+          
+        </ul>
+      </li>
+
+      <!-- Laptops Dropdown -->
+      <li class="nav-item dropdown mx-3">
+        <a class="nav-link dropdown-toggle nav-glow fw-bold"
+           href="#"
+           role="button"
+           data-bs-toggle="dropdown">
+          Laptops
+        </a>
+        <ul class="dropdown-menu dropdown-glass">
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'hp.php?delete_mode=1' : 'hp.php'; ?>">HP</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'dell.php?delete_mode=1' : 'dell.php'; ?>">Dell</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'macbook.php?delete_mode=1' : 'macbook.php'; ?>">MacBook</a></li>
+      
+        </ul>
+      </li>
+
+      <!-- Headphones Dropdown -->
+      <li class="nav-item dropdown mx-3">
+        <a class="nav-link dropdown-toggle nav-glow fw-bold"
+           href="#"
+           role="button"
+           data-bs-toggle="dropdown">
+          Headphones
+        </a>
+        <ul class="dropdown-menu dropdown-glass">
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'boat.php?delete_mode=1' : 'boat.php'; ?>">boAT</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'oneplus.php?delete_mode=1' : 'oneplus.php'; ?>">OnePlus</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'boult.php?delete_mode=1' : 'boult.php'; ?>">Boult</a></li>
+      
+        </ul>
+      </li>
+
+    </ul>
+
   </div>
 </nav>
 <br>
@@ -217,15 +772,8 @@ if (isset($_GET['add_to_cart'])) {
   </div>
 <?php endif; ?>
 
-<!-- Second Navbar -->
-<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
-    <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link" href="index.php">Welcome Guest</a></li>
-        <li class="nav-item"><a class="nav-link" href="index.php">Logout</a></li>
-    </ul>
-</nav> -->
 
-<!-- Products Section -->
+<!-- Products delete Section -->
 <?php if ($delete_mode): ?>
   <div class="container my-3">
     <form id="bulkDeleteForm" method="POST" action="delete_selected_products.php">
@@ -253,9 +801,10 @@ if (isset($_GET['add_to_cart'])) {
   </div>
 <?php endif; ?>
 
+<!-- Products Section -->
 <div class="row px-1">
     <div class="col-md-10 px-3">
-        <div class="row px-4 py-4">
+        <div class="row px-1 py-1">
             <?php
             $query = "SELECT * FROM boat_products WHERE brand = 'Boat' AND deleted_by_admin = 0";
             $result = $conn->query($query);
@@ -265,7 +814,7 @@ if (isset($_GET['add_to_cart'])) {
             <div class="card h-100 product-card <?php if ($highlight_id == $row['id']) echo 'border border-warning border-3'; ?>">
 
                     <?php if ($delete_mode): ?>
-                      <div class="text-end p-2">
+                      <div class="checkbox-box">
                         <input type="checkbox"
                                class="product-checkbox"
                                value="<?php echo (int)$row['id']; ?>"
@@ -273,116 +822,86 @@ if (isset($_GET['add_to_cart'])) {
                       </div>
                     <?php endif; ?>
 
-                    <img src="image/<?php echo htmlspecialchars($row['image']); ?>" class="product-img mx-auto d-block" alt="<?php echo htmlspecialchars($row['name']); ?>">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo htmlspecialchars($row['name']); ?></h5>
-                        <p class="card-text"><?php echo htmlspecialchars($row['description']); ?></p>
-                        <h4>₹<?php echo number_format((float)$row['price']); ?></h4>
+                    <img src="image/<?php echo htmlspecialchars($row['image']); ?>" 
+     class="product-img mx-auto d-block"
+     style="cursor:pointer;"
+     onclick="openImageModal(this.src)"
+     alt=" <?php echo htmlspecialchars($row['name']); ?>">
+                     <div class="card-body products-section">
+                        <h5 class="card-title product-name">
+    <?php echo htmlspecialchars($row['name']); ?>
+</h5>
+<?php
+$fullDesc = htmlspecialchars($row['description']);
+$shortDesc = substr($fullDesc, 0, 30);
+?>
+
+<p class="card-text">
+    <span id="short_<?php echo $row['id']; ?>">
+        <?php echo $shortDesc; ?>...
+        <a href="javascript:void(0);" 
+           onclick="toggleDesc(<?php echo $row['id']; ?>)" 
+           style="color:blue; font-weight:bold;">More</a>
+    </span>
+
+    <span id="full_<?php echo $row['id']; ?>" style="display:none;">
+        <?php echo $fullDesc; ?>
+        <a href="javascript:void(0);" 
+           onclick="toggleDesc(<?php echo $row['id']; ?>)" 
+           style="color:red; font-weight:bold;">Less</a>
+    </span>
+</p>
+                        <h4 class="price-glow">
+                            ₹<?php echo number_format($row['price']); ?>
+                          </h4>
                         <h6>
-                            M.R.P: ₹<s><?php echo number_format((float)$row['mrp']); ?></s>
-                            (<?php echo (int)round(100 - ($row['price'] / ($row['mrp'] ?: 1)) * 100); ?>% off)
+                            M.R.P: ₹<s><?php echo number_format($row['mrp']); ?></s>
+                            (<?php echo (int)round(100 - ($row['price'] / ($row['mrp'] ?: 1) * 100)); ?>% off)
                         </h6>
+                         <?php if (!$delete_mode): ?>
+  <a href="boat.php?add_to_cart=<?php echo (int)$row['id']; ?>" 
+   class="btn btn-info btn-hover">
+   Add to Cart
+</a>
 
-                        <?php if (!$delete_mode): ?>
-                          <a href="boat.php?add_to_cart=<?php echo (int)$row['id']; ?>" class="btn btn-info">Add to Cart</a>
-                          <a href="boat.php?add_to_cart=<?php echo (int)$row['id']; ?>&buy_now=1" class="btn btn-success">Buy Now</a>
-                        <?php endif; ?>
-
-                    </div>
+<a href="boat.php?add_to_cart=<?php echo (int)$row['id']; ?>&buy_now=1" 
+   class="btn btn-success btn-hover">
+   Buy Now
+</a>
+<?php endif; ?>
+                      </div>
                 </div>
             </div>
             <?php endwhile; ?>
         </div>
     </div>
- <!-- Sidebar -->
-    <div class="col-md-2 bg-secondary p-0">
-      <ul class="navbar-nav text-center">
-    <li class="nav-item bg-info">
-        <a href="#" class="nav-link text-light"><h2>Mobiles</h2></a>
-    </li>
-
-    <li class="nav-item">
-        <a href="<?php echo $delete_mode ? 'apple.php?delete_mode=1' : 'apple.php'; ?>" class="nav-link text-light">
-            <h5>Apple</h5>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a href="<?php echo $delete_mode ? 'samsung.php?delete_mode=1' : 'samsung.php'; ?>" class="nav-link text-light">
-            <h5>Samsung</h5>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a href="<?php echo $delete_mode ? 'xiaomi.php?delete_mode=1' : 'xiaomi.php'; ?>" class="nav-link text-light">
-            <h5>Xiaomi</h5>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a href="<?php echo $delete_mode ? 'oneplus.php?delete_mode=1' : 'oneplus.php'; ?>" class="nav-link text-light">
-            <h5>OnePlus</h5>
-        </a>
-    </li>
-</ul>
-
-
-<ul class="navbar-nav text-center">
-    <li class="nav-item bg-info">
-        <a href="#" class="nav-link text-light"><h2>Laptops</h2></a>
-    </li>
-
-    <li class="nav-item">
-        <a href="<?php echo $delete_mode ? 'hp.php?delete_mode=1' : 'hp.php'; ?>" class="nav-link text-light">
-            <h5>HP</h5>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a href="<?php echo $delete_mode ? 'dell.php?delete_mode=1' : 'dell.php'; ?>" class="nav-link text-light">
-            <h5>DELL</h5>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a href="<?php echo $delete_mode ? 'macbook.php?delete_mode=1' : 'macbook.php'; ?>" class="nav-link text-light">
-            <h5>MacBook</h5>
-        </a>
-    </li>
-</ul>
-
-
-<ul class="navbar-nav text-center">
-    <li class="nav-item bg-info">
-        <a href="#" class="nav-link text-light"><h3>Headphones</h3></a>
-    </li>
-
-    <li class="nav-item">
-        <a href="<?php echo $delete_mode ? 'boat.php?delete_mode=1' : 'boat.php'; ?>" class="nav-link text-light">
-            <h5>boAT</h5>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a href="<?php echo $delete_mode ? 'oneplusbud.php?delete_mode=1' : 'oneplusbud.php'; ?>" class="nav-link text-light">
-            <h5>OnePlus</h5>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a href="<?php echo $delete_mode ? 'boult.php?delete_mode=1' : 'boult.php'; ?>" class="nav-link text-light">
-            <h5>Boult</h5>
-        </a>
-    </li>
-</ul>
-    </div>
 </div>
+
+ <div id="imageModal" class="image-modal">
+    <span class="close-btn" onclick="closeImageModal()">&times;</span>
+    <img id="modalImg">
+</div>
+
 <!-- Footer -->
-<div class="bg-info p-3 text-center">
+<div class="custom-footer p-3 text-center">
     <p>All rights reserved. Designed by <span style="color:blue;">Deepak Kumar Singh and Manoj</span></p>
 </div>
 
 </div>
+<script>
+function toggleDesc(id) {
+    var shortText = document.getElementById("short_" + id);
+    var fullText = document.getElementById("full_" + id);
+
+    if (shortText.style.display === "none") {
+        shortText.style.display = "inline";
+        fullText.style.display = "none";
+    } else {
+        shortText.style.display = "none";
+        fullText.style.display = "inline";
+    }
+}
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <?php if ($delete_mode): ?>
@@ -413,5 +932,23 @@ function toggleAllProducts(state) {
 }
 </script>
 <?php endif; ?>
+<script>
+function openImageModal(src) {
+    document.getElementById("imageModal").style.display = "block";
+    document.getElementById("modalImg").src = src;
+}
+
+function closeImageModal() {
+    document.getElementById("imageModal").style.display = "none";
+}
+
+// Click outside to close
+window.onclick = function(event) {
+    let modal = document.getElementById("imageModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
 </body>
 </html>

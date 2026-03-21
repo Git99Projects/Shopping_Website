@@ -57,36 +57,61 @@ exit();
 
   <!-- Full screen light black background -->
   <style>
+    
   body {
-  background: url('image/log.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: white;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
+ margin:0;
   font-family: Arial, sans-serif;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  overflow-x:hidden;
+}
+/* Background video */
+.video-bg{
+  position:fixed;
+  right:0;
+  bottom:0;
+  min-width:100%;
+  min-height:100%;
+  object-fit:cover;
+  z-index:-1;
 }
 
 /* Glass Login Box */
-.form-box {
-  background: rgba(49, 48, 48, 0.45);   /* transparent dark */
-  backdrop-filter: blur(5px);      /* blur effect */
-  -webkit-backdrop-filter: blur(10px);
-  padding: 40px;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 420px;                 /* normal login size */
-  box-shadow: 0 0 30px rgba(115, 109, 109, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.form-box{
+position:relative;
+padding:40px;
+width:100%;
+max-width:420px;
+border-radius:20px;
 
-  /* 👇 ADD GLOW HERE */
-  box-shadow:
-    -10px 0 20px rgba(255, 0, 150, 0.6),
-     10px 0 20px rgba(0, 255, 255, 0.6);
+/* premium glass background */
+background:rgba(155, 82, 82, 0.08);
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+
+/* glass border */
+border:1px solid rgba(255,255,255,0.25);
+
+/* premium shadow */
+box-shadow:
+0 10px 40px rgba(0,0,0,0.6),
+0 0 20px rgba(0,170,255,0.3);
+
+/* smooth animation */
+transition:0.4s;
+overflow:hidden;
 }
 
+
+.form-box:hover{
+box-shadow:
+0 15px 50px rgba(0,0,0,0.7),
+0 0 30px rgba(0,170,255,0.6);
+transform:translateY(-5px);
+}
 /* Active tab */
 .nav-pills .nav-link.active {
   background-color: #0d6efd !important;
@@ -103,12 +128,255 @@ exit();
   text-align: center;
 }
 
+.login-title{
+font-size:28px;
+font-weight:600;
+color:#00aaff;   /* premium blue */
+letter-spacing:1px;
+
+text-shadow:
+0 0 5px #00aaff,
+0 0 10px #00aaff,
+0 0 20px rgba(0,170,255,0.6);
+
+transition:0.3s;
+}
+
+.login-title:hover{
+color:#00d9ff;
+text-shadow:
+0 0 10px #00d9ff,
+0 0 20px #00d9ff,
+0 0 30px rgba(0,217,255,0.9);
+}
 
 
+.form-label{
+color:#00aaff;              /* premium blue color */
+font-weight:530;
+letter-spacing:0.5px;
+transition:0.3s;
+}
+
+/* hover par sirf glow ho, zoom na ho */
+.form-label:hover{
+color:#00c3ff;
+text-shadow:
+0 0 5px #00aaff,
+0 0 10px #00aaff;
+}
+.form-control{
+background:rgba(255,255,255,0.08) !important;
+border:1px solid rgba(255,255,255,0.2);
+color:white !important;
+border-radius:10px;
+transition:0.3s ease;
+}
+
+/* Cursor input box par aane par */
+.form-control:hover{
+transform:scale(1.05);
+border-color:#00aaff;
+
+box-shadow:
+0 0 5px #00aaff,
+0 0 10px rgba(0,170,255,0.7);
+
+background:rgba(0,170,255,0.08);  /* blue glass background */
+}
+
+.form-control::placeholder{
+color: rgba(255,255,255,0.6);   /* halka white */
+}
+/* Click / typing par aur strong glow */
+.form-control:focus{
+color:white !important;
+background:rgba(0,170,255,0.12) !important;
+border-color:#00aaff;
+
+box-shadow:
+0 0 8px #00aaff,
+0 0 15px rgba(0,170,255,0.9);
+
+
+outline:none;
+}
+
+a{
+color:#ddd;
+text-decoration:none;
+transition:0.3s ease;
+display:inline-block;
+}
+
+a:hover{
+color:#00ffff;
+text-shadow:
+0 0 5px #00ffff,
+0 0 10px #00ffff;
+}
+.form-check-label{
+transition:0.3s;
+display:inline-block;
+}
+
+.form-check-label:hover{
+transform:scale(1.05);
+color:#00ffff;
+}
+.btn-light{
+background:linear-gradient(45deg,#ff00cc,#3333ff);
+border:none;
+color:white;
+font-weight:bold;
+border-radius:10px;
+transition:0.3s;
+}
+
+.btn-light:hover{
+transform:scale(1.05);
+box-shadow:
+0 0 10px #ff00cc,
+0 0 20px #ff00cc,
+0 0 40px #ff00cc;
+}
+.register-link{
+color:#ddd;
+text-decoration:none;
+transition:0.3s;
+display:inline-block;
+}
+
+.register-link:hover{
+transform:scale(1.2);
+color:#00ffff;
+text-shadow:
+0 0 5px #00ffff,
+0 0 10px #00ffff;
+}
+
+.social-icons{
+display:flex;
+justify-content:center;
+gap:30px;
+margin-top:10px;
+}
+
+.social-icons a{
+width:50px;
+height:50px;
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:50%;
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,0.25);
+
+transition:0.3s;
+}
+
+.social-icons a:hover{
+transform:scale(1.2);
+box-shadow:
+0 0 10px #00aaff,
+0 0 20px #00aaff;
+}
+
+.social-img{
+width:38px;
+height:38px;
+object-fit:contain;
+}
+/* ========================= */
+/* GLOBAL FIX */
+/* ========================= */
+body {
+  overflow-x: hidden; /* horizontal scroll band */
+}
+
+/* ========================= */
+/* 📱 MOBILE VIEW (0–576px) */
+/* ========================= */
+@media (max-width: 576px) {
+
+  body {
+    align-items: flex-start;   /* center ki jagah top se start */
+    padding-top: 40px;
+    overflow-y: auto;          /* scroll allow */
+  }
+
+  .form-box {
+    width: 90%;
+    padding: 20px;
+    border-radius: 15px;
+  }
+
+  .login-title {
+    font-size: 22px;
+  }
+
+  .form-control {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .btn-light {
+    width: 100%;
+  }
+
+  /* social icons small */
+  .social-icons {
+    gap: 15px;
+  }
+
+  .social-icons a {
+    width: 40px;
+    height: 40px;
+  }
+
+  .social-img {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+/* ========================= */
+/* 📱 TABLET VIEW (577–991px) */
+/* ========================= */
+@media (min-width: 577px) and (max-width: 991px) {
+
+  .form-box {
+    max-width: 500px;
+    padding: 30px;
+  }
+
+  .login-title {
+    font-size: 24px;
+  }
+}
+
+/* ========================= */
+/* 💻 LAPTOP VIEW (992px+) */
+/* ========================= */
+@media (min-width: 992px) {
+
+  .form-box {
+    max-width: 420px; /* perfect login size */
+  }
+
+  .login-title {
+    font-size: 28px;
+  }
+}
   </style>
 </head>
 <body>
 
+<video autoplay muted loop class="video-bg">
+  <source src="image/animation.mp4" type="video/mp4">
+</video>
 <div class="form-box">
   <!-- Pills navs -->
   <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
@@ -123,11 +391,7 @@ exit();
           <?php endif; ?>
       <form action="login.php" method="POST">
         <div class="text-center mb-3">
-          <p style="font-size: 28px;">Login </p>
-          <!-- <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-facebook-f"></i></button>
-          <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-google"></i></button>
-          <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-twitter"></i></button>
-          <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-github"></i></button> -->
+          <p  class="login-title">Login </p>
         </div>
 
         <!-- <p class="text-center">or:</p> -->
@@ -144,118 +408,49 @@ exit();
           
         </div>
 
-        <div class="row mb-4">
-          <div class="col-md-6 d-flex justify-content-center">
-            <div class="form-check mb-3 mb-md-0">
-              <input class="form-check-input" type="checkbox" id="loginCheck" checked />
-              <label class="form-check-label" for="loginCheck">Remember me </label>
-            </div>
-          </div>
-          <div class="col-md-6 d-flex justify-content-center">
-            <a href="#">Forgot password?</a>
-          </div>
-        </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+<div class="form-check">
+<input class="form-check-input" type="checkbox" id="loginCheck" checked />
+<label class="form-check-label" for="loginCheck">
+Remember me
+</label>
+</div>
+
+<a href="#" class="register-link">Forgot password?</a>
+
+</div>
 
         <button type="submit" class="btn btn-light btn-block mb-4">Sign in</button>
+<div class="social-icons">
 
+<a href="#">
+<img src="image/google.png" class="social-img" alt="Google">
+</a>
+
+<a href="#">
+<img src="image/facebook.png" class="social-img" alt="Facebook">
+</a>
+
+<a href="#">
+<img src="image/twitter.png" class="social-img" alt="Twitter">
+</a>
+
+<a href="#">
+<img src="image/instagram.png" class="social-img" alt="Instagram">
+</a>
+
+</div><br>
         <div class="text-center">
-          <p>Not a member? <a href="ragister.php" data-mdb-toggle="pill">Register</a></p>
+          <p>Not a member? <a href="ragister.php" class="register-link" data-mdb-toggle="pill">Register</a></p>
         </div>
       </form>
     </div>
-
-    <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-      <form>
-        <div class="text-center mb-3">
-          <p>Sign up with:</p>
-          <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-facebook-f"></i></button>
-          <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-google"></i></button>
-          <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-twitter"></i></button>
-          <button type="button" class="btn btn-link btn-floating mx-1"><i class="fab fa-github"></i></button>
-        </div>
-
-        <p class="text-center">or:</p>
-
-        <div class="form-outline mb-4">
-          <input type="text" id="registerName" class="form-control" required />
-          <label class="form-label" for="registerName">Name</label>
-        </div>
-
-        <div class="form-outline mb-4">
-          <input type="text" id="registerUsername" class="form-control" required />
-          <label class="form-label" for="registerUsername">Username</label>
-        </div>
-
-        <div class="form-outline mb-4">
-          <input type="email" id="registerEmail" class="form-control" required />
-          <label class="form-label" for="registerEmail">Email</label>
-        </div>
-
-        <div class="form-outline mb-4">
-          <input type="password" id="registerPassword" class="form-control" required />
-          <label class="form-label" for="registerPassword">Password</label>
-        </div>
-
-        <div class="form-outline mb-4">
-          <input type="password" id="registerRepeatPassword" class="form-control" required />
-          <label class="form-label" for="registerRepeatPassword">Repeat password</label>
-        </div>
-
-        <div class="form-check d-flex justify-content-center mb-4">
-          <input class="form-check-input me-2" type="checkbox" id="registerCheck" required />
-          <label class="form-check-label" for="registerCheck">
-            I have read and agree to the terms
-          </label>
-        </div>
-
-        <button type="submit" class="btn btn-light btn-block mb-3">Sign up</button>
+        
       </form>
     </div>
   </div>
 </div>
-
-
-<!-- FISH START -->
-<div id="fish" style="
-width:660px;
-position:fixed;
-top:0;
-left:0;
-pointer-events:none;
-z-index:9999;"></div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
-
-<script>
-var animation = lottie.loadAnimation({
- container: document.getElementById("fish"),
- renderer:"svg",
- loop:true,
- autoplay:true,
- path:"fish.json"
-});
-
-let fish = document.getElementById("fish");
-
-let x = window.innerWidth/2;
-let y = window.innerHeight/2;
-
-document.addEventListener("mousemove", e=>{
-
- let dx = e.clientX - x;
- let dy = e.clientY - y;
-
- x += dx * 0.08;
- y += dy * 0.08;
-
- fish.style.transform = dx < 0 ? "scaleX(-1)" : "scaleX(1)";
-
- fish.style.left = x + "px";
- fish.style.top = y + "px";
-});
-</script>
-<!-- FISH END -->
-
 
 </body>
 </html>  
