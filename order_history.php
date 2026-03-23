@@ -123,63 +123,7 @@ img {
 /* ========================= */
 /* 📱 MOBILE VIEW */
 /* ========================= */
-@media (max-width: 576px) {
 
-  .container {
-    margin: 15px;
-    padding: 15px;
-  }
-
-  h2 {
-    font-size: 20px;
-  }
-
-  /* Table → Card style */
-  .table thead {
-    display: none;
-  }
-
-  .table, .table tbody, .table tr, .table td {
-    display: block;
-    width: 100%;
-  }
-
-  .table tr {
-    margin-bottom: 15px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 10px;
-    padding: 10px;
-  }
-
-  .table td {
-    padding-left: 50%;
-    position: relative;
-    font-size: 13px;
-  }
-
-  .table td::before {
-    position: absolute;
-    left: 10px;
-    width: 45%;
-    font-weight: bold;
-    color: #00e5ff;
-  }
-
-  .table td:nth-child(2)::before { content: "Product"; }
-  .table td:nth-child(3)::before { content: "Qty"; }
-  .table td:nth-child(4)::before { content: "Price"; }
-  .table td:nth-child(5)::before { content: "Delivery"; }
-  .table td:nth-child(6)::before { content: "Total"; }
-
-  img {
-    width: 50px;
-  }
-
-  .btn {
-    width: 100%;
-    margin-top: 8px;
-  }
-}
 
 /* ========================= */
 /* 💻 LAPTOP VIEW */
@@ -222,6 +166,96 @@ img {
     0 0 15px rgba(0,114,255,0.4);
 
   font-size:13px;
+}
+/* ========================= */
+/* 🔥 RESPONSIVE FIX */
+/* ========================= */
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* Image auto resize */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ========================= */
+/* 📱 MOBILE */
+/* ========================= */
+@media (max-width: 576px) {
+
+  .container {
+    margin: 10px;
+    padding: 12px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .card-header {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  /* ✅ Table scroll instead of break */
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .table {
+    min-width: 600px;
+    font-size: 12px;
+  }
+
+  img {
+    width: 45px;
+  }
+
+  .btn {
+    width: 100%;
+    font-size: 12px;
+    margin-top: 6px;
+  }
+}
+
+/* ========================= */
+/* 📱 TABLET */
+/* ========================= */
+@media (min-width: 577px) and (max-width: 991px) {
+
+  .container {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  .card-header {
+    font-size: 14px;
+  }
+
+  .table {
+    font-size: 13px;
+  }
+}
+
+/* ========================= */
+/* 💻 LAPTOP */
+/* ========================= */
+@media (min-width: 992px) {
+
+  .container {
+    max-width: 1200px;
+  }
+
+  .table {
+    font-size: 14px;
+  }
 }
   </style>
 </head>
@@ -276,6 +310,7 @@ img {
         <p><strong>Name:</strong> <?php echo htmlspecialchars($order['name']); ?></p>
         <p><strong>Address:</strong> <?php echo nl2br(htmlspecialchars($order['address'])); ?></p>
 
+        <div class="table-responsive">
         <table class="table table-bordered">
           <thead class="table-light">
             <tr>
@@ -330,6 +365,7 @@ img {
             </tr>
           </tfoot>
         </table>
+        </div>
       </div>
     </div>
   <?php endwhile; ?>

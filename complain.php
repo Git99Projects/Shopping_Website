@@ -143,82 +143,6 @@ h2 {
   display: none;
 }
 
-
-/* ========================= */
-/* 📱 MOBILE VIEW (0–576px) */
-/* ========================= */
-@media (max-width: 576px) {
-
-  .container {
-    margin: 15px;
-    padding: 15px;
-  }
-
-  h2 {
-    font-size: 18px;
-    text-align: center;
-  }
-
-  .badge-count {
-    display: block;
-    margin-top: 8px;
-  }
-
-  /* 🔥 Table → Card Style */
-  .table thead {
-    display: none;
-  }
-
-  .table, 
-  .table tbody, 
-  .table tr, 
-  .table td {
-    display: block;
-    width: 100%;
-  }
-
-  .table tr {
-    margin-bottom: 15px;
-    padding: 12px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.06);
-  }
-
-  .table td {
-    padding: 8px;
-    padding-left: 50%;
-    position: relative;
-    font-size: 13px;
-  }
-
-  /* Labels for mobile */
-  .table td::before {
-    position: absolute;
-    left: 10px;
-    width: 45%;
-    font-weight: bold;
-    color: #00e5ff;
-  }
-
-  .table td:nth-child(2)::before { content: "Name"; }
-  .table td:nth-child(3)::before { content: "Email"; }
-  .table td:nth-child(4)::before { content: "Subject"; }
-  .table td:nth-child(5)::before { content: "Message"; }
-  .table td:nth-child(6)::before { content: "Date"; }
-  .table td:nth-child(7)::before { content: "Action"; }
-
-  /* Button full width */
-  .btn-danger {
-    width: 100%;
-    margin-top: 10px;
-  }
-
-  /* Navbar fix */
-  .navbar-nav .nav-link {
-    margin: 5px 0;
-  }
-}
-
 /* ========================= */
 /* 📱 TABLET VIEW (577–991px) */
 /* ========================= */
@@ -288,6 +212,89 @@ h2 {
     0 0 15px rgba(0,114,255,0.4);
 
   font-size:13px;
+}
+/* ========================= */
+/* 🔥 UNIVERSAL RESPONSIVE FIX */
+/* ========================= */
+
+.container {
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* Table fix */
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* ========================= */
+/* 📱 MOBILE (0–576px) */
+/* ========================= */
+@media (max-width: 576px) {
+
+  .container {
+    margin: 10px;
+    padding: 12px;
+  }
+
+  h2 {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .badge-count {
+    display: block;
+    margin-top: 8px;
+  }
+
+  /* ✅ Table scroll instead of break */
+  .table {
+    min-width: 700px;   /* 🔥 important */
+    font-size: 12px;
+  }
+
+  .table td, .table th {
+    white-space: nowrap;
+  }
+
+  /* Button fix */
+  .btn-danger {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .navbar-nav .nav-link {
+    margin: 5px 0;
+  }
+}
+
+/* ========================= */
+/* 📱 TABLET */
+/* ========================= */
+@media (min-width: 577px) and (max-width: 991px) {
+
+  .container {
+    max-width: 95%;
+    padding: 20px;
+  }
+
+  .table {
+    font-size: 13px;
+  }
+}
+
+/* ========================= */
+/* 💻 LAPTOP */
+/* ========================= */
+@media (min-width: 992px) {
+
+  .container {
+    max-width: 1100px;
+  }
+
+  .table {
+    font-size: 14px;
+  }
 }
   </style>
 </head>

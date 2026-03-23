@@ -157,6 +157,93 @@ accent-color:#00d4ff;
 .hide-id{
 display:none;
 }
+/* ========================= */
+/* 🔥 UNIVERSAL RESPONSIVE FIX */
+/* ========================= */
+
+.page-box {
+  width: 100%;
+}
+
+/* Table scroll fix */
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* ========================= */
+/* 📱 MOBILE (0–576px) */
+/* ========================= */
+@media (max-width: 576px) {
+
+  .page-box {
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  /* Header buttons wrap */
+  .d-flex {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* ✅ Table scroll instead of break */
+  .table {
+    min-width: 650px;   /* 🔥 important */
+    font-size: 12px;
+  }
+
+  .table td, .table th {
+    white-space: nowrap;
+  }
+
+  .product-img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .product-checkbox {
+    width: 20px;
+    height: 20px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+}
+
+/* ========================= */
+/* 📱 TABLET */
+/* ========================= */
+@media (min-width: 577px) and (max-width: 991px) {
+
+  .page-box {
+    padding: 20px;
+  }
+
+  .table {
+    font-size: 13px;
+  }
+}
+
+/* ========================= */
+/* 💻 LAPTOP */
+/* ========================= */
+@media (min-width: 992px) {
+
+  .page-box {
+    max-width: 1100px;
+    margin: auto;
+  }
+
+  .table {
+    font-size: 14px;
+  }
+}
   </style>
 </head>
 <body>
@@ -164,8 +251,8 @@ display:none;
 <div class="container">
   <div class="page-box">
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2 class="m-0"><i class="fa-solid fa-rotate-left text-success me-2"></i>Restore Deleted Products</h2>
       <a href="admin_dashboard.php" class="btn btn-secondary">⬅️ Back</a>
+      <h2 class="m-0"><i class="fa-solid fa-rotate-left text-success me-2"></i>Restore Deleted Products</h2>
     </div>
 
     <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>

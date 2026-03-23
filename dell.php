@@ -521,6 +521,53 @@ background: rgba(255,255,255,0.15);
         width: 90%;
     }
 }
+@media (max-width: 576px) {
+
+  .navbar.d-lg-none {
+    display: flex;
+    flex-wrap: nowrap !important;   /* 🔥 sab ek line me */
+    align-items: center;
+    justify-content: space-between;
+  }
+
+}
+@media (max-width: 576px) {
+
+  .premium-search {
+    width: 110px !important;   /* 🔥 chhota karo */
+  }
+
+}
+@media (max-width: 576px) {
+
+  .fa-cart-shopping {
+    font-size: 25px !important;
+  }
+
+}
+/* ❌ mobile me hide */
+@media (max-width: 991px){
+    .profile-desktop{
+        display: none !important;
+    }
+}
+
+/* ✅ desktop me show */
+@media (min-width: 992px){
+    .profile-desktop{
+        display: block !important;
+    }
+}
+.profile-img{
+    width: 30px;
+    height: 30px;
+    border-radius: 10%;
+    cursor: pointer;
+}
+.profile-img:hover{
+    transform: scale(1.1);
+    box-shadow: 0 0 25px #0957f4ff;
+}
     </style>
 </head>
 <body>
@@ -564,11 +611,16 @@ background: rgba(255,255,255,0.15);
 
       <!-- Left Links -->
       <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link nav-glow" href="<?php echo $delete_mode ? 'dell.php?delete_mode=1' : 'dell.php'; ?>">Home</a>
-        </li>
+        <?php if (($_SESSION['role'] ?? '') !== 'admin'): ?>
+  <li class="nav-item">
+    <a class="nav-link nav-glow" href="home.php">Home</a>
+  </li>
+<?php endif; ?>
         <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
           <li class="nav-item"><a class="nav-link nav-glow" href="admin_dashboard.php">Admin</a></li>
+           <li class="nav-item">
+          <a href="<?php echo $delete_mode ? 'home.php?delete_mode=1' : 'home.php'; ?>" class="nav-link nav-glow" >Home</a>
+        </li>
          <?php endif; ?>
         <li class="nav-item">
           <a class="nav-link nav-glow" href="contact.php">Contact</a>
@@ -631,10 +683,26 @@ background: rgba(255,255,255,0.15);
 <!-- MOBILE NAVBAR -->
 <nav class="navbar bg-info d-flex d-lg-none px-3">
 
-  <!-- Logo -->
-  <a href="home.php">
-    <img src="image/logo.png" width="40">
-  </a>
+   <!-- Profile (ONLY ONE ICON) -->
+      <div class="dropdown">
+        <a class="btn  dropdown-toggle text-dark fw-bold nav-glow dropdown-custom" href="#"
+           role="button" data-bs-toggle="dropdown">
+          <img src="image/profile.png" class="profile-img">
+        </a>
+
+        <ul class="dropdown-menu dropdown-glass">
+          <?php if (isset($_SESSION['user_id'])): ?>
+            <li><a class="dropdown-item nav-glow" href="profile.php">My Profile</a></li>
+            <li><a class="dropdown-item nav-glow" href="order_history.php">My Orders</a></li>
+            <li><a class="dropdown-item nav-glow" href="complain.php">My Complaints</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
+          <?php else: ?>
+            <li><a class="dropdown-item nav-glow" href="login.php">Login</a></li>
+            <li><a class="dropdown-item nav-glow" href="register.php">Register</a></li>
+          <?php endif; ?>
+        </ul>
+      </div>
 
   <!-- Home Dropdown -->
   <div class="dropdown">
@@ -643,9 +711,16 @@ background: rgba(255,255,255,0.15);
   </button>
 
   <ul class="dropdown-menu dropdown-glass">
-    <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'dell.php?delete_mode=1' : 'dell.php'; ?>">Home</a></li>
-    <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
+<ul class="navbar-nav me-auto">
+        <?php if (($_SESSION['role'] ?? '') !== 'admin'): ?>
+  <li>
+    <a class="dropdown-item nav-glow" href="home.php">Home</a>
+  </li>
+<?php endif; ?>    <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
          <li><a class="dropdown-item nav-glow" href="admin_dashboard.php">Admin</a></li>
+         <li>
+          <a href="<?php echo $delete_mode ? 'home.php?delete_mode=1' : 'home.php'; ?>" class="dropdown-item nav-glow" >Home</a>
+        </li>
          <?php endif; ?>
     <li><a class="dropdown-item nav-glow" href="contact.php">Contact</a></li>
     <?php if (isset($_SESSION['user_id'])): ?>
@@ -690,26 +765,29 @@ if ($user_id && isset($_SESSION['cart'][$user_id])) {
 
     <ul class="navbar-nav products-section_2nav">
 
-    <!-- Profile (ONLY ONE ICON) -->
-      <div class="dropdown">
-        <a class="btn btn-info dropdown-toggle text-dark fw-bold nav-glow dropdown-custom" href="#"
-           role="button" data-bs-toggle="dropdown">
-          <i class="fa-solid fa-circle-user fs-4"></i>
-        </a>
+   <!-- ✅ PROFILE (DESKTOP ONLY) -->
+<li class="nav-item dropdown mx-3 profile-desktop">
+  <a class="nav-link dropdown-toggle nav-glow fw-bold"
+     href="#"
+     role="button"
+     data-bs-toggle="dropdown">
 
-        <ul class="dropdown-menu dropdown-glass">
-          <?php if (isset($_SESSION['user_id'])): ?>
-            <li><a class="dropdown-item nav-glow" href="profile.php">My Profile</a></li>
-            <li><a class="dropdown-item nav-glow" href="order_history.php">My Orders</a></li>
-            <li><a class="dropdown-item nav-glow" href="complain.php">My Complaints</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
-          <?php else: ?>
-            <li><a class="dropdown-item nav-glow" href="login.php">Login</a></li>
-            <li><a class="dropdown-item nav-glow" href="register.php">Register</a></li>
-          <?php endif; ?>
-        </ul>
-      </div>
+    <img src="image/profile.png" class="profile-img">
+  </a>
+
+  <ul class="dropdown-menu dropdown-glass">
+    <?php if (isset($_SESSION['user_id'])): ?>
+      <li><a class="dropdown-item nav-glow" href="profile.php">My Profile</a></li>
+      <li><a class="dropdown-item nav-glow" href="order_history.php">My Orders</a></li>
+      <li><a class="dropdown-item nav-glow" href="complain.php">My Complaints</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
+    <?php else: ?>
+      <li><a class="dropdown-item nav-glow" href="login.php">Login</a></li>
+      <li><a class="dropdown-item nav-glow" href="register.php">Register</a></li>
+    <?php endif; ?>
+  </ul>
+</li>
       <!-- Mobiles Dropdown -->
       <li class="nav-item dropdown mx-3">
         <a class="nav-link dropdown-toggle nav-glow fw-bold"
@@ -763,7 +841,6 @@ if ($user_id && isset($_SESSION['cart'][$user_id])) {
 
   </div>
 </nav>
-<br>
 
 <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
   <div class="container mt-3">
@@ -803,7 +880,7 @@ if ($user_id && isset($_SESSION['cart'][$user_id])) {
 <!-- Products Section -->
 <div class="row px-1">
     <div class="col-md-10 px-3">
-        <div class="row px-4 py-4">
+        <div class="row px-1 py-1">
             <?php
             $query = "SELECT * FROM dell_products WHERE brand = 'Dell' AND deleted_by_admin = 0";
             $result = $conn->query($query);

@@ -139,72 +139,6 @@ img:hover {
   color: #fff;
 }
 
-/* ========================= */
-/* 📱 MOBILE VIEW */
-/* ========================= */
-@media (max-width: 576px) {
-
-  .container-box {
-    padding: 15px;
-  }
-
-  .cart-title {
-    font-size: 20px;
-  }
-
-  /* Table → Card style */
-  .table thead {
-    display: none;
-  }
-
-  .table, .table tbody, .table tr, .table td {
-    display: block;
-    width: 100%;
-  }
-
-  .table tr {
-    margin-bottom: 15px;
-    padding: 10px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.05);
-  }
-
-  .table td {
-    padding-left: 50%;
-    position: relative;
-    font-size: 13px;
-  }
-
-  .table td::before {
-    position: absolute;
-    left: 10px;
-    width: 45%;
-    font-weight: bold;
-    color: #00e5ff;
-  }
-
-  .table td:nth-child(2)::before { content: "Image"; }
-  .table td:nth-child(3)::before { content: "Product"; }
-  .table td:nth-child(4)::before { content: "Price"; }
-  .table td:nth-child(5)::before { content: "Qty"; }
-  .table td:nth-child(6)::before { content: "Delivery"; }
-  .table td:nth-child(7)::before { content: "Total"; }
-
-  img {
-    width: 50px;
-    height: 50px;
-  }
-
-  .btn {
-    width: 100%;
-    margin-top: 8px;
-  }
-
-  .d-flex {
-    flex-direction: column;
-    gap: 10px;
-  }
-}
 
 /* ========================= */
 /* 💻 LAPTOP VIEW */
@@ -233,6 +167,88 @@ input[type="checkbox"] {
 .btn-success:hover {
   transform: scale(1.08);
   box-shadow: 0 0 15px rgba(0,255,100,0.7);
+}
+/* ========================= */
+/* 🔥 UNIVERSAL RESPONSIVE FIX */
+/* ========================= */
+
+.container-box {
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* Table scroll fix */
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* ========================= */
+/* 📱 MOBILE (0–576px) */
+/* ========================= */
+@media (max-width: 576px) {
+
+  .container-box {
+    padding: 12px;
+  }
+
+  .cart-title {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  /* ✅ Table scroll instead of break */
+  .table {
+    min-width: 750px;   /* 🔥 important */
+    font-size: 12px;
+  }
+
+  .table td, .table th {
+    white-space: nowrap;
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .d-flex {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* ========================= */
+/* 📱 TABLET */
+/* ========================= */
+@media (min-width: 577px) and (max-width: 991px) {
+
+  .container-box {
+    max-width: 95%;
+    padding: 20px;
+  }
+
+  .table {
+    font-size: 13px;
+  }
+}
+
+/* ========================= */
+/* 💻 LAPTOP */
+/* ========================= */
+@media (min-width: 992px) {
+
+  .container-box {
+    max-width: 1200px;
+  }
+
+  .table {
+    font-size: 14px;
+  }
 }
   </style>
 </head>
