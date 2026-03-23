@@ -264,6 +264,115 @@ box-shadow:
 
 font-size:13px;
 }
+/* ========================= */
+/* 🔥 UNIVERSAL RESPONSIVE FIX */
+/* ========================= */
+
+/* Container safe */
+.container {
+  width: 100%;
+}
+
+/* Table scroll fix */
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* ========================= */
+/* 📱 MOBILE (0–576px) */
+/* ========================= */
+@media (max-width: 576px) {
+
+  /* Navbar wrap */
+  .navbar .d-flex {
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .navbar .btn {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  /* Top buttons (Add/Delete/Restore) */
+  .mb-4.d-flex {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mb-4.d-flex .btn {
+    width: 100%;
+  }
+
+  /* Cards text */
+  .card-custom {
+    padding: 12px !important;
+  }
+
+  .card-custom .fs-2 {
+    font-size: 22px;
+  }
+
+  /* Table scroll instead of break */
+  .table {
+    min-width: 900px;   /* 🔥 main fix */
+    font-size: 12px;
+  }
+
+  .table td, .table th {
+    white-space: nowrap;
+  }
+
+  /* Form inside table */
+  .table form {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .form-select {
+    font-size: 12px;
+  }
+
+  .btn-sm {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+
+  /* Modal responsive */
+  .modal-dialog {
+    margin: 10px;
+  }
+
+}
+
+/* ========================= */
+/* 📱 TABLET */
+/* ========================= */
+@media (min-width: 577px) and (max-width: 991px) {
+
+  .table {
+    min-width: 800px;
+    font-size: 13px;
+  }
+
+  .card-custom .fs-2 {
+    font-size: 26px;
+  }
+
+}
+
+/* ========================= */
+/* 💻 LAPTOP */
+/* ========================= */
+@media (min-width: 992px) {
+
+  .table {
+    font-size: 14px;
+  }
+
+}
   </style>
 </head>
 <body>

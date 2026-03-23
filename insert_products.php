@@ -108,6 +108,72 @@ text-shadow:
 0 0 5px #00d4ff,
 0 0 10px rgba(0,212,255,0.5);
 }
+.button {
+  display: flex;
+  flex-wrap: wrap;   /* 🔥 MAIN FIX */
+  gap: 10px;
+}
+/* ========================= */
+/* 📱 MOBILE FIX */
+/* ========================= */
+@media (max-width: 576px) {
+
+  .bg-secondary {
+    flex-direction: column;   /* 🔥 vertical layout */
+    align-items: center !important;
+    text-align: center;
+    padding: 15px;
+  }
+
+  .px-5 {
+    padding: 0 !important;
+    margin-bottom: 10px;
+  }
+
+  .button {
+    justify-content: center;
+  }
+
+  button a.nav-link {
+    padding: 8px 15px;
+    font-size: 13px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  .nav-linkwelcome {
+    font-size: 14px;
+    text-align: center;
+  }
+}
+
+/* ========================= */
+/* 📱 TABLET */
+/* ========================= */
+@media (min-width: 577px) and (max-width: 991px) {
+
+  .button {
+    justify-content: center;
+  }
+
+  button a.nav-link {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+/* ========================= */
+/* 💻 LAPTOP */
+/* ========================= */
+@media (min-width: 992px) {
+
+  .button {
+    justify-content: flex-start;
+  }
+
+}
     </style>
 
 </head>
