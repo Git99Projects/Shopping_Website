@@ -1,6 +1,7 @@
 <?php
 include 'auth_admin.php';
 include 'db.php';
+include 'user_profile_data.php';
 
 /* ---------- COUNTS ---------- */
 $totalUsers = 0;
@@ -373,6 +374,127 @@ font-size:13px;
   }
 
 }
+/* 🔵 Nav Glow (same effect) */
+.nav-glow {
+    font-weight: bold;
+    font-size: 16px;
+    color: #2020e7ff;
+    text-shadow: 0 0 6px #e6dfdfff, 0 0 12px #314180ff;
+    transition: 0.3s ease;
+}
+
+.nav-glow:hover {
+    color: #ff1493;
+    transform: scale(1.08);
+}
+
+/* 🔵 Dropdown button */
+.dropdown-custom {
+    background: transparent !important;
+    color: #2020e7ff !important;
+    border-radius: 8px;
+    transition: 0.3s ease;
+}
+
+.dropdown-custom:hover {
+    background: rgba(255,255,255,0.2) !important;
+    transform: scale(1.05);
+}
+
+/* 🔵 Dropdown menu (IMPORTANT for working) */
+.dropdown-menu {
+    background: rgba(152, 137, 137, 0.9) !important;
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    z-index: 9999;
+}
+
+.dropdown-menu .dropdown-item {
+    color: white;
+    transition: 0.3s;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background: rgba(255,255,255,0.2);
+    color: red;
+}
+
+/* 🔵 Profile Image */
+.profile-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #00c6ff;
+    cursor: pointer;
+}
+
+.profile-img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px #00c6ff;
+}
+
+/* 🔵 Default Avatar */
+.nav-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: linear-gradient(135deg,#00c6ff,#0072ff);
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.nav-avatar:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #00c6ff;
+}
+#passwordBox {
+  transition: all 0.3s ease;
+}
+/* 🔥 Premium Select */
+.premium-select {
+  background: rgba(181, 170, 170, 0.1);
+  color: white;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.3);
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.premium-select:hover {
+  box-shadow: 0 0 15px rgba(0,212,255,0.6);
+}
+
+.premium-select:focus {
+  border-color: #00c6ff;
+  box-shadow: 0 0 20px rgba(0,198,255,0.8);
+}
+
+/* option text fix */
+.premium-select option {
+  color: black;
+}
+.form-control {
+  background: rgba(152, 129, 129, 0.14);
+  color: white;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.form-control:focus {
+  border-color: #00c6ff;
+  box-shadow: 0 0 15px rgba(0,198,255,0.8);
+}
+.toast {
+  background: linear-gradient(135deg,#00c6ff,#0072ff);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,198,255,0.7);
+  font-weight: bold;
+}
   </style>
 </head>
 <body>
@@ -386,9 +508,35 @@ font-size:13px;
     </span>
 
     <div class="ms-auto d-flex align-items-center gap-3">
-      <span class="text-muted">
+      <span class="navbar-brand">
         Hi, <?= e($_SESSION['first_name'] ?? 'Admin'); ?>
       </span>
+      
+      <!-- Profile (ONLY ONE ICON) -->
+      <div class="dropdown">
+        <a class="btn text-dark fw-bold nav-glow dropdown-custom" href="#"
+           role="button" data-bs-toggle="dropdown">
+          <?php if (!empty($profile_image)): ?>
+    <img src="uploads/<?php echo $profile_image; ?>" class="profile-img">
+<?php else: ?>
+    <div class="nav-avatar">
+        <?php echo strtoupper($first_name[0] ?? 'U'); ?>
+    </div>
+<?php endif; ?>
+        </a>
+        <ul class="dropdown-menu dropdown-glass">
+          <?php if (isset($_SESSION['user_id'])): ?>
+            <li><a class="dropdown-item nav-glow" href="profile.php">My Profile</a></li>
+            <li><a class="dropdown-item nav-glow" href="order_history.php">Orders</a></li>
+            <li><a class="dropdown-item nav-glow" href="complain.php">Complaints</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="logout.php">Logout</a></li>
+          <?php else: ?>
+            <li><a class="dropdown-item nav-glow" href="login.php">Login</a></li>
+            <li><a class="dropdown-item nav-glow" href="register.php">Register</a></li>
+          <?php endif; ?>
+        </ul>
+      </div>
       <a href="home.php" class="btn btn-outline-primary btn-sm">Go to Site</a>
       <a href="logout.php" class="btn btn-danger btn-sm">Logout</a>
     </div>
@@ -402,6 +550,46 @@ font-size:13px;
     <a href="insert_products.php" class="btn btn-success">➕ Add Product</a>
     <a href="home.php?delete_mode=1" class="btn btn-danger">🗑️ Delete Product</a>
     <a href="restore_products.php" class="btn btn-warning">♻️ Restore Product</a>
+    <button class="btn btn-info" onclick="togglePasswordBox()">
+  🔑 User Change Password
+</button>
+</div>
+<div id="passwordBox" class="card card-custom p-3 mt-3" style="display:none; max-width:500px;">
+
+  <h6 class="mb-3 navbar-brand">Change User Password</h6>
+
+  <form method="POST" action="admin_change_password.php">
+
+    <!-- Email Select -->
+   <div class="mb-3">
+  <label class="form-label text-info fw-bold">🔍 Select User</label>
+
+  <select name="user_id" class="form-select premium-select" required>
+    <option value="">🔍 Select User Email</option>
+
+    <?php
+    $users = $conn->query("SELECT id, email FROM users");
+    while($u = $users->fetch_assoc()):
+    ?>
+      <option value="<?= $u['id']; ?>">
+        <?= $u['email']; ?>
+      </option>
+    <?php endwhile; ?>
+  </select>
+          
+    <!-- New Password -->
+    <div class="mb-2">
+      <input type="password" name="new_password" class="form-control" placeholder="New Password" required>
+    </div>
+
+    <!-- Button -->
+    <button type="submit" class="btn btn-success w-100">
+      Update Password
+    </button>
+
+  </form>
+
+</div>
   </div>
 <?php endif; ?>
 
@@ -595,6 +783,23 @@ font-size:13px;
   </div>
 </div>
 
+<!-- Toast Popup -->
+<div class="position-fixed top-0 end-0 p-3" style="z-index:9999">
+
+  <div id="liveToast" class="toast align-items-center text-white border-0" role="alert">
+    <div class="d-flex">
+
+      <div class="toast-body" id="toastMessage">
+        <!-- Message yaha aayega -->
+      </div>
+
+      <button type="button" class="btn-close btn-close-white me-2 m-auto"
+              data-bs-dismiss="toast"></button>
+
+    </div>
+  </div>
+
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
@@ -628,6 +833,43 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 </script>
+<script>
+function togglePasswordBox() {
+  const box = document.getElementById("passwordBox");
 
+  if (box.style.display === "none") {
+    box.style.display = "block";
+  } else {
+    box.style.display = "none";
+  }
+}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const msg = urlParams.get("msg");
+
+  if (msg) {
+    const toastEl = document.getElementById("liveToast");
+    const toastMsg = document.getElementById("toastMessage");
+
+    if (msg === "passsuccess") {
+      toastMsg.innerHTML = "✅ Password updated successfully";
+      toastEl.style.background = "linear-gradient(135deg,#00ff9c,#00c6ff)";
+    } 
+    else if (msg === "error") {
+      toastMsg.innerHTML = "⚠️ Failed to update password!";
+      toastEl.style.background = "linear-gradient(135deg,#ff4d4d,#cc0000)";
+    }
+
+    const toast = new bootstrap.Toast(toastEl);
+    toast.show();
+    // 🔥 URL clean (optional)
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+
+});
+</script>
 </body>
 </html>

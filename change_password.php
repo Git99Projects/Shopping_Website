@@ -8,15 +8,21 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $current = $_POST['current_password'];
-    $new = $_POST['new_password'];
-    $confirm = $_POST['confirm_password'];
+    // 🔥 trim for safety
+    $current_password = trim($_POST['current_password']);
+    $new_password     = trim($_POST['new_password']);
+    $confirm_password = trim($_POST['confirm_password']);
 
-    // Get current password from DB
+    // ✅ 1. New password match check
+    if ($new_password !== $confirm_password || strlen($new_password) < 6) {
+    header("Location: profile.php?msg=notmatch");
+    exit();
+}
+
+    // ✅ 2. Get old password
     $stmt = $conn->prepare("SELECT password FROM users WHERE id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
@@ -24,25 +30,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->fetch();
     $stmt->close();
 
-    // Check current password
-if (!password_verify($current, $db_password)) {
-    $message = "❌ Current password incorrect!";
-} elseif ($new !== $confirm) {
-    $message = "❌ New passwords do not match!";
-} else {
-
-    $hashed = password_hash($new, PASSWORD_DEFAULT);
-
-    $stmt = $conn->prepare("UPDATE users SET password=? WHERE id=?");
-    $stmt->bind_param("si", $hashed, $user_id);
-
-    if ($stmt->execute()) {
-        header("Location: profile.php?msg=success");
-        exit();
-    } else {
-        header("Location: profile.php?msg=error");
+    // ✅ 3. Verify current password
+    if (!password_verify($current_password, $db_password)) {
+        header("Location: profile.php?msg=wrong");
         exit();
     }
+
+    // ✅ 4. Hash new password
+    $new_hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+
+    // ✅ 5. Update password
+    $update = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
+    $update->bind_param("si", $new_hashed_password, $user_id);
+
+    if ($update->execute()) {
+        header("Location: profile.php?msg=success");
+    } else {
+        header("Location: profile.php?msg=error");
+    }
+
+    $update->close();
 }
 ?>
 
