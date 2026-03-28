@@ -318,6 +318,10 @@ form input:focus {
   box-shadow: 0 0 15px rgba(255,0,0,0.6);
   transform: scale(1.05);
 }
+.input-error {
+  border: 2px solid red !important;
+  box-shadow: 0 0 10px rgba(255,0,0,0.6);
+}
 </style>
 </head>
 
@@ -374,6 +378,8 @@ form input:focus {
     <div class="alert alert-warning">⚠ Only JPG, PNG allowed</div>
   <?php elseif($_GET['msg'] == 'removed'): ?>
     <div class="alert alert-success">✅ Profile image removed</div>
+  <?php elseif($_GET['msg'] == 'short'): ?>
+  <div class="alert alert-warning">⚠ Password must be at least 6 characters</div>
   <?php else: ?>
     <div class="alert alert-danger">❌ Something went wrong</div>
   <?php endif; ?>
@@ -418,6 +424,10 @@ form input:focus {
   <div class="mb-3 position-relative">
     <input type="password" name="new_password" id="new_password"
       class="form-control premium-input" placeholder="New Password" required>
+       <!-- 🔥 Error message -->
+  <small id="passwordError" style="color:red; display:none;">
+    Password must be greater than 6 characters
+  </small>
     <span class="toggle-eye" onclick="togglePassword('new_password', this)">
       👁️
     </span>
@@ -520,6 +530,35 @@ fileInput.addEventListener("change", function() {
     };
 
     reader.readAsDataURL(file);
+  }
+
+});
+</script>
+<script>
+
+const form = document.getElementById("passwordForm");
+const newPassword = document.getElementById("new_password");
+const errorText = document.getElementById("passwordError");
+
+form.addEventListener("submit", function(e) {
+
+  if (newPassword.value.length < 6) {
+    e.preventDefault(); // ❌ form submit रोक देगा
+
+    // 🔥 red input
+    newPassword.classList.add("input-error");
+
+    // 🔥 show error text
+    errorText.style.display = "block";
+  }
+});
+
+// 🔥 live fix (typing करते समय)
+newPassword.addEventListener("input", function() {
+
+  if (newPassword.value.length >= 6) {
+    newPassword.classList.remove("input-error");
+    errorText.style.display = "none";
   }
 
 });

@@ -17,8 +17,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirm_password = trim($_POST['confirm_password']);
 
     // ✅ 1. New password match check
-    if ($new_password !== $confirm_password || strlen($new_password) < 6) {
+    // 🔥 1. match check
+if ($new_password !== $confirm_password) {
     header("Location: profile.php?msg=notmatch");
+    exit();
+}
+
+// 🔥 2. length check
+if (strlen($new_password) < 6) {
+    header("Location: profile.php?msg=short");
     exit();
 }
 

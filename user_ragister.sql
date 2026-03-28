@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 14, 2026 at 11:42 AM
--- Server version: 10.4.32-MariaDB
+-- Generation Time: Mar 28, 2026 at 04:29 PM
+-- Server version: 8.0.44
 -- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -28,14 +28,14 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `apple_products` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `mrp` decimal(10,2) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `brand` varchar(100) DEFAULT 'Apple',
-  `deleted_by_admin` tinyint(1) DEFAULT 0,
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `brand` varchar(100) COLLATE utf8mb4_general_ci DEFAULT 'Apple',
+  `deleted_by_admin` tinyint(1) DEFAULT '0',
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -44,10 +44,10 @@ CREATE TABLE `apple_products` (
 --
 
 INSERT INTO `apple_products` (`id`, `name`, `description`, `price`, `mrp`, `image`, `brand`, `deleted_by_admin`, `deleted_at`) VALUES
-(1, 'Apple iPhone 15', 'Advanced dual-camera system: 48MP Main, 12MP Ultra Wide, 12MP 2x Telephoto, Smart HDR 5', 23999.00, 79999.00, 'a1.webp', 'Apple', 0, NULL),
-(2, 'iPhone 16 128 GB: 5G', 'iPhone 16 128 GB with A18 chip and improved battery life', 24999.00, 78999.00, 'a2.webp', 'Apple', 0, NULL),
-(3, 'iPhone 16 Pro Max 256 GB: 5G', 'iPhone 16 Pro Max with 4K 120fps Dolby Vision and long battery life', 45999.00, 164999.00, 'a3.webp', 'Apple', 0, NULL),
-(4, 'Apple iPhone 14', 'Dual-camera system with Portrait mode, Smart HDR 4, and 4K Dolby Vision', 33999.00, 84999.00, 'a5.webp', 'Apple', 0, NULL),
+(1, 'Apple iPhone 15', 'Advanced dual-camera system: 48MP Main,12MP Ultra Wide, 12MP 2x Telephoto,2x optical zoom in, 2x opticalzoom out; 4x optical zoom range Digital zoom up to 10x, Smart HDR 5', 23999.00, 79999.00, 'a1.webp', 'Apple', 0, NULL),
+(2, 'iPhone 16 128 GB: 5G', 'iPhone 16 128 GB: 5G Mobile Phone with Camera Control, A18 Chip and a Big Boost in Battery Life. Works with AirPods; Teal', 24999.00, 78999.00, 'a2.webp', 'Apple', 0, NULL),
+(3, 'iPhone 16 Pro Max 256 GB: 5G', 'iPhone 16 Pro Max 256 GB: 5G Mobile Phone with Camera Control, 4K 120 fps Dolby Vision and a Huge Leap in Battery Life. Works with AirPods; Black Titaniumry life', 45999.00, 164999.00, 'a3.webp', 'Apple', 0, NULL),
+(4, 'Apple iPhone 14', 'Dual-camera system: 12MP Main, 12MP Ultrawide with Portrait mode, Depth Control, Portrait Lighting, Smart HDR 4, and 4K Dolby Vision HDR video up to 60 fps', 33999.00, 84999.00, 'a5.webp', 'Apple', 0, NULL),
 (5, 'Apple iPhone 13 (128GB)', '12MP Wide and Ultra Wide cameras, Night mode, and 4K Dolby Vision recording', 13999.00, 54999.00, 'a6.webp', 'Apple', 0, NULL),
 (6, 'Apple iPhone 15', 'Advanced dual-camera system: 48MP Main,12MP Ultra Wide, 12MP 2x Telephoto,2x optical zoom in, 2x opticalzoom out; Smart HDR 5', 23999.00, 79999.00, 'a1.webp', 'Apple', 0, NULL),
 (7, 'iPhone 16 128 GB: 5G', 'iPhone 16 128 GB: 5G Mobile Phone with Camera Control, A18 Chip and a Big Boost in Battery Life', 24999.00, 78999.00, 'a2.webp', 'Apple', 0, NULL),
@@ -64,14 +64,14 @@ INSERT INTO `apple_products` (`id`, `name`, `description`, `price`, `mrp`, `imag
 --
 
 CREATE TABLE `boat_products` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `mrp` decimal(10,2) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `brand` varchar(100) DEFAULT 'Boat',
-  `deleted_by_admin` tinyint(1) DEFAULT 0
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `brand` varchar(100) COLLATE utf8mb4_general_ci DEFAULT 'Boat',
+  `deleted_by_admin` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -94,14 +94,14 @@ INSERT INTO `boat_products` (`id`, `name`, `description`, `price`, `mrp`, `image
 --
 
 CREATE TABLE `boult_products` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `mrp` decimal(10,2) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `brand` varchar(100) DEFAULT 'Boult',
-  `deleted_by_admin` tinyint(1) DEFAULT 0
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `brand` varchar(100) COLLATE utf8mb4_general_ci DEFAULT 'Boult',
+  `deleted_by_admin` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -124,14 +124,14 @@ INSERT INTO `boult_products` (`id`, `name`, `description`, `price`, `mrp`, `imag
 --
 
 CREATE TABLE `complaints` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `subject` varchar(255) DEFAULT NULL,
-  `message` text DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `deleted_by_user` tinyint(1) DEFAULT 0,
+  `id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `name` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `subject` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `message` text COLLATE utf8mb4_general_ci,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_by_user` tinyint(1) DEFAULT '0',
   `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -148,7 +148,8 @@ INSERT INTO `complaints` (`id`, `user_id`, `name`, `email`, `subject`, `message`
 (9, 39, 'user-2', 'user-2@gmail.com', 'this is user-2', 'this is user-2', '2026-03-02 05:22:22', 0, NULL),
 (11, 36, 'het', 'user1@gmail.com', 'kahoia', 'i akllove tooyuo', '2026-03-06 17:59:15', 1, '2026-03-07 23:37:37'),
 (12, 40, 'user-3', 'user-3@gmail.com', 'this is user-3 testing', 'helllo user-3', '2026-03-14 07:30:59', 0, NULL),
-(13, 42, 'Manoj Gola07', 'user5@gmail.com', 'kahoia', 'i am unhappy', '2026-03-14 10:30:53', 0, NULL);
+(13, 42, 'Manoj Gola07', 'user5@gmail.com', 'kahoia', 'i am unhappy', '2026-03-14 10:30:53', 0, NULL),
+(14, 40, 'user-3', 'user-3@gmail.com', 'hello', 'dhhe;dsaf', '2026-03-19 09:30:00', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -157,14 +158,14 @@ INSERT INTO `complaints` (`id`, `user_id`, `name`, `email`, `subject`, `message`
 --
 
 CREATE TABLE `dell_products` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `mrp` decimal(10,2) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `brand` varchar(100) DEFAULT 'Dell',
-  `deleted_by_admin` tinyint(1) DEFAULT 0
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `brand` varchar(100) COLLATE utf8mb4_general_ci DEFAULT 'Dell',
+  `deleted_by_admin` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -187,14 +188,14 @@ INSERT INTO `dell_products` (`id`, `name`, `description`, `price`, `mrp`, `image
 --
 
 CREATE TABLE `home_products` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `mrp` decimal(10,2) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `brand` varchar(100) DEFAULT 'Home',
-  `deleted_by_admin` tinyint(1) DEFAULT 0,
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `brand` varchar(100) COLLATE utf8mb4_general_ci DEFAULT 'Home',
+  `deleted_by_admin` tinyint(1) DEFAULT '0',
   `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -203,9 +204,9 @@ CREATE TABLE `home_products` (
 --
 
 INSERT INTO `home_products` (`id`, `name`, `description`, `price`, `mrp`, `image`, `brand`, `deleted_by_admin`, `deleted_at`) VALUES
-(2, 'iPhone 16 128 GB: 5G', 'iPhone 16 128 GB: 5G Mobile Phone with Camera Control, A18 Chip and a Big Boost in Battery Life. Works with AirPods; Teal', 25999.00, 78999.00, 'a2.webp', 'Home', 0, NULL),
-(3, 'iPhone 16 Pro Max 256 GB: 5G', 'iPhone 16 Pro Max 256 GB: 5G Mobile Phone with Camera Control, 4K 120 fps Dolby Vision and a Huge Leap in Battery Life. Works with AirPods; Black Titanium', 33999.00, 164999.00, 'a3.webp', 'Home', 0, NULL),
-(5, 'iQOO Z10 5G', 'iQOO Z10 5G (Silver, 8GB RAM, 128GB Stroage) | India\'s Biggest Ever 7300 mAh Battery | Snapdragon 7s Gen 3 Processor | Brightest Quad Curved AMOLED Display in The Segment', 13999.00, 25999.00, '1751118674_20.jpg', 'Home', 0, NULL),
+(2, 'iPhone 16 128 GB: 5G', 'iPhone 16 128 GB: 5G Mobile Phone with Camera Control, A18 Chip and a Big Boost in Battery Life. Works with AirPods; Teal', 25999.00, 78999.00, 'a2.webp', 'Home', 1, NULL),
+(3, 'iPhone 16 Pro Max 256 GB: 5G', 'iPhone 16 Pro Max 256 GB: 5G Mobile Phone with Camera Control, 4K 120 fps Dolby Vision and a Huge Leap in Battery Life. Works with AirPods; Black Titanium', 33999.00, 164999.00, 'a3.webp', 'Home', 1, NULL),
+(5, 'iQOO Z10 5G', 'iQOO Z10 5G (Silver, 8GB RAM, 128GB Stroage) | India\'s Biggest Ever 7300 mAh Battery | Snapdragon 7s Gen 3 Processor | Brightest Quad Curved AMOLED Display in The Segment', 13999.00, 25999.00, '1751118674_20.jpg', 'Home', 1, NULL),
 (6, 'Lava Storm Play 5G', 'Lava Storm Play 5G (Dune Titanium, 6+6*GB RAM, 128GB Storage) | World\'s First MTK D7060 Processor | 500k+ Antutu | LPDDR5 RAM | UFS 3.1 Storage | 50MP AI Camera | 120Hz Refresh Rate | IP64 Protection', 4999.00, 15999.00, '1751118674_21.jpg', 'Home', 0, NULL),
 (7, 'iQOO Z9s 5G', 'iQOO Z9s 5G (Titanium Matte, 8GB RAM, 128GB Storage) | 120 Hz 3D Curved AMOLED Display | 5500 mAh Ultra-Thin Battery | Dimesity 7300 5G Processor | Sony IMX882 OIS Camera with Aura Light', 8999.00, 34999.00, '1751118674_22.jpg', 'Home', 0, NULL),
 (8, 'Samsung Galaxy A35 5G', 'Samsung Galaxy A35 5G (Awesome Lilac, 8GB RAM, 128GB Storage) | Premium Glass Back | 50 MP Main Camera (OIS) | Nightography | IP67 | Corning Gorilla Glass Victus+ | sAMOLED with Vision Booster', 12999.00, 34999.00, '1751118674_23.jpg', 'Home', 0, NULL),
@@ -252,14 +253,14 @@ INSERT INTO `home_products` (`id`, `name`, `description`, `price`, `mrp`, `image
 --
 
 CREATE TABLE `hp_products` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `mrp` decimal(10,2) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `brand` varchar(100) DEFAULT 'Hp',
-  `deleted_by_admin` tinyint(1) DEFAULT 0
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `brand` varchar(100) COLLATE utf8mb4_general_ci DEFAULT 'Hp',
+  `deleted_by_admin` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -282,14 +283,14 @@ INSERT INTO `hp_products` (`id`, `name`, `description`, `price`, `mrp`, `image`,
 --
 
 CREATE TABLE `macbook_products` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `mrp` decimal(10,2) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `brand` varchar(100) DEFAULT 'Macbook',
-  `deleted_by_admin` tinyint(1) DEFAULT 0
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `brand` varchar(100) COLLATE utf8mb4_general_ci DEFAULT 'Macbook',
+  `deleted_by_admin` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -312,14 +313,14 @@ INSERT INTO `macbook_products` (`id`, `name`, `description`, `price`, `mrp`, `im
 --
 
 CREATE TABLE `oneplusbud_products` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `mrp` decimal(10,2) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `brand` varchar(100) DEFAULT 'Oneplusbud',
-  `deleted_by_admin` tinyint(1) DEFAULT 0
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `brand` varchar(100) COLLATE utf8mb4_general_ci DEFAULT 'Oneplusbud',
+  `deleted_by_admin` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -344,14 +345,14 @@ INSERT INTO `oneplusbud_products` (`id`, `name`, `description`, `price`, `mrp`, 
 --
 
 CREATE TABLE `oneplus_products` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `mrp` decimal(10,2) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `brand` varchar(100) DEFAULT 'Oneplus',
-  `deleted_by_admin` tinyint(1) DEFAULT 0
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `brand` varchar(100) COLLATE utf8mb4_general_ci DEFAULT 'Oneplus',
+  `deleted_by_admin` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -374,17 +375,17 @@ INSERT INTO `oneplus_products` (`id`, `name`, `description`, `price`, `mrp`, `im
 --
 
 CREATE TABLE `orders` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(150) NOT NULL,
-  `phone` varchar(30) NOT NULL,
-  `address` text NOT NULL,
-  `payment` varchar(50) NOT NULL,
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
+  `phone` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `address` text COLLATE utf8mb4_general_ci NOT NULL,
+  `payment` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `total` decimal(10,2) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `deleted_by_user` tinyint(1) DEFAULT 0,
-  `status` varchar(20) DEFAULT 'Pending',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_by_user` tinyint(1) DEFAULT '0',
+  `status` varchar(20) COLLATE utf8mb4_general_ci DEFAULT 'Pending',
   `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -428,13 +429,13 @@ INSERT INTO `orders` (`id`, `user_id`, `name`, `email`, `phone`, `address`, `pay
 --
 
 CREATE TABLE `order_items` (
-  `id` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
-  `product_key` varchar(100) NOT NULL,
-  `product_name` varchar(200) NOT NULL,
+  `id` int NOT NULL,
+  `order_id` int NOT NULL,
+  `product_key` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `product_name` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
+  `quantity` int NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `delivery` decimal(10,2) NOT NULL,
   `line_total` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -496,13 +497,13 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_key`, `product_name`, `pri
 --
 
 CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `description` text DEFAULT NULL,
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_general_ci,
   `price` decimal(10,2) DEFAULT NULL,
   `mrp` decimal(10,2) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `brand` varchar(100) DEFAULT NULL
+  `image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `brand` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -525,14 +526,14 @@ INSERT INTO `products` (`id`, `name`, `description`, `price`, `mrp`, `image`, `b
 --
 
 CREATE TABLE `sum_products` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `mrp` decimal(10,2) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `brand` varchar(100) DEFAULT 'Samsung',
-  `deleted_by_admin` tinyint(1) DEFAULT 0,
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `brand` varchar(100) COLLATE utf8mb4_general_ci DEFAULT 'Samsung',
+  `deleted_by_admin` tinyint(1) DEFAULT '0',
   `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -556,33 +557,34 @@ INSERT INTO `sum_products` (`id`, `name`, `description`, `price`, `mrp`, `image`
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `first_name` varchar(100) DEFAULT NULL,
-  `last_name` varchar(100) DEFAULT NULL,
-  `email` varchar(150) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `role` varchar(20) DEFAULT 'user',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id` int NOT NULL,
+  `first_name` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `last_name` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(150) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `role` varchar(20) COLLATE utf8mb4_general_ci DEFAULT 'user',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `profile_image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `role`, `created_at`) VALUES
-(27, 'Deepak', 'kumar', 'deepak@gmail.com', '$2y$10$RmMkmV565b9vPpPu0zey4ee5hXH5fF53zyjSvDxDlW2fQ7fPmB1FG', 'user', '2026-02-25 17:42:53'),
-(32, 'manoj', 'kumar', 'manojkumar@gmail.com', '$2y$10$BANCrlj490DhjsAfHx3tr.IwU6RWVmIu2uJiI7WCL1xz85dDGxj8i', 'user', '2026-02-25 17:42:53'),
-(33, 'Manoj', 'Gola07', 'harprasadkumar6448@gmail.com', '$2y$10$u8dc3RUn3tQJ2/HnPuQdHuUahN1gjto7jsRF2bpasrkEdY3CupNN2', 'user', '2026-02-25 17:42:53'),
-(34, 'Admin', 'Admin', 'admin@gmail.com', '$2y$10$NWw19qIsFvn9IVnP..l8rugiWwQLxSC0XeqjS3ZkbCzNlpI6Amqbm', 'admin', '2026-02-25 17:49:21'),
-(35, 'Manoj', 'Gola', 'manoj@gmail.com', '$2y$10$3xzZ1LpXyNAm1qfrRtb4T.k86W0g8bpGzrK0TK4fZX5dew0lS1u8u', 'user', '2026-02-26 11:22:39'),
-(36, 'user1', 'u1', 'user1@gmail.com', '$2y$10$EYpU/gsRcfmzjKzQC1dW0uosEeXdDaWGHLvx5uS94YDXzr9DRGRoO', 'user', '2026-02-27 18:12:12'),
-(37, 'user2', 'u2', 'user2@gmail.com', '$2y$10$D.hfe6Kdu.z8biHrdeDyxeR3GoCqOF6Mk5JdzO6vfGpUEQHC8EGVO', 'user', '2026-02-27 18:16:50'),
-(38, 'user-1', 'kumar', 'user-1@gmail.com', '$2y$10$lkJenx2Zgk0mbjoGJrylYeiutvSecjuZHM2MbBDmYvC8raa5/mGDi', 'user', '2026-03-02 05:13:25'),
-(39, 'user-2', 'kumar', 'user-2@gmail.com', '$2y$10$75QCtcDxxEMc0vwfvd4IwenJnZ4mENOBRMk3vTooPm5Y/kuGgZSGi', 'user', '2026-03-02 05:13:56'),
-(40, 'user-3', 'kumar', 'user-3@gmail.com', '$2y$10$NqYe/oPwdMd15WER4IenfOaca3NqmT2nn5VZdRLzfgmlj5QP2QEci', 'user', '2026-03-14 07:19:33'),
-(41, 'user4', 'u4', 'user4@gmail.com', '$2y$10$Cwlh2DT.g2PtRIL2ibR5teHvgVwLW0dTTFu6W8J1ek2LG7R.E/8AS', 'user', '2026-03-14 07:54:15'),
-(42, 'user5', 'u5', 'user5@gmail.com', '$2y$10$rIfXAkoKaXHh7/VFG/pmI.5XBrUNMwSc/LCaQHOcGr3Qs34.3YDHe', 'user', '2026-03-14 09:55:11'),
-(43, 'user6', 'u6', 'user6@gmail.com', '$2y$10$LshHnAkLJ1iOpSEGr/ynm.tXsU4qvY5Mfx.763FIOdNTf7vATU8d2', 'user', '2026-03-14 09:56:32');
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `role`, `created_at`, `profile_image`) VALUES
+(27, 'Deepak', 'kumar', 'deepak@gmail.com', '$2y$10$RmMkmV565b9vPpPu0zey4ee5hXH5fF53zyjSvDxDlW2fQ7fPmB1FG', 'user', '2026-02-25 17:42:53', NULL),
+(32, 'manoj', 'kumar', 'manojkumar@gmail.com', '$2y$10$BANCrlj490DhjsAfHx3tr.IwU6RWVmIu2uJiI7WCL1xz85dDGxj8i', 'user', '2026-02-25 17:42:53', NULL),
+(33, 'Manoj', 'Gola07', 'harprasadkumar6448@gmail.com', '$2y$10$u8dc3RUn3tQJ2/HnPuQdHuUahN1gjto7jsRF2bpasrkEdY3CupNN2', 'user', '2026-02-25 17:42:53', NULL),
+(34, 'Admin', 'Admin', 'admin@gmail.com', '$2y$10$OLKz1TdI9McqbAcI23O8kuPh6oJC3fBC2TApIKpTAo/hQoHN63noq', 'admin', '2026-02-25 17:49:21', 'user_34_1774443675.png'),
+(35, 'Manoj', 'Gola', 'manoj@gmail.com', '$2y$10$3xzZ1LpXyNAm1qfrRtb4T.k86W0g8bpGzrK0TK4fZX5dew0lS1u8u', 'user', '2026-02-26 11:22:39', NULL),
+(36, 'user1', 'u1', 'user1@gmail.com', '$2y$10$EYpU/gsRcfmzjKzQC1dW0uosEeXdDaWGHLvx5uS94YDXzr9DRGRoO', 'user', '2026-02-27 18:12:12', NULL),
+(37, 'user2', 'u2', 'user2@gmail.com', '$2y$10$D.hfe6Kdu.z8biHrdeDyxeR3GoCqOF6Mk5JdzO6vfGpUEQHC8EGVO', 'user', '2026-02-27 18:16:50', NULL),
+(38, 'user-1', 'kumar', 'user-1@gmail.com', '$2y$10$0z/P77XrHIc6Ej0u/AM0XunY.4tmKUu0IFx/icp/CUGvS4SrvzzWC', 'user', '2026-03-02 05:13:25', NULL),
+(39, 'user-2', 'kumar', 'user-2@gmail.com', '$2y$10$75QCtcDxxEMc0vwfvd4IwenJnZ4mENOBRMk3vTooPm5Y/kuGgZSGi', 'user', '2026-03-02 05:13:56', NULL),
+(40, 'user-3', 'kumar', 'user-3@gmail.com', '$2y$10$tdR.n/CpdgT5SdIY5CTx2OE2vpIWPu0OpmZYm6Y0H0wm8VZK2CcFy', 'user', '2026-03-14 07:19:33', 'user_40_1774445567.png'),
+(41, 'user4', 'u4', 'user4@gmail.com', '$2y$10$Cwlh2DT.g2PtRIL2ibR5teHvgVwLW0dTTFu6W8J1ek2LG7R.E/8AS', 'user', '2026-03-14 07:54:15', NULL),
+(42, 'user5', 'u5', 'user5@gmail.com', '$2y$10$rIfXAkoKaXHh7/VFG/pmI.5XBrUNMwSc/LCaQHOcGr3Qs34.3YDHe', 'user', '2026-03-14 09:55:11', NULL),
+(43, 'user6', 'u6', 'user6@gmail.com', '$2y$10$LshHnAkLJ1iOpSEGr/ynm.tXsU4qvY5Mfx.763FIOdNTf7vATU8d2', 'user', '2026-03-14 09:56:32', NULL);
 
 -- --------------------------------------------------------
 
@@ -591,14 +593,14 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `role
 --
 
 CREATE TABLE `xiaomi_products` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `mrp` decimal(10,2) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `brand` varchar(100) DEFAULT 'Xiaomi',
-  `deleted_by_admin` tinyint(1) DEFAULT 0
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `brand` varchar(100) COLLATE utf8mb4_general_ci DEFAULT 'Xiaomi',
+  `deleted_by_admin` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -727,97 +729,97 @@ ALTER TABLE `xiaomi_products`
 -- AUTO_INCREMENT for table `apple_products`
 --
 ALTER TABLE `apple_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `boat_products`
 --
 ALTER TABLE `boat_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `boult_products`
 --
 ALTER TABLE `boult_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `dell_products`
 --
 ALTER TABLE `dell_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `home_products`
 --
 ALTER TABLE `home_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `hp_products`
 --
 ALTER TABLE `hp_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `macbook_products`
 --
 ALTER TABLE `macbook_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `oneplusbud_products`
 --
 ALTER TABLE `oneplusbud_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `oneplus_products`
 --
 ALTER TABLE `oneplus_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `sum_products`
 --
 ALTER TABLE `sum_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `xiaomi_products`
 --
 ALTER TABLE `xiaomi_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
