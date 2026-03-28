@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'db.php';
+include 'user_profile_data.php';
 
 $delete_mode = (
     isset($_GET['delete_mode']) &&
@@ -567,6 +568,30 @@ background: rgba(255,255,255,0.15);
     transform: scale(1.1);
     box-shadow: 0 0 25px #0957f4ff;
 }
+.nav-avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(135deg,#00c6ff,#0072ff);
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.nav-avatar:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #00c6ff;
+}
+.profile-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #00c6ff;
+}
     </style>
 </head>
 <body>
@@ -684,9 +709,16 @@ background: rgba(255,255,255,0.15);
 
    <!-- Profile (ONLY ONE ICON) -->
       <div class="dropdown">
-        <a class="btn  dropdown-toggle text-dark fw-bold nav-glow dropdown-custom" href="#"
+        <a class="btn text-dark fw-bold nav-glow dropdown-custom" href="#"
            role="button" data-bs-toggle="dropdown">
-          <img src="image/profile.png" class="profile-img">
+
+          <?php if (!empty($profile_image)): ?>
+    <img src="uploads/<?php echo $profile_image; ?>" class="profile-img">
+<?php else: ?>
+    <div class="nav-avatar">
+        <?php echo strtoupper($first_name[0] ?? 'U'); ?>
+    </div>
+<?php endif; ?>
         </a>
 
         <ul class="dropdown-menu dropdown-glass">
@@ -766,12 +798,18 @@ if ($user_id && isset($_SESSION['cart'][$user_id])) {
 
    <!-- ✅ PROFILE (DESKTOP ONLY) -->
 <li class="nav-item dropdown mx-3 profile-desktop">
-  <a class="nav-link dropdown-toggle nav-glow fw-bold"
+  <a class="nav-link nav-glow fw-bold"
      href="#"
      role="button"
      data-bs-toggle="dropdown">
 
-    <img src="image/profile.png" class="profile-img">
+    <?php if (!empty($profile_image)): ?>
+    <img src="uploads/<?php echo $profile_image; ?>" class="profile-img">
+<?php else: ?>
+    <div class="nav-avatar">
+        <?php echo strtoupper($first_name[0] ?? 'U'); ?>
+    </div>
+<?php endif; ?>
   </a>
 
   <ul class="dropdown-menu dropdown-glass">
