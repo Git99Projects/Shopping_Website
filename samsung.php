@@ -869,7 +869,7 @@ if ($user_id && isset($_SESSION['cart'][$user_id])) {
         </a>
         <ul class="dropdown-menu dropdown-glass">
           <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'boat.php?delete_mode=1' : 'boat.php'; ?>">boAT</a></li>
-          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'oneplus.php?delete_mode=1' : 'oneplus.php'; ?>">OnePlus</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'oneplus.php?delete_mode=1' : 'oneplusbud.php'; ?>">OnePlus</a></li>
           <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'boult.php?delete_mode=1' : 'boult.php'; ?>">Boult</a></li>
       
         </ul>

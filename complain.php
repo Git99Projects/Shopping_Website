@@ -382,7 +382,7 @@ h2 {
         else:
          ?>
         <tr>
-          <td colspan="6" class="text-center text-muted">No complaints found.</td>
+          <td colspan="8" class="text-center text-muted">No complaints found.</td>
         </tr>
         <?php endif; ?>
       </tbody>
