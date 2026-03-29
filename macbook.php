@@ -562,8 +562,8 @@ background: rgba(255,255,255,0.15);
     }
 }
 .profile-img{
-    width: 30px;
-    height: 30px;
+    /* width: 30px;
+    height: 30px; */
     border-radius: 10%;
     cursor: pointer;
 }
@@ -572,8 +572,8 @@ background: rgba(255,255,255,0.15);
     box-shadow: 0 0 25px #0957f4ff;
 }
 .nav-avatar {
-  width: 35px;
-  height: 35px;
+  /* width: 35px;
+  height: 35px; */
   border-radius: 50%;
   display:flex;
   align-items:center;
@@ -594,6 +594,126 @@ background: rgba(255,255,255,0.15);
   height: 30px;
   border-radius: 50%;
   border: 2px solid #00c6ff;
+}
+/* ✅ Desktop Profile Icon Bigger */
+@media (min-width: 992px){
+    .profile-desktop .profile-img{
+        width: 50px;
+        height: 50px;
+    }
+
+    .profile-desktop .nav-avatar{
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+    }
+    .profile-desktop .profile-img:hover{
+    transform: scale(1.2);
+    box-shadow: 0 0 25px #00c6ff;
+}
+}
+/* ✅ parent glass remove / neutral */
+.profile-desktop .nav-link{
+    padding: 0 !important;
+    background: transparent !important;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+/* ✅ image full cover kare */
+.profile-desktop .profile-img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ✅ avatar (letter wala) bhi same */
+.profile-desktop .nav-avatar{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 18px;
+}
+.profile-desktop .profile-img{
+    border: 2px solid #00c6ff;
+}
+
+/* ===== PROFILE RESPONSIVE FIX ===== */
+
+/* button ka background remove (mobile + desktop dono) */
+.navbar .dropdown .btn{
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* responsive profile image */
+.profile-img{
+    width: clamp(32px, 6vw, 45px);
+    height: clamp(32px, 6vw, 45px);
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+/* avatar (letter) */
+.nav-avatar{
+    width: clamp(32px, 6vw, 45px);
+    height: clamp(32px, 6vw, 45px);
+    border-radius: 50%;
+    font-size: clamp(12px, 2vw, 18px);
+}
+/* ===== MOBILE = DESKTOP SAME PROFILE FIX ===== */
+
+.dropdown-custom{
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* image proper fit */
+.dropdown-custom img,
+.dropdown-custom .nav-avatar{
+    display: block;
+}
+
+/* alignment fix */
+.navbar .dropdown{
+    display: flex;
+    align-items: center;
+}
+/* ===== MOBILE NAVBAR PERFECT ALIGN ===== */
+@media (max-width: 576px){
+
+  .navbar.d-lg-none{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;   /* spacing control */
+  }
+
+  /* profile + home same size */
+  .navbar .dropdown{
+    flex-shrink: 0;
+  }
+
+  /* search ko flexible bana do */
+  .premium-search{
+    flex: 1;          /* 🔥 ye important hai */
+    min-width: 80px;
+    max-width: 140px;
+  }
+
+  /* cart icon fix */
+  .fa-cart-shopping{
+    flex-shrink: 0;
+    font-size: 22px;
+  }
+
 }
     </style>
 </head>
@@ -712,7 +832,7 @@ background: rgba(255,255,255,0.15);
 
   <!-- Profile (ONLY ONE ICON) -->
       <div class="dropdown">
-        <a class="btn text-dark fw-bold nav-glow dropdown-custom" href="#"
+        <a class="nav-link fw-bold nav-glow dropdown-custom" href="#"
            role="button" data-bs-toggle="dropdown">
           <?php if (!empty($profile_image)): ?>
     <img src="uploads/<?php echo $profile_image; ?>" class="profile-img">
@@ -870,7 +990,7 @@ if ($user_id && isset($_SESSION['cart'][$user_id])) {
         </a>
         <ul class="dropdown-menu dropdown-glass">
           <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'boat.php?delete_mode=1' : 'boat.php'; ?>">boAT</a></li>
-          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'oneplus.php?delete_mode=1' : 'oneplus.php'; ?>">OnePlus</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'oneplusbud.php?delete_mode=1' : 'oneplusbud.php'; ?>">OnePlus</a></li>
           <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'boult.php?delete_mode=1' : 'boult.php'; ?>">Boult</a></li>
       
         </ul>

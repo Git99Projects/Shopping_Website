@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $target_file = $target_dir . basename($image);
 
     if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-        $stmt = $conn->prepare("INSERT INTO products (name, description, price, mrp, image, brand) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO apple_products (name, description, price, mrp, image, brand) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssddss", $name, $description, $price, $mrp, $image, $brand);
         $stmt->execute();
 

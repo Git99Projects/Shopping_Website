@@ -560,8 +560,8 @@ background: rgba(255,255,255,0.15);
     }
 }
 .profile-img{
-    width: 30px;
-    height: 30px;
+    /* width: 30px;
+    height: 30px; */
     border-radius: 10%;
     cursor: pointer;
 }
@@ -570,8 +570,8 @@ background: rgba(255,255,255,0.15);
     box-shadow: 0 0 25px #0957f4ff;
 }
 .nav-avatar {
-  width: 35px;
-  height: 35px;
+  /* width: 35px;
+  height: 35px; */
   border-radius: 50%;
   display:flex;
   align-items:center;
@@ -710,7 +710,7 @@ background: rgba(255,255,255,0.15);
 
    <!-- Profile (ONLY ONE ICON) -->
       <div class="dropdown">
-        <a class="btn text-dark fw-bold nav-glow dropdown-custom" href="#"
+        <a class="nav-link fw-bold nav-glow dropdown-custom" href="#"
            role="button" data-bs-toggle="dropdown">
           <?php if (!empty($profile_image)): ?>
     <img src="uploads/<?php echo $profile_image; ?>" class="profile-img">
@@ -868,7 +868,7 @@ if ($user_id && isset($_SESSION['cart'][$user_id])) {
         </a>
         <ul class="dropdown-menu dropdown-glass">
           <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'boat.php?delete_mode=1' : 'boat.php'; ?>">boAT</a></li>
-          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'oneplus.php?delete_mode=1' : 'oneplus.php'; ?>">OnePlus</a></li>
+          <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'oneplusbud.php?delete_mode=1' : 'oneplusbud.php'; ?>">OnePlus</a></li>
           <li><a class="dropdown-item nav-glow" href="<?php echo $delete_mode ? 'boult.php?delete_mode=1' : 'boult.php'; ?>">Boult</a></li>
       
         </ul>
