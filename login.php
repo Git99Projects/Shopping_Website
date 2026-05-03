@@ -404,8 +404,14 @@ body {
 
         <div class="mb-4">
         <label class="form-label" for="loginPassword">Password</label>
-          <input type="password" name="password" id="loginPassword" class="form-control" required placeholder="Enter Password"/>
-          
+<div style="position: relative;">
+  <input type="password" name="password" id="loginPassword" class="form-control" required placeholder="Enter Password"/>
+
+  <span onclick="togglePassword('loginPassword', this)" 
+        style="position:absolute; right:15px; top:50%; transform:translateY(-50%); cursor:pointer; color:white;">
+        👁️
+  </span>
+</div>          
         </div>
 
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -417,7 +423,7 @@ Remember me
 </label>
 </div>
 
-<a href="#" class="register-link">Forgot password?</a>
+<a href="admin_forgot.php" class="register-link">Forgot password?</a>
 
 </div>
 
@@ -451,6 +457,17 @@ Remember me
     </div>
   </div>
 </div>
-
+<script>
+function togglePassword(id, el) {
+  const input = document.getElementById(id);
+  if (input.type === "password") {
+    input.type = "text";
+    el.innerText = "🙈";
+  } else {
+    input.type = "password";
+    el.innerText = "👁️";
+  }
+}
+</script>
 </body>
 </html>  

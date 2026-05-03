@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 28, 2026 at 04:29 PM
+-- Generation Time: May 03, 2026 at 05:53 AM
 -- Server version: 8.0.44
 -- PHP Version: 8.2.12
 
@@ -55,7 +55,8 @@ INSERT INTO `apple_products` (`id`, `name`, `description`, `price`, `mrp`, `imag
 (9, 'Apple iPhone 15', 'Advanced dual-camera system: 48MP Main,12MP Ultra Wide, 12MP 2x Telephoto enabled by quad-pixel sensor', 34999.00, 88999.00, 'a4.webp', 'Apple', 0, NULL),
 (10, 'Apple iPhone 14', 'Dual-camera system: 12MP Main, 12MP Ultrawide with Portrait mode, Smart HDR 4', 33999.00, 84999.00, 'a5.webp', 'Apple', 0, NULL),
 (11, 'Apple iPhone 13 (128GB)', 'Advanced dual-camera system with 12MP Wide and Ultra Wide cameras, Night mode', 13999.00, 54999.00, 'a6.webp', 'Apple', 0, NULL),
-(12, 'iPhone 16e 128 GB', 'iPhone 16e 128 GB with A18 Chip, Supersized Battery Life, 48MP Fusion Camera', 17999.00, 64999.00, 'a7.webp', 'Apple', 0, NULL);
+(12, 'iPhone 16e 128 GB', 'iPhone 16e 128 GB with A18 Chip, Supersized Battery Life, 48MP Fusion Camera', 17999.00, 64999.00, 'a7.webp', 'Apple', 0, NULL),
+(13, 'iPhone 17 Pro Max 256 ', 'iPhone 17 Pro Max 256 GB: 17.42 cm (6.9″) Display with Promotion, A19 Pro Chip, Best Battery Life in Any iPhone Ever, Pro Fusion Camera System, Center Stage Front Camera; Silver', 49999.00, 149900.00, '616-Eh2FbPL._AC_UY327_FMwebp_QL65_.webp', 'Apple', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -144,11 +145,9 @@ INSERT INTO `complaints` (`id`, `user_id`, `name`, `email`, `subject`, `message`
 (2, NULL, 'Deepak kumar', 'deepakkumar897986@gmail.com', 'good products', 'dddd', '2025-06-28 05:19:56', 0, NULL),
 (3, NULL, 'Deepak kumar', 'deepakkumar897986@gmail.com', 'good products', 'dfff', '2025-06-28 05:50:52', 0, NULL),
 (4, NULL, 'kahsdha', 'lasijdiauojli@gmail.com', 'apouipoarjwepr', 'nkljdoeiqw983horiwe98rywohiuweyrwelrhowei', '2025-06-28 12:29:32', 0, NULL),
-(8, 38, 'user-1', 'user-1@gmail.com', 'this is user-1', 'this is user-1 testing', '2026-03-02 05:15:47', 0, NULL),
 (9, 39, 'user-2', 'user-2@gmail.com', 'this is user-2', 'this is user-2', '2026-03-02 05:22:22', 0, NULL),
-(11, 36, 'het', 'user1@gmail.com', 'kahoia', 'i akllove tooyuo', '2026-03-06 17:59:15', 1, '2026-03-07 23:37:37'),
+(11, NULL, 'het', 'user1@gmail.com', 'kahoia', 'i akllove tooyuo', '2026-03-06 17:59:15', 1, '2026-03-07 23:37:37'),
 (12, 40, 'user-3', 'user-3@gmail.com', 'this is user-3 testing', 'helllo user-3', '2026-03-14 07:30:59', 0, NULL),
-(13, 42, 'Manoj Gola07', 'user5@gmail.com', 'kahoia', 'i am unhappy', '2026-03-14 10:30:53', 0, NULL),
 (14, 40, 'user-3', 'user-3@gmail.com', 'hello', 'dhhe;dsaf', '2026-03-19 09:30:00', 0, NULL);
 
 -- --------------------------------------------------------
@@ -394,33 +393,16 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `name`, `email`, `phone`, `address`, `payment`, `total`, `created_at`, `deleted_by_user`, `status`, `deleted_at`) VALUES
-(1, 36, 'user1', 'user1@gmail.com', '1234456691', 'pakistan', 'Cash on Delivery', 23053.00, '2026-02-27 18:15:22', 1, 'Pending', NULL),
 (2, 32, 'lmslf', 'harprasadkumar6448@gmail.com', '9803`48249236`-4', 'kqwlkej', 'Cash on Delivery', 23075.00, '2026-03-01 18:28:02', 0, 'Pending', NULL),
-(3, 38, 'Deepak kumar', 'deepakkumar897986@gmail.com', '08979866218', 'village barhana post kosi kalan teh-chhata mathura', 'Cash on Delivery', 94224.00, '2026-03-02 05:17:26', 1, 'Pending', NULL),
 (4, 39, 'Deepak kumar', 'deepakkumar897986@gmail.com', '08979866218', 'village barhana post kosi kalan teh-chhata mathura', 'Cash on Delivery', 80089.00, '2026-03-02 05:27:22', 0, 'Shipped', NULL),
 (5, 34, 'Manoj Gola07', 'harprasadkumar6448@gmail.com', '1234456691', 'sakraya mathura', 'Cash on Delivery', 23050.00, '2026-03-02 07:04:46', 0, 'Pending', NULL),
-(6, 36, 'manoj', 'harprasadkumar6448@gmail.com', '1234456691', 'sakraya', 'Cash on Delivery', 68029.00, '2026-03-06 18:00:03', 0, 'Pending', NULL),
-(7, 36, 'manoj', 'harprasadkumar6448@gmail.com', '1234456691', 'sakraya', 'Cash on Delivery', 35298.00, '2026-03-06 18:01:36', 0, 'Pending', NULL),
-(8, 36, 'manoj', 'harprasadkumar6448@gmail.com', '1234456691', 'sakraya', 'Cash on Delivery', 30056.00, '2026-03-06 18:01:54', 0, 'Pending', NULL),
-(9, 36, 'manoj', 'harprasadkumar6448@gmail.com', '1234456691', 'sakraya', 'Cash on Delivery', 34058.00, '2026-03-06 18:02:08', 0, 'Pending', NULL),
-(10, 36, 'manoj', 'harprasadkumar6448@gmail.com', '1234456691', 'sakraya', 'Cash on Delivery', 48080.00, '2026-03-06 18:02:29', 1, 'Cancelled', NULL),
-(11, 36, 'manoj', 'harprasadkumar6448@gmail.com', '1234456691', 'sakraya', 'Cash on Delivery', 88040.00, '2026-03-06 18:02:42', 0, 'Pending', NULL),
-(12, 36, 'manoj', 'harprasadkumar6448@gmail.com', '1234456691', 'sakraya', 'Cash on Delivery', 1032.00, '2026-03-06 18:02:57', 0, 'Cancelled', NULL),
-(13, 36, 'manoj', 'harprasadkumar6448@gmail.com', '1234456691', 'sakraya', 'Cash on Delivery', 1634.00, '2026-03-06 18:03:15', 1, 'Delivered', NULL),
-(14, 36, 'manoj', 'harprasadkumar6448@gmail.com', '1234456691', 'sakraya', 'Cash on Delivery', 884.00, '2026-03-06 18:03:31', 0, 'Shipped', NULL),
-(15, 36, 'Manoj Gola07', 'harprasadkumar6448@gmail.com', '7505324053', 'sakraya', 'Cash on Delivery', 73180.00, '2026-03-07 17:22:24', 0, 'Pending', NULL),
 (16, 34, 'manoj', 'harprasadkumar6448@gmail.com', '7505324053', 'sakraya', 'UPI', 34068.00, '2026-03-13 07:13:15', 0, 'Pending', NULL),
-(17, 36, 'Manoj Gola07', 'harprasadkumar6448@gmail.com', '7505324053', 'sakraya', 'Cash on Delivery', 19100.00, '2026-03-14 06:45:48', 0, 'Pending', NULL),
-(18, 36, 'Manoj Gola07', 'harprasadkumar6448@gmail.com', '7505324053', 'sakraya', 'Cash on Delivery', 34085.00, '2026-03-14 06:47:02', 0, 'Pending', NULL),
 (19, 40, 'Deepak kumar', 'deepakkumar897986@gmail.com', '08979866218', 'village barhana post kosi kalan teh-chhata mathura', 'Cash on Delivery', 108874.00, '2026-03-14 07:31:42', 0, 'Pending', NULL),
-(20, 41, 'Manoj Gola07', 'harprasadkumar6448@gmail.com', '7505324053', 'sakraya', 'Cash on Delivery', 5509.00, '2026-03-14 08:24:27', 1, 'Cancelled', '2026-03-14 13:54:58'),
 (21, 34, 'Deepak kumar', 'deepakkumar897986@gmail.com', '08979866218', 'village barhana post kosi kalan teh-chhata mathura', 'Cash on Delivery', 24078.00, '2026-03-14 08:25:37', 0, 'Pending', NULL),
 (22, 34, 'Deepak kumar', 'deepakkumar897986@gmail.com', '08979866218', 'village barhana post kosi kalan teh-chhata mathura', 'Cash on Delivery', 18703.00, '2026-03-14 08:26:13', 0, 'Pending', NULL),
 (23, 34, 'Deepak kumar', 'deepakkumar897986@gmail.com', '08979866218', 'village barhana post kosi kalan teh-chhata mathura', 'Cash on Delivery', 44104.00, '2026-03-14 08:27:00', 0, 'Pending', NULL),
 (24, 34, 'Manoj Gola07', 'harprasadkumar6448@gmail.com', '7505324053', 'sakraya', 'Cash on Delivery', 14030.00, '2026-03-14 08:48:09', 0, 'Pending', NULL),
-(25, 34, 'Manoj Gola07', 'harprasadkumar6448@gmail.com', '7505324053', 'sakraya', 'Cash on Delivery', 44043.00, '2026-03-14 08:49:09', 0, 'Pending', NULL),
-(26, 42, 'Manoj Gola07', 'harprasadkumar6448@gmail.com', '1234456691', 'sakraya', 'Cash on Delivery', 10058.00, '2026-03-14 10:01:34', 0, 'Pending', NULL),
-(27, 42, 'Manoj Gola07', 'harprasadkumar6448@gmail.com', '7505324053', 'manoj', 'Cash on Delivery', 2063.00, '2026-03-14 10:30:22', 0, 'Pending', NULL);
+(25, 34, 'Manoj Gola07', 'harprasadkumar6448@gmail.com', '7505324053', 'sakraya', 'Cash on Delivery', 44043.00, '2026-03-14 08:49:09', 0, 'Pending', NULL);
 
 -- --------------------------------------------------------
 
@@ -445,50 +427,46 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_key`, `product_name`, `price`, `quantity`, `image`, `delivery`, `line_total`) VALUES
-(1, 1, 'home_1', 'Apple iPhone 15', 23000.00, 1, 'a1.webp', 53.00, 23053.00),
 (2, 2, 'home_1', 'Apple iPhone 15', 23000.00, 1, 'a1.webp', 75.00, 23075.00),
-(3, 3, 'home_1', 'Apple iPhone 15', 23000.00, 1, 'a1.webp', 24.00, 23024.00),
-(4, 3, 'home_3', 'iPhone 16 Pro Max 256 GB: 5G', 33999.00, 1, 'a3.webp', 66.00, 34065.00),
-(5, 3, 'home_9', 'Motorola Edge 5G', 8999.00, 1, '1751118674_24.jpg', 90.00, 9089.00),
-(6, 3, 'home_12', 'Samsung Galaxy S24 Ultra 5G', 27999.00, 1, 's2.webp', 47.00, 28046.00),
 (7, 4, 'home_4', 'Apple iPhone 15', 23459.00, 1, 'a4.webp', 50.00, 23509.00),
 (8, 4, 'home_8', 'Samsung Galaxy A35 5G', 12999.00, 1, '1751118674_23.jpg', 13.00, 13012.00),
 (9, 4, 'macbook_8', 'Apple 2025 MacBook Air', 42999.00, 1, 'm7.webp', 58.00, 43057.00),
 (10, 4, 'boat_5', 'boAt Bassheads 900 Pro', 499.00, 1, 'b4.webp', 12.00, 511.00),
 (11, 5, 'home_1', 'Apple iPhone 15', 23000.00, 1, 'a1.webp', 50.00, 23050.00),
-(12, 6, 'home_3', 'iPhone 16 Pro Max 256 GB: 5G', 33999.00, 2, 'a3.webp', 31.00, 68029.00),
-(13, 7, 'home_2', 'iPhone 16 128 GB: 5G', 25999.00, 1, 'a2.webp', 81.00, 26080.00),
-(14, 7, 'samsung_8', 'Samsung Galaxy S24 FE', 4599.00, 2, 'p4.webp', 20.00, 9218.00),
-(15, 8, 'xiaomi_8', 'Xiaomi 12 Pro', 14999.00, 2, 'x4.webp', 58.00, 30056.00),
-(16, 9, 'hp_5', 'HP 255 Notebook', 16999.00, 2, 'h4.webp', 60.00, 34058.00),
-(17, 10, 'dell_5', 'Dell Inspiron 5440 Laptop', 23999.00, 2, 'd4.webp', 82.00, 48080.00),
-(18, 11, 'macbook_5', 'Apple 2024 MacBook Air', 43999.00, 2, 'm4.webp', 42.00, 88040.00),
-(19, 12, 'boat_5', 'boAt Bassheads 900 Pro', 499.00, 2, 'b4.webp', 34.00, 1032.00),
-(20, 13, 'oneplusbud_5', 'OnePlus Buds 3', 799.00, 2, 'n4.webp', 36.00, 1634.00),
-(21, 14, 'boult_5', 'Boult Audio W20', 399.00, 2, 'u4.webp', 86.00, 884.00),
-(22, 15, 'apple_7', 'Apple iPhone 15', 23999.00, 2, 'a1.webp', 87.00, 48085.00),
-(23, 15, 'apple_8', 'iPhone 16 128 GB: 5G', 24999.00, 1, 'a2.webp', 96.00, 25095.00),
 (24, 16, 'home_3', 'iPhone 16 Pro Max 256 GB: 5G', 33999.00, 1, 'a3.webp', 69.00, 34068.00),
-(25, 17, 'home_6', 'Lava Storm Play 5G', 4999.00, 1, '1751118674_21.jpg', 82.00, 5081.00),
-(26, 17, 'home_5', 'iQOO Z10 5G', 13999.00, 1, '1751118674_20.jpg', 20.00, 14019.00),
-(27, 18, 'home_3', 'iPhone 16 Pro Max 256 GB: 5G', 33999.00, 1, 'a3.webp', 86.00, 34085.00),
 (28, 19, 'home_2', 'iPhone 16 128 GB: 5G', 25999.00, 1, 'a2.webp', 51.00, 26050.00),
 (29, 19, 'apple_3', 'iPhone 16 Pro Max 256 GB: 5G', 45999.00, 1, 'a3.webp', 23.00, 46022.00),
 (30, 19, 'oneplus_5', 'OnePlus Nord CE4', 13999.00, 1, 'o5.webp', 83.00, 14082.00),
 (31, 19, 'hp_5', 'HP 255 Notebook', 16999.00, 1, 'h4.webp', 35.00, 17034.00),
 (32, 19, 'boat_5', 'boAt Bassheads 900 Pro', 499.00, 1, 'b4.webp', 94.00, 593.00),
 (33, 19, 'home_6', 'Lava Storm Play 5G', 4999.00, 1, '1751118674_21.jpg', 94.00, 5093.00),
-(34, 20, 'home_6', 'Lava Storm Play 5G', 4999.00, 1, '1751118674_21.jpg', 55.00, 5054.00),
-(35, 20, 'boult_5', 'Boult Audio W20', 399.00, 1, 'u4.webp', 56.00, 455.00),
 (36, 21, 'dell_5', 'Dell Inspiron 5440 Laptop', 23999.00, 1, 'd4.webp', 79.00, 24078.00),
 (37, 22, 'home_5', 'iQOO Z10 5G', 13999.00, 1, '1751118674_20.jpg', 78.00, 14077.00),
 (38, 22, 'samsung_8', 'Samsung Galaxy S24 FE', 4599.00, 1, 'p4.webp', 27.00, 4626.00),
 (39, 23, 'home_6', 'Lava Storm Play 5G', 4999.00, 2, '1751118674_21.jpg', 96.00, 10094.00),
 (40, 23, 'home_3', 'iPhone 16 Pro Max 256 GB: 5G', 33999.00, 1, 'a3.webp', 11.00, 34010.00),
 (41, 24, 'home_5', 'iQOO Z10 5G', 13999.00, 1, '1751118674_20.jpg', 31.00, 14030.00),
-(42, 25, 'macbook_5', 'Apple 2024 MacBook Air', 43999.00, 1, 'm4.webp', 44.00, 44043.00),
-(43, 26, 'home_6', 'Lava Storm Play 5G', 4999.00, 2, '1751118674_21.jpg', 60.00, 10058.00),
-(44, 27, 'boult_4', 'Boult X Mustang', 999.00, 2, 'u3.webp', 65.00, 2063.00);
+(42, 25, 'macbook_5', 'Apple 2024 MacBook Air', 43999.00, 1, 'm4.webp', 44.00, 44043.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `id` int NOT NULL,
+  `mobile` varchar(255) DEFAULT NULL,
+  `otp` varchar(6) DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`id`, `mobile`, `otp`, `expires_at`) VALUES
+(67, '', '397031', '2026-05-03 04:14:08');
 
 -- --------------------------------------------------------
 
@@ -517,7 +495,8 @@ INSERT INTO `products` (`id`, `name`, `description`, `price`, `mrp`, `image`, `b
 (10, 'Apple iPhone 15', 'Advanced dual-camera system: 48MP Main,12MP Ultra Wide, 12MP 2x Telephoto (enabled by quad-pixel sensor), 2x optical zoom in, 2x optical zoom out; 4x optical zoom range Digital zoom up to 10x', 34999.00, 88999.00, 'a4.webp', 'Apple'),
 (11, 'Apple iPhone 14', 'Dual-camera system: 12MP Main, 12MP Ultrawide with Portrait mode, Depth Control, Portrait Lighting, Smart HDR 4, and 4K Dolby Vision HDR video up to 60 fps', 33999.00, 84999.00, 'a5.webp', 'Apple'),
 (12, 'Apple iPhone 13 (128GB)', 'Advanced dual-camera system with 12MP Wide and Ultra Wide cameras; Photographic Styles, Smart HDR 4, Night mode, 4K Dolby Vision HDR recording', 13999.00, 54999.00, 'a6.webp', 'Apple'),
-(13, 'iPhone 16e 128 GB', 'iPhone 16e 128 GB: Built for Apple Intelligence, A18 Chip, Supersized Battery Life, 48MP Fusion. Camera, 15.40 cm (6.1″) Super Retina XDR Display; Black', 17999.00, 64999.00, 'a7.webp', 'Apple');
+(13, 'iPhone 16e 128 GB', 'iPhone 16e 128 GB: Built for Apple Intelligence, A18 Chip, Supersized Battery Life, 48MP Fusion. Camera, 15.40 cm (6.1″) Super Retina XDR Display; Black', 17999.00, 64999.00, 'a7.webp', 'Apple'),
+(14, 'iPhone 17 Pro Max 256 GB', 'iPhone 17 Pro Max 256 GB: 17.42 cm (6.9″) Display with Promotion, A19 Pro Chip, Best Battery Life in Any iPhone Ever, Pro Fusion Camera System, Center Stage Front Camera; Silver', 49000.00, 149900.00, '616-Eh2FbPL._AC_UY327_FMwebp_QL65_.webp', 'Apple');
 
 -- --------------------------------------------------------
 
@@ -548,7 +527,8 @@ INSERT INTO `sum_products` (`id`, `name`, `description`, `price`, `mrp`, `image`
 (8, 'Samsung Galaxy S24 FE', 'The Samsung Galaxy S24 FE is a premium mid-range phone with a 120Hz AMOLED display, Exynos 2400e processor, a 50MP triple-camera system, and IP68 water resistance..', 4599.00, 2199.00, 'p4.webp', 'samsung', 0, NULL),
 (9, 'Samsung Galaxy A35 5G', 'Samsung Galaxy A35 5G (Awesome Iceblue, 8GB RAM, 128GB Storage) with Other OffersBATTERY - Get a massive 5000mAh Lithium-ion Battery (Non-Removable) with C-Type Super Fast Charging (25W Charging Support)', 1399.00, 34999.00, 's3.webp', 'samsung', 0, NULL),
 (10, 'Samsung Galaxy M35 5G', 'Samsung Galaxy M35 5G (Moonlight Blue,6GB RAM,128GB Storage)| Corning Gorilla Glass Victus+| AnTuTu Score 595K+ | Vapour Cooling Chamber | 6000mAh Battery | 120Hz Super AMOLED Display| Without Charger', 5999.00, 19999.00, 's4.webp', 'samsung', 0, NULL),
-(11, 'Samsung Galaxy Z Flip3 5G', 'Samsung Galaxy Z Flip3 5G (Cream, 8GB RAM, 128GB Storage) with No Cost EMI/Additional Exchange Offers Corning Gorilla Glass Victus+| AnTuTu Score 595K+ | Vapour Cooling Chamber | 6000mAh Battery | 120Hz Super AMOLED Display| Without Charger', 13999.00, 54999.00, 's5.webp', 'samsung', 0, NULL);
+(11, 'Samsung Galaxy Z Flip3 5G', 'Samsung Galaxy Z Flip3 5G (Cream, 8GB RAM, 128GB Storage) with No Cost EMI/Additional Exchange Offers Corning Gorilla Glass Victus+| AnTuTu Score 595K+ | Vapour Cooling Chamber | 6000mAh Battery | 120Hz Super AMOLED Display| Without Charger', 13999.00, 54999.00, 's5.webp', 'samsung', 0, NULL),
+(12, 'Galaxy S26 Ultra 5G', 'Samsung Galaxy S26 Ultra 5G (Cobalt Violet, 12GB RAM, 256GB Storage) with Built-in Privacy Display, AI Phone, Photo Assist, Creative Studio, 200MP Camera, 5000mAh Battery and Snapdragon 8 Elite Gen 5', 39999.00, 139999.00, '71xHws+eI5L._AC_UY327_FMwebp_QL65_.webp', 'samsung', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -564,27 +544,25 @@ CREATE TABLE `users` (
   `password` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `role` varchar(20) COLLATE utf8mb4_general_ci DEFAULT 'user',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `profile_image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `profile_image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `mobile` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `role`, `created_at`, `profile_image`) VALUES
-(27, 'Deepak', 'kumar', 'deepak@gmail.com', '$2y$10$RmMkmV565b9vPpPu0zey4ee5hXH5fF53zyjSvDxDlW2fQ7fPmB1FG', 'user', '2026-02-25 17:42:53', NULL),
-(32, 'manoj', 'kumar', 'manojkumar@gmail.com', '$2y$10$BANCrlj490DhjsAfHx3tr.IwU6RWVmIu2uJiI7WCL1xz85dDGxj8i', 'user', '2026-02-25 17:42:53', NULL),
-(33, 'Manoj', 'Gola07', 'harprasadkumar6448@gmail.com', '$2y$10$u8dc3RUn3tQJ2/HnPuQdHuUahN1gjto7jsRF2bpasrkEdY3CupNN2', 'user', '2026-02-25 17:42:53', NULL),
-(34, 'Admin', 'Admin', 'admin@gmail.com', '$2y$10$OLKz1TdI9McqbAcI23O8kuPh6oJC3fBC2TApIKpTAo/hQoHN63noq', 'admin', '2026-02-25 17:49:21', 'user_34_1774443675.png'),
-(35, 'Manoj', 'Gola', 'manoj@gmail.com', '$2y$10$3xzZ1LpXyNAm1qfrRtb4T.k86W0g8bpGzrK0TK4fZX5dew0lS1u8u', 'user', '2026-02-26 11:22:39', NULL),
-(36, 'user1', 'u1', 'user1@gmail.com', '$2y$10$EYpU/gsRcfmzjKzQC1dW0uosEeXdDaWGHLvx5uS94YDXzr9DRGRoO', 'user', '2026-02-27 18:12:12', NULL),
-(37, 'user2', 'u2', 'user2@gmail.com', '$2y$10$D.hfe6Kdu.z8biHrdeDyxeR3GoCqOF6Mk5JdzO6vfGpUEQHC8EGVO', 'user', '2026-02-27 18:16:50', NULL),
-(38, 'user-1', 'kumar', 'user-1@gmail.com', '$2y$10$0z/P77XrHIc6Ej0u/AM0XunY.4tmKUu0IFx/icp/CUGvS4SrvzzWC', 'user', '2026-03-02 05:13:25', NULL),
-(39, 'user-2', 'kumar', 'user-2@gmail.com', '$2y$10$75QCtcDxxEMc0vwfvd4IwenJnZ4mENOBRMk3vTooPm5Y/kuGgZSGi', 'user', '2026-03-02 05:13:56', NULL),
-(40, 'user-3', 'kumar', 'user-3@gmail.com', '$2y$10$tdR.n/CpdgT5SdIY5CTx2OE2vpIWPu0OpmZYm6Y0H0wm8VZK2CcFy', 'user', '2026-03-14 07:19:33', 'user_40_1774445567.png'),
-(41, 'user4', 'u4', 'user4@gmail.com', '$2y$10$Cwlh2DT.g2PtRIL2ibR5teHvgVwLW0dTTFu6W8J1ek2LG7R.E/8AS', 'user', '2026-03-14 07:54:15', NULL),
-(42, 'user5', 'u5', 'user5@gmail.com', '$2y$10$rIfXAkoKaXHh7/VFG/pmI.5XBrUNMwSc/LCaQHOcGr3Qs34.3YDHe', 'user', '2026-03-14 09:55:11', NULL),
-(43, 'user6', 'u6', 'user6@gmail.com', '$2y$10$LshHnAkLJ1iOpSEGr/ynm.tXsU4qvY5Mfx.763FIOdNTf7vATU8d2', 'user', '2026-03-14 09:56:32', NULL);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `role`, `created_at`, `profile_image`, `mobile`) VALUES
+(27, 'Deepak', 'kumar', 'deepak@gmail.com', '$2y$10$RmMkmV565b9vPpPu0zey4ee5hXH5fF53zyjSvDxDlW2fQ7fPmB1FG', 'user', '2026-02-25 17:42:53', NULL, NULL),
+(32, 'manoj', 'kumar', 'manojkumar@gmail.com', '$2y$10$BANCrlj490DhjsAfHx3tr.IwU6RWVmIu2uJiI7WCL1xz85dDGxj8i', 'user', '2026-02-25 17:42:53', NULL, NULL),
+(33, 'Manoj', 'Gola07', 'harprasadkumar6448@gmail.com', '$2y$10$u8dc3RUn3tQJ2/HnPuQdHuUahN1gjto7jsRF2bpasrkEdY3CupNN2', 'user', '2026-02-25 17:42:53', NULL, NULL),
+(34, 'Admin', 'Admin', 'admin@gmail.com', '$2y$10$X6QOF7w2JVVCxbGBw61OjewVX3gG8c/ieskS4/d3PC4RdNfQ3Y6pC', 'admin', '2026-02-25 17:49:21', 'user_34_1774443675.png', NULL),
+(35, 'Manoj', 'Gola', 'manoj@gmail.com', '$2y$10$3xzZ1LpXyNAm1qfrRtb4T.k86W0g8bpGzrK0TK4fZX5dew0lS1u8u', 'user', '2026-02-26 11:22:39', NULL, NULL),
+(39, 'user-2', 'kumar', 'user-2@gmail.com', '$2y$10$Bu3onMo7arBRE2d5MaXlreYdWEXH2fQo0JN9oTz8oCb5c1zajGujm', 'user', '2026-03-02 05:13:56', NULL, NULL),
+(40, 'user-3', 'kumar', 'user-3@gmail.com', '$2y$10$tdR.n/CpdgT5SdIY5CTx2OE2vpIWPu0OpmZYm6Y0H0wm8VZK2CcFy', 'user', '2026-03-14 07:19:33', 'user_40_1774445567.png', NULL),
+(43, 'user6', 'u6', 'user6@gmail.com', '$2y$10$LshHnAkLJ1iOpSEGr/ynm.tXsU4qvY5Mfx.763FIOdNTf7vATU8d2', 'user', '2026-03-14 09:56:32', NULL, NULL),
+(45, 'Deepak', 'kumar', 'Deepak-admin@gmail.com', '$2y$10$myrxoih32vj5g27Edddk3uTla6pFXlDkNbVEwQhcTcil0AVv9BHEW', 'admin', '2026-05-02 14:53:05', NULL, '8979866218'),
+(46, 'Manoj', 'gola', 'Manoj-admin@gmail.com', '$2y$10$zuTIBPClyGftPXsIh2AQIOvD8xzy2qCNIHVKwGZp9z5oA513E2UKq', 'admin', '2026-05-02 14:53:55', NULL, '7505324053');
 
 -- --------------------------------------------------------
 
@@ -696,6 +674,12 @@ ALTER TABLE `order_items`
   ADD KEY `fk_items_order` (`order_id`);
 
 --
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
@@ -713,7 +697,8 @@ ALTER TABLE `sum_products`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `email_2` (`email`);
+  ADD UNIQUE KEY `email_2` (`email`),
+  ADD UNIQUE KEY `mobile` (`mobile`);
 
 --
 -- Indexes for table `xiaomi_products`
@@ -729,7 +714,7 @@ ALTER TABLE `xiaomi_products`
 -- AUTO_INCREMENT for table `apple_products`
 --
 ALTER TABLE `apple_products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `boat_products`
@@ -798,22 +783,28 @@ ALTER TABLE `order_items`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
+-- AUTO_INCREMENT for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+
+--
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `sum_products`
 --
 ALTER TABLE `sum_products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `xiaomi_products`

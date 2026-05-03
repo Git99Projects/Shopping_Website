@@ -550,47 +550,14 @@ font-size:13px;
     <a href="insert_products.php" class="btn btn-success">➕ Add Product</a>
     <a href="home.php?delete_mode=1" class="btn btn-danger">🗑️ Delete Product</a>
     <a href="restore_products.php" class="btn btn-warning">♻️ Restore Product</a>
-    <button class="btn btn-info" onclick="togglePasswordBox()">
+    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
   🔑 User Change Password
 </button>
+<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+  🗑️ Delete Users
+</button>
 </div>
-<div id="passwordBox" class="card card-custom p-3 mt-3" style="display:none; max-width:500px;">
 
-  <h6 class="mb-3 navbar-brand">Change User Password</h6>
-
-  <form method="POST" action="admin_change_password.php">
-
-    <!-- Email Select -->
-   <div class="mb-3">
-  <label class="form-label text-info fw-bold">🔍 Select User</label>
-
-  <select name="user_id" class="form-select premium-select" required>
-    <option value="">🔍 Select User Email</option>
-
-    <?php
-    $users = $conn->query("SELECT id, email FROM users");
-    while($u = $users->fetch_assoc()):
-    ?>
-      <option value="<?= $u['id']; ?>">
-        <?= $u['email']; ?>
-      </option>
-    <?php endwhile; ?>
-  </select>
-          
-    <!-- New Password -->
-    <div class="mb-2">
-      <input type="password" name="new_password" class="form-control" placeholder="New Password" required>
-    </div>
-
-    <!-- Button -->
-    <button type="submit" class="btn btn-success w-100">
-      Update Password
-    </button>
-
-  </form>
-
-</div>
-  </div>
 <?php endif; ?>
 
   <!-- Top Stats -->
@@ -862,6 +829,10 @@ document.addEventListener("DOMContentLoaded", function () {
       toastMsg.innerHTML = "⚠️ Failed to update password!";
       toastEl.style.background = "linear-gradient(135deg,#ff4d4d,#cc0000)";
     }
+    else if (msg === "deleted") {
+     toastMsg.innerHTML = "🗑️ Users deleted successfully";
+     toastEl.style.background = "linear-gradient(135deg,#ff4d4d,#cc0000)";
+     }
 
     const toast = new bootstrap.Toast(toastEl);
     toast.show();
@@ -871,5 +842,105 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
+<script>
+function togglePassword(id, el) {
+  const input = document.getElementById(id);
+  const isHidden = input.type === "password";
+  input.type = isHidden ? "text" : "password";
+  el.textContent = isHidden ? "🙈" : "👁️";
+}
+</script>
+<!-- 🔥 DELETE USER MODAL -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Users</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form method="POST" action="delete_multiple_users.php">
+
+        <div class="modal-body" style="max-height:300px; overflow:auto;">
+
+          <?php
+          $users = $conn->query("SELECT id, email FROM users WHERE role != 'admin'");
+          while($u = $users->fetch_assoc()):
+          ?>
+
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="user_ids[]" value="<?= $u['id']; ?>">
+            <label class="form-check-label">
+              <?= $u['email']; ?>
+            </label>
+          </div>
+
+          <?php endwhile; ?>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger w-100">
+            Delete Selected Users
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+<!-- CHANGE PASSWORD MODAL -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Change User Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form method="POST" action="admin_change_password.php">
+
+        <div class="modal-body">
+
+          <!-- Select User -->
+          <select name="user_id" class="form-select mb-3" required>
+            <option value="">Select User Email</option>
+
+            <?php
+            $users = $conn->query("SELECT id, email FROM users");
+            while($u = $users->fetch_assoc()):
+            ?>
+              <option value="<?= $u['id']; ?>">
+                <?= $u['email']; ?>
+              </option>
+            <?php endwhile; ?>
+          </select>
+
+          <!-- Password -->
+          <div style="position:relative;">
+            <input type="password" id="adminPassword" name="new_password" class="form-control" placeholder="New Password" required>
+
+            <span onclick="togglePassword('adminPassword', this)" 
+              style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
+              👁️
+            </span>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success w-100">
+            Update Password
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
 </body>
 </html>

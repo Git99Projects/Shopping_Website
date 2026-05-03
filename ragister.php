@@ -4,9 +4,9 @@ include 'db.php';
 $alert = ""; // To store error or success message
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $first = $_POST["first_name"];
-  $last = $_POST["last_name"];
-  $email = $_POST["email"];
+  $first = trim($_POST["first_name"]);
+$last = trim($_POST["last_name"]);
+  $email = trim($_POST["email"]);
   $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
   // Check if email already exists
@@ -48,6 +48,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
 
     <style>
+.video-bg {
+  will-change: transform;
+}
     body {
   background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   font-family: 'Segoe UI', sans-serif;
@@ -74,15 +77,15 @@ section {
   border-radius: 20px;
 
   background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 
   border: 1px solid rgba(255, 255, 255, 0.2);
 
-  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
 
   color: white;
-  transition: all 0.3s ease;
+  transition: 0.2s ease;
 }
 
 /* Hover effect like first code */
@@ -104,7 +107,7 @@ section {
   color: white;
   border-radius: 10px;
   padding: 12px;
-  transition: all 0.3s ease;
+  transition: 0.2s ease;
 }
 
 /* Placeholder */
@@ -117,8 +120,8 @@ section {
   border: 1px solid transparent;
   background: linear-gradient(#111, #2e2d2d) padding-box,
               linear-gradient(135deg, #00e5ff, #0072ff) border-box;
-  box-shadow: 0 0 15px rgba(0,229,255,0.6);
-  transform: scale(1.02);
+  box-shadow: 0 0 8px rgba(0,229,255,0.4);
+  transform: scale(1.01);
 }
 
 /* Focus effect */
@@ -142,7 +145,7 @@ section {
 
 .btn-light:hover {
   background: linear-gradient(135deg, #0072ff, #eaeff0ff);
-  transform: scale(1.05);
+  transform: scale(1.02);
   box-shadow: 0 5px 20px rgba(0,114,255,0.6);
 }
 
@@ -299,18 +302,18 @@ text-shadow:
     max-width: 900px;
   }
 }
+.video-bg {
+  will-change: transform;
+}
     </style>
   </head>
   <body>
-<video autoplay muted loop class="video-bg">
+<video autoplay muted loop class="video-bg" preload="none" playsinline>
   <source src="image/animation.mp4" type="video/mp4">
 </video>
   <!-- Section: Design Block --> 
   <section class="">
-    <!-- Replace background image with color -->
-    <!-- <div class="p-5" style="background-color:rgb(220, 24, 24); height: 300px;"></div> -->
-
-    <div class="card form-container shadow-5-strong" backdrop-filter: blur(30px);">
+    <div class="card form-container shadow-5-strong">
       <div class="card-body py-5 px-md-5">
 
         <div class="row d-flex justify-content-center">
@@ -361,17 +364,15 @@ text-shadow:
               <!-- Password -->
               <div class="mb-4">
               <label class="form-label text-white" for="form3Example4">Password</label>
-                <input type="password" name="password" id="form3Example4" class="form-control" required placeholder="Enter Password" />
-              
-              </div>
+              <div style="position: relative;">
+  <input type="password" name="password" id="form3Example4" class="form-control" required placeholder="Enter Password" />
 
-              <!-- Checkbox -->
-              <!-- <div class="form-check d-flex justify-content-center mb-4">
-                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
-                <label class="form-check-label text-white" for="form2Example33">
-                  Welcome Users 
-                </label>
-              </div> -->
+  <span onclick="togglePassword('form3Example4', this)" 
+        style="position:absolute; right:15px; top:50%; transform:translateY(-50%); cursor:pointer; color:white;">
+        👁️
+  </span>
+</div>
+              </div>
 
               <!-- Submit button -->
               <button type="submit" class="btn btn-light btn-block mb-3">
@@ -408,5 +409,13 @@ text-shadow:
 
   <!-- MDB JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.js"></script>
+ <script>
+function togglePassword(id, el) {
+  const input = document.getElementById(id);
+  const isHidden = input.type === "password";
+  input.type = isHidden ? "text" : "password";
+  el.textContent = isHidden ? "🙈" : "👁️";
+}
+</script>
   </body>
   </html>
